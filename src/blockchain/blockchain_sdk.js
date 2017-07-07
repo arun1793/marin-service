@@ -163,7 +163,7 @@ function doQuery(params) {
                             logHelper.logMessage(logger, 'doQuery', 'data in data.result ', data.result);
                             var buffer = new Buffer(data.result);
                             logHelper.logMessage(logger, 'doQuery', 'data in buffer.tostring ', buffer.toString());
-                            var jsonResp = JSON.parse(buffer.toString());
+                            var jsonResp = (buffer.toString());
                             logHelper.logMessage(logger, jsonResp, 'json response in query line 218')
                             return resolve({ statusCode: constants.SUCCESS, body: jsonResp });
                         } catch (err) {
