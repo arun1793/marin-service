@@ -25,6 +25,55 @@ var secure = true;
 var retryLimit = 5;
 var retryInterval = 2000;
 
+function UserRegisteration(params) {
+
+    console.log("calling SDK for registration");
+    return new Promise(function(resolve, reject) {
+        var UserDetails;
+        try {
+            logHelper.logEntryAndInput(logger, 'UserRegisteration', params);
+
+            if (!validate.isValidJson(params)) {
+                logHelper.logError(logger, 'UserRegisteration', 'Invalid params');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create UserRegisteration. Invalid params' })
+            }
+
+            var user = params.user;
+            if (!validate.isValidString(user)) {
+                logHelper.logError(logger, 'UserRegisteration', 'Invalid user');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create UserRegisteration. Invalid user' })
+            }
+
+            UserDetails = params.UserDetails;
+
+            if (!validate.isValidJson(UserDetails)) {
+                logHelper.logError(logger, 'UserRegisteration', 'Invalid UserDetails');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create  userRegisteration. Invalid json object' })
+            }
+            //here in function name we use the actual function name which is used for registeration i.e User_register
+            //args: [UserDetails.name,UserDetails.email,UserDetails.phone,UserDetails.pan,UserDetails.aadhar,UserDetails.usertype,UserDetails.upi,UserDetails.passpin]})
+            var reqSpec = getRequestSpec({ functionName: 'registerUser', args: [UserDetails.id, UserDetails.fname, UserDetails.lname, UserDetails.phone, UserDetails.email, UserDetails.password, UserDetails.repassword] });
+            recursiveInvoke({ requestSpec: reqSpec, user: user })
+                .then(function(resp) {
+                    logHelper.logMessage(logger, 'UserRegisteration', 'Successfully registered user', resp.body);
+                    return resolve({ statusCode: constants.SUCCESS, body: UserDetails });
+                })
+                .catch(function(err) {
+                    logHelper.logError(logger, 'UserRegisteration', 'Could not register user', err);
+                    return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not register user' });
+
+                });
+
+        } catch (err) {
+            logHelper.logError(logger, 'UserRegisteration', 'Could not register user application on blockchain ledger: ', err);
+            return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not register user' });
+        }
+    });
+
+
+
+}
+
 
 /**
 Create a new Mortgage application
