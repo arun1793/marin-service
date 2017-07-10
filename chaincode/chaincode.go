@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
-	"time"
+	// "time"
 	//"strings"
 	//"reflect"
 
@@ -30,6 +30,13 @@ type User struct {
 
 type AllUsers struct {
 	Userlist []User `json:"userlist"`
+}
+type SessionAunthentication struct {
+	Token string `json:"token"`
+	Email string `json:"email"`
+}
+type Session struct {
+	StoreSession []SessionAunthentication `json:"session"`
 }
 
 type SimpleChaincode struct {
@@ -136,10 +143,10 @@ func (t *SimpleChaincode) readuser(stub shim.ChaincodeStubInterface, args []stri
 		return nil, errors.New("Incorrect number of arguments. Expecting name of the var to query")
 	}
 
-	id = args[0]
-	valAsbytes, err := stub.GetState(Id) //get the var from chaincode state
+	name = args[0]
+	valAsbytes, err := stub.GetState(name) //get the var from chaincode state
 	if err != nil {
-		jsonResp = "{\"Error\":\"Failed to get state for " + id + "\"}"
+		jsonResp = "{\"Error\":\"Failed to get state for " + name + "\"}"
 		return nil, errors.New(jsonResp)
 	}
 
@@ -161,7 +168,7 @@ func (t *SimpleChaincode) registerUser(stub shim.ChaincodeStubInterface, args []
     if len(args[1]) <= 0 {
         return nil, errors.New("2nd argument must be a non-empty string")
     }
-    if len(args[2]) <= 0 {register
+    if len(args[2]) <= 0 {
         return nil, errors.New("3rd argument must be a non-empty string")
     }
     if len(args[3]) <= 0 {
@@ -215,4 +222,42 @@ func (t *SimpleChaincode) registerUser(stub shim.ChaincodeStubInterface, args []
     }
     fmt.Println("- end user_register")
     return nil, nil
+}
+
+func (t *SimpleChaincode) login(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	var err error
+
+	if len(args) != 2 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 2")
+	}
+
+	//input sanitation
+	fmt.Println("- login")
+	if len(args[0]) <= 0 {
+		return nil, errors.New("1st argument must be a non-empty string")
+	}
+	if len(args[1]) <= 0 {
+		return nil, errors.New("2nd argument must be a non-empty string")
+	}
+
+	email := args[0]
+
+	password := args[1]
+	
+
+	UserAsBytes, err := stub.GetState("getusers")
+	if err != nil {
+		return nil, errors.New("Failed to get users")
+	}
+	var allusers AllUsers
+	json.Unmarshal(UserAsBytes, &allusers) //un stringify it aka JSON.parse()
+
+	for i := 0; i < len(allusers.Userlist); i++ {
+
+		if allusers.Userlist[i].Email == email && allusers.Userlist[i].Password == password {
+
+			return []byte(allusers.Userlist[i].Email), nil
+		}
+	}
+	return nil, nil
 }

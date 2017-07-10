@@ -6,18 +6,20 @@ const auth = require('basic-auth');
 const jwt = require('jsonwebtoken');
 */
 const query = require('./functions/query');
+const login = require('./functions/login');
+const register = require('./functions/register');
 
 
 
 module.exports = router => {
 
-    router.get('/', (req, res) => res.end('Welcome to crowdfunding,please hit a service !'));
+    router.get('/', (req, res) => res.end('Welcome to marine service,please hit a service !'));
 
 
     router.get('/query', (req, res) => {
         if (1 == 1) {
 
-            query.query({ "user": "risabh.s", "helloworld": "hello_world" })
+            query.query({ "user": "dhananjay.p", "helloworld": "hello_world" })
 
             .then(function(result) {
                 res.json(result)
@@ -29,6 +31,48 @@ module.exports = router => {
 
             res.status(401).json({ message: 'cant fetch data !' });
         }
+    });
+
+
+    router.get('/', (req, res) => res.end('Welcome to marine insurance,please hit a service !'));
+
+    router.post('/login', (res, req) => {
+
+        const email = req.body.email;
+        console.log(`email from ui side`, email);
+        const password = req.body.password;
+        console.log(password, 'password from ui');
+
+
+
+        if (!email || !password || !email.trim() || !password.trim()) {
+
+            res.status(400).json({ message: 'Invalid Request !' });
+
+        } else {
+
+            login.loginUser(email, password)
+
+            .then(result => {
+
+                var token = "";
+                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789rapidqubepvtltd";
+
+                for (var i = 0; i < 25; i++)
+                    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+                console.log(token);
+
+                res.status(result.status).json({ message: result.message, token: token, email: email });
+
+            })
+
+            .catch(err => res.status(err.status).json({ message: err.message }));
+        }
+    });
+    router.post('/testmethod', function(req, res) {
+        console.log(req.body)
+        res.send({ "name": "jay", "email": "rls@gmail.com" });
     });
 
     router.post('/registerUser', (req, res) => {

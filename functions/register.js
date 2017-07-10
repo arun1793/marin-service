@@ -1,10 +1,9 @@
 'use strict';
 
-const bc_client = require('../blockchain_sample_client');
 const bcrypt = require('bcryptjs');
 var bcSdk = require('../src/blockchain/blockchain_sdk');
-var user = 'risabh.s';
-var affiliation = 'fundraiser';
+var user = 'dhananjay.p';
+var affiliation = 'marine';
 //exports is used here so that registerUser can be exposed for router and blockchainSdk file
 exports.registerUser = (id, fname, lname, phone, email, password, repassword) =>
     new Promise((resolve, reject) => {

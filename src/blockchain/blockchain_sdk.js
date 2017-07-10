@@ -4,7 +4,7 @@
 "use strict";
 
 /**
-@author: risabh sharma
+@author: dhananjay patil
 @version: 3.0
 @date: 04/02/2017
 @Description: SDK to talk to blockchain using hfc
