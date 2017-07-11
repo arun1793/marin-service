@@ -5,7 +5,7 @@ var user = "dhananjay_login";
 var bcSdk = require('../src/blockchain/blockchain_sdk.js');
 
 
-exports.loginUser = (email, password) =>
+exports.userLogin = (email, password) =>
 
     new Promise((resolve, reject) => {
         const ui_login = ({

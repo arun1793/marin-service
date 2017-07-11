@@ -8,6 +8,8 @@ const jwt = require('jsonwebtoken');
 const query = require('./functions/query');
 const login = require('./functions/login');
 const register = require('./functions/register');
+// var passport = require('passport');
+// var bcrypt = require('bcrypt-nodejs');
 
 
 
@@ -36,7 +38,7 @@ module.exports = router => {
 
     router.get('/', (req, res) => res.end('Welcome to marine insurance,please hit a service !'));
 
-    router.post('/login', (res, req) => {
+    router.post('/userLogin', (res, req) => {
 
         const email = req.body.email;
         console.log(`email from ui side`, email);
@@ -86,11 +88,11 @@ module.exports = router => {
         const phone = req.body.phone;
         console.log("data in phone:" + phone);
         const email = req.body.email;
-        console.log("data in pan:" + email);
+        console.log("data in email:" + email);
         const password = req.body.password;
-        console.log("data in aadhar:" + password);
+        console.log("data in pasword:" + password);
         const repassword = req.body.repassword;
-        console.log("data in usertype:" + repassword);
+        console.log("data in repassword:" + repassword);
 
 
 

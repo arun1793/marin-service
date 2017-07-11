@@ -93,8 +93,14 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 	} else if function == "registerUser" {
 		return t.registerUser(stub, args)
+	}
+	// } else if function == "Delete" {
+	// 	return t.Delete(stub, args)
 
-	} 
+	// } else if function == "SaveSession" {
+	// 	return t.SaveSession(stub, args)
+
+	// }
 
 	fmt.Println("invoke did not find func: " + function)
 
@@ -127,7 +133,13 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	// Handle different functions
 	if function == "readuser" { //read a variable
 		return t.readuser(stub, args)
-	} 
+	}  else if function == "login" {
+		return t.login(stub, args)
+	}
+	// } else if function == "auntheticatetoken" {
+	// 	return t.SetUserForSession(stub, args)
+
+	// }
 	fmt.Println("query did not find func: " + function)
 
 	return nil, errors.New("Received unknown function query: " + function)
@@ -224,7 +236,7 @@ func (t *SimpleChaincode) registerUser(stub shim.ChaincodeStubInterface, args []
     return nil, nil
 }
 
-func (t *SimpleChaincode) login(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+func (t *SimpleChaincode) userLogin(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var err error
 
 	if len(args) != 2 {
@@ -261,3 +273,4 @@ func (t *SimpleChaincode) login(stub shim.ChaincodeStubInterface, args []string)
 	}
 	return nil, nil
 }
+

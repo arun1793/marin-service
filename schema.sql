@@ -9,8 +9,8 @@ CREATE TABLE user_detail (
 
 CREATE TABLE user_session(
     uid int,
-    ID int NOT NULL,
-    token int NOT NULL,
+    ID int NOT NULL AUTO_INCREMENT,
+    token VARCHAR(12) NOT NULL,
     PRIMARY KEY (ID),
     FOREIGN KEY (uid) REFERENCES user_detail(uid)
 );

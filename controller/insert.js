@@ -21,7 +21,7 @@ function BD() {
     return connection;
 }
 
-router.post("/user/create", function(req, res) {
+router.post("/user/registerUser", function(req, res) {
     var objBD = BD();
     console.log(req.body.email)
     console.log(req.body.password)
@@ -43,13 +43,13 @@ router.post("/user/create", function(req, res) {
         });
     });
 });
-router.post("/user/login", cors(), function(req, res) {
+router.post("/user/userLogin", cors(), function(req, res) {
     var objBD = BD();
     objBD.connect()
     console.log(req.body);
     var email = req.body.email;
     var password = req.body.password;
-    objBD.query('SELECT * FROM user_detail WHERE password = ?', [email], function(error, results, fields) {
+    objBD.query('SELECT * FROM user_detail WHERE email = ?', [email], function(error, results, fields) {
         // console.log("results:" + JSON.stringify(results));
         //console.log("fields:" + fields);
         if (error) {
@@ -67,9 +67,19 @@ router.post("/user/login", cors(), function(req, res) {
                 // console.log("Password: " + resultLength[0].password);
                 // console.log("PasswordUI: " + password);
                 if (resultLength[0].password === password) {
+                    var token = "";
+                    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789rapidqubepvtltd";
+
+                    for (var i = 0; i < 10; i++)
+                        token += possible.charAt(Math.floor(Math.random() * possible.length));
+
+                    console.log(token);
+                    objBD.query('INSERT INTO user_session( uid, token) values ( ?, ?)', [resultLength[0].uid, token], function(error, results, fields) {});
+
                     res.send({
                         "code": 200,
-                        "success": "login sucessfull"
+                        "success": "login sucessfull",
+                        "token": token
                     });
                 } else {
                     res.send({
@@ -86,6 +96,7 @@ router.post("/user/login", cors(), function(req, res) {
         }
     });
 });
+
 
 router.get("/user/get", cors(), function(req, res) {
     var objBD = BD();

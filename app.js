@@ -34,6 +34,10 @@ var bcSdk = require('./src/blockchain/blockchain_sdk.js');
 
 var cors = require('cors');
 var http = require('http');
+var mysql = require('mysql');
+// router.use('/marine', require('./insert'));
+module.exports = router;
+
 //var router=express.Router();
 app.use(bodyParser.json());
 //app.use(express.bodyParser());
@@ -53,6 +57,16 @@ app.use('/', router);
 
 console.log(`App Runs on ${port}`);
 
+function BD() {
+    var connection = mysql.createConnection({
+        user: 'root',
+        password: 'rpqb123',
+        host: 'localhost',
+        // port: 3306,
+        database: 'marine_db'
+    });
+    return connection;
+}
 
 function runClient() {
 
@@ -60,7 +74,7 @@ function runClient() {
     logger = logHelper.getLogger('blockchain_sample_client.js');
 
     var user = 'dhananjay.p';
-    var affiliation = 'fundraiser';
+    var affiliation = 'marine';
 
     var args = process.argv.slice(2);
     if (args.length >= 1) {
