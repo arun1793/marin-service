@@ -19,18 +19,17 @@ function BD() {
 }
 var objBD = BD();
 
-exports.userLogin = (email, password) =>
+exports.userLogout = (token) =>
 
     new Promise((resolve, reject) => {
-        const Ui_login = ({
+        const Ui_logout = ({
 
-            email: email,
-            password: password
+            token: token
         });
 
         objBD.connect();
-        objBD.query('SELECT * FROM user_detail WHERE email = ?', [email], function(error, results, fields) {
 
+        objBD.query('SELECT * FROM user_session WHERE token = ?', [token], function(error, results, fields) {
             if (error) {
 
                 res.send({
@@ -43,29 +42,28 @@ exports.userLogin = (email, password) =>
 
                 if (resultLength.length > 0) {
 
-                    if (resultLength[0].password === password) {
-                        var token = "";
-                        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789rapidqubepvtltd";
+                    if (resultLength[0].token === token) {
 
-                        for (var i = 0; i < 10; i++)
-                            token += possible.charAt(Math.floor(Math.random() * possible.length));
+                        console.log(token);
+                        objBD.query('delete  from user_session where uid = ?', [resultLength[0].uid, token], function(error, results, fields) {});
+                        console.log(token);
 
-                        objBD.query('INSERT INTO user_session( uid, token) values ( ?, ?)', [resultLength[0].uid, token], function(error, results, fields) {});
-
-
+                        res.send({
+                            "code": 200,
+                            "success": "logout sucessfull"
+                        });
                     }
                 }
             }
         })
 
-
-        .then(() => resolve({ status: 200, message: 'login sucessfull', token: token }))
+        .then(() => resolve({ status: 200, message: 'logout sucessfull', token: token }))
 
         .catch(err => {
 
             if (err.code == 409) {
 
-                reject({ status: 409, message: 'User Already Registered !' });
+                reject({ status: 409, message: 'User logged out !' });
 
             } else {
                 conslole.log("error occurred" + err);

@@ -133,9 +133,8 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	// Handle different functions
 	if function == "readuser" { //read a variable
 		return t.readuser(stub, args)
-	}  else if function == "login" {
-		return t.login(stub, args)
-	}
+	}  
+
 	// } else if function == "auntheticatetoken" {
 	// 	return t.SetUserForSession(stub, args)
 
@@ -244,7 +243,7 @@ func (t *SimpleChaincode) userLogin(stub shim.ChaincodeStubInterface, args []str
 	}
 
 	//input sanitation
-	fmt.Println("- login")
+	fmt.Println("login")
 	if len(args[0]) <= 0 {
 		return nil, errors.New("1st argument must be a non-empty string")
 	}
@@ -273,4 +272,5 @@ func (t *SimpleChaincode) userLogin(stub shim.ChaincodeStubInterface, args []str
 	}
 	return nil, nil
 }
+
 

@@ -1,36 +1,52 @@
 'use strict';
+var mysql = require('mysql');
+var express = require('express');
+var router = express.Router();
+var cors = require('cors');
+var bodyParser = require('body-parser');
 
-const bcrypt = require('bcryptjs');
 var bcSdk = require('../src/blockchain/blockchain_sdk');
-var user = 'dhananjay.p';
+// var user = 'dhananjay.p';
 var affiliation = 'marine';
+
+function BD() {
+    var connection = mysql.createConnection({
+        user: 'root',
+        password: 'rpqb123',
+        host: 'localhost',
+        database: 'marine_db'
+    });
+    return connection;
+}
+var objBD = BD();
 //exports is used here so that registerUser can be exposed for router and blockchainSdk file
-exports.registerUser = (id, fname, lname, phone, email, password, repassword) =>
+exports.registerUser = (fname, lname, phone, email, password) =>
     new Promise((resolve, reject) => {
 
 
         const newUser = ({
-            id: id,
+
             fname: fname,
             lname: lname,
             phone: phone,
             email: email,
-            password: password,
-            repassword: repassword
-
+            password: password
         });
 
-        console.log("ENTERING THE Userregisteration from register.js to blockchainSdk");
+
+        objBD.connect()
+
+        objBD.query('INSERT INTO user_detail SET ?', newUser)
 
         bcSdk.UserRegisteration({ user: user, UserDetails: newUser })
 
 
 
-        .then(() => resolve({ status: 201, message: usertype }))
+        .then(() => resolve({ status: 200, message: newUser }))
 
         .catch(err => {
 
-            if (err.code == 11000) {
+            if (err.code == 409) {
 
                 reject({ status: 409, message: 'User Already Registered !' });
 

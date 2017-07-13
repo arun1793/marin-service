@@ -113,6 +113,7 @@ router.post("/user/userLogout", cors(), function(req, res) {
 
                     console.log(token);
                     objBD.query('delete  from user_session where uid = ?', [resultLength[0].uid, token], function(error, results, fields) {});
+                    console.log(token);
 
                     res.send({
                         "code": 200,

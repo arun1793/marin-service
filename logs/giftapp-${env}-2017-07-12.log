@@ -785,3 +785,50 @@
 [32m[2017-07-12 17:28:29.185] [INFO] console - [39mtHspXjbeuR
 [32m[2017-07-12 17:29:15.638] [INFO] console - [39mToken: tHspXjbeuR
 [32m[2017-07-12 17:29:15.644] [INFO] console - [39mtHspXjbeuR
+[32m[2017-07-12 19:31:25.998] [INFO] console - [39mdata in id:88816
+[32m[2017-07-12 19:31:25.999] [INFO] console - [39mdata in name:abc
+[32m[2017-07-12 19:31:25.999] [INFO] console - [39mdata in email:jdjjd
+[32m[2017-07-12 19:31:25.999] [INFO] console - [39mdata in phone:1234567890
+[32m[2017-07-12 19:31:25.999] [INFO] console - [39mdata in email:ahshs
+[32m[2017-07-12 19:31:26.000] [INFO] console - [39mdata in pasword:hsusu
+[32m[2017-07-12 19:31:26.000] [INFO] console - [39mdata in repassword:undefined
+[32m[2017-07-12 19:32:06.401] [INFO] console - [39mdata in id:63541
+[32m[2017-07-12 19:32:06.402] [INFO] console - [39mdata in name:abc
+[32m[2017-07-12 19:32:06.402] [INFO] console - [39mdata in email:jdjjd
+[32m[2017-07-12 19:32:06.402] [INFO] console - [39mdata in phone:1234567890
+[32m[2017-07-12 19:32:06.402] [INFO] console - [39mdata in email:ahshs
+[32m[2017-07-12 19:32:06.402] [INFO] console - [39mdata in pasword:hsusu
+[32m[2017-07-12 19:32:06.403] [INFO] console - [39mdata in repassword:hsusu
+[32m[2017-07-12 19:32:06.403] [INFO] console - [39mregister object[object Object]
+[32m[2017-07-12 19:32:06.404] [INFO] console - [39mENTERING THE Userregisteration from register.js to blockchainSdk
+[31m[2017-07-12 19:32:06.408] [ERROR] console - [39m(node:25468) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 2): RangeError: Invalid status code: 0
+[32m[2017-07-12 19:33:07.967] [INFO] console - [39mdata in id:35503
+[32m[2017-07-12 19:33:07.968] [INFO] console - [39mdata in name:abc
+[32m[2017-07-12 19:33:07.970] [INFO] console - [39mdata in email:jdjjd
+[32m[2017-07-12 19:33:07.970] [INFO] console - [39mdata in phone:1234567890
+[32m[2017-07-12 19:33:07.970] [INFO] console - [39mdata in email:ahshs
+[32m[2017-07-12 19:33:07.970] [INFO] console - [39mdata in pasword:hsusu
+[32m[2017-07-12 19:33:07.971] [INFO] console - [39mdata in repassword:hsusu
+[32m[2017-07-12 19:33:07.974] [INFO] console - [39mregister object[object Object]
+[32m[2017-07-12 19:33:07.974] [INFO] console - [39mENTERING THE Userregisteration from register.js to blockchainSdk
+[31m[2017-07-12 19:33:07.976] [ERROR] console - [39m(node:25468) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 4): RangeError: Invalid status code: 0
+[32m[2017-07-12 19:34:18.957] [INFO] console - [39mdata in id:57183
+[32m[2017-07-12 19:34:18.958] [INFO] console - [39mdata in name:abc
+[32m[2017-07-12 19:34:18.958] [INFO] console - [39mdata in email:jdjjd
+[32m[2017-07-12 19:34:18.958] [INFO] console - [39mdata in phone:1234567890
+[32m[2017-07-12 19:34:18.958] [INFO] console - [39mdata in email:ahshs
+[32m[2017-07-12 19:34:18.959] [INFO] console - [39mdata in pasword:hsusu
+[32m[2017-07-12 19:34:18.959] [INFO] console - [39mdata in repassword:hsusu
+[32m[2017-07-12 19:34:18.959] [INFO] console - [39mregister object[object Object]
+[32m[2017-07-12 19:34:18.959] [INFO] console - [39mENTERING THE Userregisteration from register.js to blockchainSdk
+[31m[2017-07-12 19:34:18.960] [ERROR] console - [39m(node:25468) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 6): RangeError: Invalid status code: 0
+[32m[2017-07-12 19:40:32.653] [INFO] console - [39mdata in id:1999
+[32m[2017-07-12 19:40:32.653] [INFO] console - [39mdata in name:abc
+[32m[2017-07-12 19:40:32.653] [INFO] console - [39mdata in email:jdjjd
+[32m[2017-07-12 19:40:32.654] [INFO] console - [39mdata in phone:1234567890
+[32m[2017-07-12 19:40:32.655] [INFO] console - [39mdata in email:ahshs
+[32m[2017-07-12 19:40:32.655] [INFO] console - [39mdata in pasword:hsusu
+[32m[2017-07-12 19:40:32.655] [INFO] console - [39mdata in repassword:hsusu
+[32m[2017-07-12 19:40:32.655] [INFO] console - [39mregister object[object Object]
+[32m[2017-07-12 19:40:32.656] [INFO] console - [39mENTERING THE Userregisteration from register.js to blockchainSdk
+[31m[2017-07-12 19:40:32.657] [ERROR] console - [39m(node:25468) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 8): RangeError: Invalid status code: 0

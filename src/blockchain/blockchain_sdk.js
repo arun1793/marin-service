@@ -69,12 +69,61 @@ function UserRegisteration(params) {
             return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not register user' });
         }
     });
-
-
-
 }
 
+function User_login(params) {
+    return new Promise(function(resolve, reject) {
+        var ui_login;
+        try {
+            logHelper.logEntryAndInput(logger, 'get login details try ', params);
 
+            if (!validate.isValidJson(params)) {
+                logHelper.logError(logger, 'get login details', 'Invalid params');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not fetch login details. Invalid params' })
+            }
+
+
+
+            var user = params.user;
+            console.log(user)
+            if (!validate.isValidString(user)) {
+                logHelper.logError(logger, 'UserRegisteration', 'Invalid user');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create UserRegisteration. Invalid user' })
+            }
+
+
+            var emailid = params.ui_login.email;
+            if (!validate.isValidString(emailid)) {
+                logHelper.logError(logger, 'get login details', 'Invalid user');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not fetch login details. Invalid email' })
+            }
+
+            var password = params.ui_login.password;
+            if (!validate.isValidString(password)) {
+                logHelper.logError(logger, 'login details', 'Invalid passpin');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not fetch user details. Invalid password' })
+            }
+
+            var reqSpec = getRequestSpec({ functionName: 'login', args: [emailid, password] });
+            recursiveQuery1({ requestSpec: reqSpec, user: user })
+                .then(function(resp) {
+                    logHelper.logMessage(logger, 'get login details', 'Successfully fetched login details', resp.body);
+
+                    return resolve({ statusCode: constants.SUCCESS, body: resp.body });
+                })
+
+            .catch(function(err) {
+                logHelper.logError(logger, 'user login details', 'Could not fetch user details', err);
+                return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not fetch user details' });
+
+            });
+
+        } catch (err) {
+            logHelper.logError(logger, 'getUserDetails', 'Could not fetch property ad ', err);
+            return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not fetch user details' });
+        }
+    });
+}
 /**
 Create a new Mortgage application
 **/

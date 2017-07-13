@@ -18,7 +18,7 @@ exports.query = (params) => {
 
         .catch(err => {
 
-            if (err.code == 11000) {
+            if (err.code == 409) {
 
                 return reject({ status: 409, message: 'cant fetch !' });
 
