@@ -5,7 +5,7 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 
 
-
+//database connection done here.
 function BD() {
     var connection = mysql.createConnection({
         user: 'root',
@@ -17,6 +17,7 @@ function BD() {
     return connection;
 }
 
+//registerUser link stores user input in database. 
 router.post("/user/registerUser", function(req, res) {
     var objBD = BD();
     console.log(req.body.email)
@@ -39,6 +40,8 @@ router.post("/user/registerUser", function(req, res) {
         });
     });
 });
+
+//userLogin link compares userinput with database data and gives response as token.
 router.post("/user/userLogin", cors(), function(req, res) {
     var objBD = BD();
     objBD.connect()
@@ -83,13 +86,14 @@ router.post("/user/userLogin", cors(), function(req, res) {
             } else {
                 res.send({
                     "code": 204,
-                    "success": "Email does not exits"
+                    "success": "Email does not exist"
                 });
             }
         }
     });
 });
 
+//userLogout link compares tokens taken from header with database if it matches deletes token.
 router.post("/user/userLogout", cors(), function(req, res) {
     var objBD = BD();
     objBD.connect();
@@ -130,7 +134,7 @@ router.post("/user/userLogout", cors(), function(req, res) {
 
     });
 });
-
+// get link displays  all stored data 
 router.get("/user/get", cors(), function(req, res) {
     var objBD = BD();
     objBD.connect();

@@ -24,6 +24,7 @@ type User struct {
 	LastName 	string `json:"lname"`
 	Phone    	int    `json:"phone"`
 	Email    	string `json:"email"`
+	Usertype    string `json:"usertype"`
 	Password 	string `json:"password"`
 	Repassword  string `json:"repassword"`
 }
@@ -163,7 +164,7 @@ func (t *SimpleChaincode) readuser(stub shim.ChaincodeStubInterface, args []stri
 
 	return valAsbytes, nil //send it onward
 }
-
+//registeruser - invoke function to store values in ledger. 
 func (t *SimpleChaincode) registerUser(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
     var err error
 
@@ -194,6 +195,9 @@ func (t *SimpleChaincode) registerUser(stub shim.ChaincodeStubInterface, args []
 	 if len(args[6]) <= 0 {
         return nil, errors.New("6th argument must be a non-empty string")
     }
+	if len(args[7]) <= 0 {
+        return nil, errors.New("7th argument must be a non-empty string")
+    }
 	
     
     user := User{}
@@ -210,8 +214,9 @@ func (t *SimpleChaincode) registerUser(stub shim.ChaincodeStubInterface, args []
         return nil, errors.New("Failed to get phone as cannot convert it to int")
     }
 	user.Email = args[4]
-    user.Password = args[5]
-    user.Repassword=args[6]
+	user.Usertype=args[5]
+    user.Password = args[6]
+    user.Repassword=args[7]
 
     fmt.Println("user", user)
 

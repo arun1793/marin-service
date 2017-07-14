@@ -57,6 +57,7 @@ app.use('/', router);
 
 console.log(`App Runs on ${port}`);
 
+//connection for mysql
 function BD() {
     var connection = mysql.createConnection({
         user: 'root',

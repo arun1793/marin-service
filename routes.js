@@ -1,10 +1,10 @@
-//here only routing is done and if the ro
+//here only routing is done
 
 'use strict';
-/*
-const auth = require('basic-auth');
-const jwt = require('jsonwebtoken');
-*/
+
+// const auth = require('basic-auth');
+// const jwt = require('jsonwebtoken');
+
 const query = require('./functions/query');
 const register = require('./functions/register');
 const login = require('./functions/login');
@@ -66,9 +66,9 @@ module.exports = router => {
             }]
         })
 
-    })
+    });
 
-
+    //takes data from chaincode function registerUser.
 
     router.post('/registerUser', (req, res) => {
         // const uid = Math.floor(Math.random() * (100000 - 1)) + 1;
@@ -109,6 +109,8 @@ module.exports = router => {
         }
     });
 
+    //takes data from chaincode function userLogin.
+
     router.post('/userLogin', (req, res) => {
 
         const email = req.body.email;
@@ -136,7 +138,7 @@ module.exports = router => {
             .catch(err => res.status(err.status).json({ message: err.message }));
         }
     });
-
+    //takes token from header and matches with current token and deletes it.
     router.post('/userLogout', (req, res) => {
         const token = req.get('Authorization');
         if (!token || !token.trim()) {

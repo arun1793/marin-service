@@ -87,9 +87,9 @@ function chainInit(params) {
     });
 }
 
-/**
-Load all blockchain network information from config or vcap
-**/
+
+// Load all blockchain network information from config or vcap
+
 
 function loadNetworkConfiguration(blockchainConfig) {
     return new Promise(function(resolve, reject) {
@@ -137,10 +137,10 @@ function loadNetworkConfiguration(blockchainConfig) {
 
 
 
-/**
-Configure the chain with network configuration
-Enroll the Registrar 
-**/
+
+// Configure the chain with network configuration
+// Enroll the Registrar 
+
 function configureNetwork() {
     return new Promise(function(resolve, reject) {
 
@@ -185,9 +185,9 @@ function configureNetwork() {
 
 }
 
-/**
-Setup the blockchain network
-**/
+
+// Setup the blockchain network
+
 function setupBlockchain(params) {
     return new Promise(function(resolve, reject) {
         try {
@@ -224,9 +224,9 @@ function setupBlockchain(params) {
     });
 }
 
-/**
-Returns the initialized chain
-**/
+
+// Returns the initialized chain
+
 function getChain() {
     if (!isSetupComplete) {
         throw new Error('Please complete blockchain setup before accessing chain');
@@ -235,9 +235,9 @@ function getChain() {
     return chain;
 }
 
-/**
-Enroll user with the Blockchain CA
-**/
+
+// Enroll user with the Blockchain CA
+
 function doLogin(params) {
     return new Promise(function(resolve, reject) {
 
@@ -404,9 +404,9 @@ function recursiveDeploy(params) {
     });
 }
 
-/**
- * Sample method to showcase how to subscribe and consume events emitted from blockchain
- */
+
+//   Sample method to showcase how to subscribe and consume events emitted from blockchain
+
 function setupEvents() {
     try {
         var eh = chain.getEventHub();

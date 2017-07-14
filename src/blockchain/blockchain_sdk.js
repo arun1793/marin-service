@@ -25,6 +25,7 @@ var secure = true;
 var retryLimit = 5;
 var retryInterval = 2000;
 
+//function  UserRegisteration calls sdk to store it in bluemix.
 function UserRegisteration(params) {
 
     console.log("calling SDK for registration");
@@ -354,7 +355,7 @@ function doInvoke(params) {
 
 }
 
-/*Performs register on Blockchain CA*/
+//Performs register on Blockchain CA
 function doRegister(params) {
     return new Promise(function(resolve, reject) {
 
@@ -423,9 +424,9 @@ function doRegister(params) {
 
 }
 
-/**
-Enroll user with the Blockchain CA
-**/
+
+//Enroll user with the Blockchain CA
+
 function doLogin(params) {
     return new Promise(function(resolve, reject) {
 
