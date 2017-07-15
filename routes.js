@@ -67,28 +67,44 @@ module.exports = router => {
     //fetchPolicyQuotes- routes policy quotes to function fetchpolicy
     router.get('/fetchPolicyQuotes', (req, res) => {
         res.send({
-            policyList: [{
+            Consignment_Detail: [{
                 "policyName": "Marine Insurance",
+                "Roadways Eligibility": "Available",
+                "Ship Eligibility ": "Available",
+                "Train Eligibilty": "Available",
+                "Air Eligibilty": "Not_Available",
                 "policyAmount": "1Lac",
                 "sumInsured": "50k",
-                "EMI": "6k"
+                "Annually": "6k"
             }, {
 
                 "policyName": "Blue Dart",
+                "Roadways Eligibility": "Available",
+                "Ship Eligibility ": "Available",
+                "Train Eligibilty": "Available",
+                "Air Eligibilty": "Not_Available",
                 "policyAmount": "2Lac",
                 "sumInsured": "1.25ac",
-                "EMI": "20k"
+                "Annually": "20k"
 
             }, {
                 "policyName": "DHFL",
+                "Roadways Eligibility": "Available",
+                "Ship Eligibility ": "Available",
+                "Train Eligibilty": "Available",
+                "Air Eligibilty": "Not_Available",
                 "policyAmount": "1.5Lac",
                 "sumInsured": "7.25k",
-                "EMI": "15k"
+                "Annually": "15k"
             }, {
                 "policyName": "Blue Dart",
+                "Roadways Eligibility": "Available",
+                "Ship Eligibility ": "Available",
+                "Train Eligibilty": "Available",
+                "Air Eligibilty": "Not_Available",
                 "policyAmount": "2Lac",
                 "sumInsured": "1.25ac",
-                "EMI": "20k"
+                "Annually": "20k"
 
             }]
         })
