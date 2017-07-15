@@ -5,22 +5,15 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
-	// "time"
-	//"strings"
-	//"reflect"
-
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
 var userIndexStr = "_userindex"
 
-//var campaignIndexStr= "_campaignindex"
-//var transactionIndexStr= "_transactionindex"
-
 type User struct {
-		
+	//the field tags of user are needed to store in the ledger	
 	Id       	int    `json:"id"`
-	FirstName   string `json:"fname"` //the fieldtags of user are needed to store in the ledger
+	FirstName   string `json:"fname"` 
 	LastName 	string `json:"lname"`
 	Phone    	int    `json:"phone"`
 	Email    	string `json:"email"`
@@ -49,7 +42,7 @@ func main() {
 		fmt.Printf("Error starting Simple chaincode: %s", err)
 	}
 }
-
+//Init-initializes your chaincode.
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 
 	//_, args := stub.GetFunctionAndParameters()
@@ -95,13 +88,6 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	} else if function == "registerUser" {
 		return t.registerUser(stub, args)
 	}
-	// } else if function == "Delete" {
-	// 	return t.Delete(stub, args)
-
-	// } else if function == "SaveSession" {
-	// 	return t.SaveSession(stub, args)
-
-	// }
 
 	fmt.Println("invoke did not find func: " + function)
 
@@ -199,15 +185,13 @@ func (t *SimpleChaincode) registerUser(stub shim.ChaincodeStubInterface, args []
         return nil, errors.New("7th argument must be a non-empty string")
     }
 	
-    
-    user := User{}
+	user := User{}
 
 	user.Id, err = strconv.Atoi(args[0])
 	if err != nil {
 		return nil, errors.New("Failed to get id as cannot convert it to int")
 	}
-
-    user.FirstName=args[1]
+	user.FirstName=args[1]
     user.LastName = args[2]
     user.Phone, err = strconv.Atoi(args[3])
     if err != nil {
@@ -224,13 +208,14 @@ func (t *SimpleChaincode) registerUser(stub shim.ChaincodeStubInterface, args []
     if err != nil {
         return nil, errors.New("Failed to get users")
     }
-    var allusers AllUsers
+    
+	var allusers AllUsers
     json.Unmarshal(UserAsBytes, &allusers) //un stringify it aka JSON.parse()
-
-    allusers.Userlist = append(allusers.Userlist, user)
+	allusers.Userlist = append(allusers.Userlist, user)
     fmt.Println("allusers", allusers.Userlist) //append to allusers
     fmt.Println("! appended user to allusers")
-    jsonAsBytes, _ := json.Marshal(allusers)
+    
+	jsonAsBytes, _ := json.Marshal(allusers)
     fmt.Println("json", jsonAsBytes)
     err = stub.PutState("getusers", jsonAsBytes) //rewrite allusers
     if err != nil {
@@ -257,14 +242,13 @@ func (t *SimpleChaincode) userLogin(stub shim.ChaincodeStubInterface, args []str
 	}
 
 	email := args[0]
-
 	password := args[1]
 	
-
 	UserAsBytes, err := stub.GetState("getusers")
 	if err != nil {
 		return nil, errors.New("Failed to get users")
 	}
+	
 	var allusers AllUsers
 	json.Unmarshal(UserAsBytes, &allusers) //un stringify it aka JSON.parse()
 

@@ -35,12 +35,10 @@ var bcSdk = require('./src/blockchain/blockchain_sdk.js');
 var cors = require('cors');
 var http = require('http');
 var mysql = require('mysql');
-// router.use('/marine', require('./insert'));
 module.exports = router;
 
-//var router=express.Router();
+
 app.use(bodyParser.json());
-//app.use(express.bodyParser());
 app.use(require('./controller'));
 app.use(cors());
 
@@ -63,7 +61,6 @@ function BD() {
         user: 'root',
         password: 'rpqb123',
         host: 'localhost',
-        // port: 3306,
         database: 'marine_db'
     });
     return connection;

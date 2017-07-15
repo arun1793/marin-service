@@ -11,7 +11,6 @@ function BD() {
         user: 'root',
         password: 'rpqb123',
         host: 'localhost',
-        // port: 3306,
         database: 'marine_db'
     });
     return connection;
@@ -32,7 +31,7 @@ router.post("/user/registerUser", function(req, res) {
         password: req.body.password
 
     };
-    //console.log(user.username)
+
     objBD.query('INSERT INTO user_detail SET ?', user, function(error) {
         return res.json({
             message: 'success',
@@ -49,27 +48,22 @@ router.post("/user/userLogin", cors(), function(req, res) {
     var email = req.body.email;
     var password = req.body.password;
     objBD.query('SELECT * FROM user_detail WHERE email = ?', [email], function(error, results, fields) {
-
         if (error) {
-
             res.send({
                 "code": 400,
                 "failed": "error ocurred"
             })
         } else {
-
             var resultLength = JSON.parse(JSON.stringify(results));
-
             if (resultLength.length > 0) {
-
                 if (resultLength[0].password === password) {
                     var token = "";
                     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789rapidqubepvtltd";
 
                     for (var i = 0; i < 10; i++)
                         token += possible.charAt(Math.floor(Math.random() * possible.length));
-
                     console.log(token);
+
                     objBD.query('INSERT INTO user_session( uid, token) values ( ?, ?)', [resultLength[0].uid, token], function(error, results, fields) {});
 
                     res.send({
@@ -102,23 +96,17 @@ router.post("/user/userLogout", cors(), function(req, res) {
 
     objBD.query('SELECT * FROM user_session WHERE token = ?', [token], function(error, results, fields) {
         if (error) {
-
             res.send({
                 "code": 400,
                 "failed": "error ocurred"
             })
         } else {
-
             var resultLength = JSON.parse(JSON.stringify(results));
-
             if (resultLength.length > 0) {
-
                 if (resultLength[0].token === token) {
-
                     console.log(token);
                     objBD.query('delete  from user_session where uid = ?', [resultLength[0].uid, token], function(error, results, fields) {});
                     console.log(token);
-
                     res.send({
                         "code": 200,
                         "success": "logout sucessfull"
@@ -134,6 +122,7 @@ router.post("/user/userLogout", cors(), function(req, res) {
 
     });
 });
+
 // get link displays  all stored data 
 router.get("/user/get", cors(), function(req, res) {
     var objBD = BD();
@@ -141,7 +130,6 @@ router.get("/user/get", cors(), function(req, res) {
 
     objBD.query('select * from user_detail ', function(error, vals, fields) {
         var temp = JSON.stringify(vals);
-
         var userdetail = JSON.parse(temp);
         return res.json({
             users: userdetail,

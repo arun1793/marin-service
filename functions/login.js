@@ -4,9 +4,7 @@ var express = require('express');
 var router = express.Router();
 var cors = require('cors');
 var bodyParser = require('body-parser');
-
 var user = "dhananjay_login";
-
 
 function BD() {
     var connection = mysql.createConnection({
@@ -19,6 +17,7 @@ function BD() {
 }
 var objBD = BD();
 
+//exports is used here so that registerUser can be exposed for router and blockchainSdk file as well Mysql.
 exports.userLogin = (email, password) =>
 
     new Promise((resolve, reject) => {
@@ -38,7 +37,6 @@ exports.userLogin = (email, password) =>
                     "failed": "error ocurred"
                 })
             } else {
-
                 var resultLength = JSON.parse(JSON.stringify(results));
 
                 if (resultLength.length > 0) {
@@ -51,25 +49,19 @@ exports.userLogin = (email, password) =>
                             token += possible.charAt(Math.floor(Math.random() * possible.length));
 
                         objBD.query('INSERT INTO user_session( uid, token) values ( ?, ?)', [resultLength[0].uid, token], function(error, results, fields) {});
-
-
                     }
                 }
             }
         })
 
-
-        .then(() => resolve({ status: 200, message: 'login sucessfull', token: token }))
+        .then(() => resolve({ "status": true, "message": "Login Successfull", "token": "token" }))
 
         .catch(err => {
-
             if (err.code == 409) {
-
                 reject({ status: 409, message: 'User Already Registered !' });
 
             } else {
                 conslole.log("error occurred" + err);
-
             }
         })
     });

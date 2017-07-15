@@ -53,7 +53,7 @@ function UserRegisteration(params) {
             }
             //here in function name we use the actual function name which is used for registeration i.e User_register
             //args: [UserDetails.name,UserDetails.email,UserDetails.phone,UserDetails.pan,UserDetails.aadhar,UserDetails.usertype,UserDetails.upi,UserDetails.passpin]})
-            var reqSpec = getRequestSpec({ functionName: 'registerUser', args: [UserDetails.id, UserDetails.fname, UserDetails.lname, UserDetails.phone, UserDetails.email, UserDetails.password, UserDetails.repassword] });
+            var reqSpec = getRequestSpec({ functionName: 'registerUser', args: [UserDetails.id, UserDetails.fname, UserDetails.lname, UserDetails.phone, UserDetails.email, UserDetails.password] });
             recursiveInvoke({ requestSpec: reqSpec, user: user })
                 .then(function(resp) {
                     logHelper.logMessage(logger, 'UserRegisteration', 'Successfully registered user', resp.body);
