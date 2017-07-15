@@ -58,7 +58,7 @@ exports.userLogout = (token) =>
             }
         })
 
-        .then(() => resolve({ status: 200, message: 'logout sucessfull', token: token }))
+        .then(() => resolve({ status: true, message: 'logout sucessfull', token: token }))
 
         .catch(err => {
 

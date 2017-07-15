@@ -33,7 +33,7 @@ exports.registerUser = (fname, lname, phone, email, password) =>
         objBD.query('INSERT INTO user_detail SET ?', newUser)
         bcSdk.UserRegisteration({ user: user, UserDetails: newUser })
 
-        .then(() => resolve({ status: 200, message: newUser }))
+        .then(() => resolve({ "status": true, "message": "Registration Successfull" }))
 
         .catch(err => {
 

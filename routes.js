@@ -8,7 +8,7 @@ const logout = require('./functions/logout');
 
 
 module.exports = router => {
-
+    //registerUser- routes user input to function register.
     router.post('/registerUser', (req, res) => {
         // const uid = Math.floor(Math.random() * (100000 - 1)) + 1;
         const fname = req.body.fname;
@@ -40,7 +40,7 @@ module.exports = router => {
             .catch(err => res.status(err.status).json({ message: err.message }));
         }
     });
-
+    //userLogin- routes user input to function login
     router.post('/userLogin', (req, res) => {
 
         const email = req.body.email;
@@ -64,6 +64,7 @@ module.exports = router => {
         }
     });
 
+    //fetchPolicyQuotes- routes policy quotes to function fetchpolicy
     router.get('/fetchPolicyQuotes', (req, res) => {
         res.send({
             policyList: [{
@@ -93,7 +94,7 @@ module.exports = router => {
         })
 
     });
-    //takes token from header and matches with current token and deletes it.
+    //userLogout- routes token  to function logout 
     router.post('/userLogout', (req, res) => {
         const token = req.get('Authorization');
         if (!token || !token.trim()) {
