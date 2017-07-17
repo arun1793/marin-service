@@ -19,18 +19,20 @@ module.exports = router => {
         console.log("data in phone:" + phone);
         const email = req.body.email;
         console.log("data in email:" + email);
+        const usertype = req.body.usertype;
+        console.log("data in usertype:" + usertype);
         const password = req.body.password;
         console.log("data in pasword:" + password);
 
-        if (!fname || !lname || !phone || !email || !password || !fname.trim() || !lname.trim() || !phone.trim() ||
-            !email.trim() || !password.trim()) {
+        if (!fname || !lname || !phone || !email || !usertype || !password || !fname.trim() || !lname.trim() || !phone.trim() ||
+            !email.trim() || !usertype.trim() || !password.trim()) {
             //the if statement checks if any of the above paramenters are null or not..if is the it sends an error report.
             res.status(400).json({ message: 'Invalid Request !' });
 
         } else {
             console.log("register object" + register)
 
-            register.registerUser(fname, lname, phone, email, password)
+            register.registerUser(fname, lname, phone, email, usertype, password)
 
             .then(result => {
 

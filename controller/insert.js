@@ -21,6 +21,7 @@ router.post("/user/registerUser", function(req, res) {
     var objBD = BD();
     console.log(req.body.email)
     console.log(req.body.password)
+    console.log(req.body.usertype)
 
     objBD.connect();
     var user = {
@@ -28,6 +29,7 @@ router.post("/user/registerUser", function(req, res) {
         lname: req.body.lname,
         phone: req.body.phone,
         email: req.body.email,
+        usertype: req.body.usertype,
         password: req.body.password
 
     };
