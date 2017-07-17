@@ -25,6 +25,63 @@ type User struct {
 type AllUsers struct {
 	Userlist []User `json:"userlist"`
 }
+
+type CifTransport struct{
+	//the field tags of user are needed to store in the ledger	
+
+	Id	  			   int     `json:"id"`
+	ConsignmentWeight  int 	   `json:"consignmentweight"`
+	ConsignmentValue   int	   `json:"consignmentvalue"`
+	TransportMode	   string  `json:"transportmode"`
+
+}
+
+type AllAgreement struct{
+	Querylist []CifTransport `json:"querylist"`
+}
+
+type CisTransport struct{
+	//the field tags of user are needed to store in the ledger	
+
+	Id	  			   int     `json:"id"`
+	ConsignmentWeight  int 	   `json:"consignmentweight"`
+	ConsignmentValue   int	   `json:"consignmentvalue"`
+	TransportMode	   string  `json:"transportmode"`
+
+}
+
+type CisAgreement struct{
+	Policylist []CisTransport `json:"policylist"`
+}
+
+type CipTransport struct{
+	//the field tags of user are needed to store in the ledger	
+
+	Id	  			   int     `json:"id"`
+	ConsignmentWeight  int 	   `json:"consignmentweight"`
+	ConsignmentValue   int	   `json:"consignmentvalue"`
+	TransportMode	   string  `json:"transportmode"`
+
+}
+
+type CipAgreement struct{
+	Ciplist []CipTransport `json:"ciplist"`
+}
+
+type FobTransport struct{
+	//the field tags of user are needed to store in the ledger	
+
+	Id	  			   int     `json:"id"`
+	ConsignmentWeight  int 	   `json:"consignmentweight"`
+	ConsignmentValue   int	   `json:"consignmentvalue"`
+	TransportMode	   string  `json:"transportmode"`
+
+}
+
+type FobAgreement struct{
+	Foblist []FobTransport `json:"foblist"`
+}
+
 type SessionAunthentication struct {
 	Token string `json:"token"`
 	Email string `json:"email"`
@@ -84,9 +141,16 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return t.Init(stub, "init", args)
 	} else if function == "write" {
 		return t.write(stub, args)
-
 	} else if function == "registerUser" {
 		return t.registerUser(stub, args)
+	}else if function =="cifPolicy"{
+		return t.cifPolicy(stub,args)
+	}else if function =="cisPolicy"{
+		return t.cisPolicy(stub,args)
+	}else if function=="cipPolicy"{
+		return t.cipPolicy(stub,args)
+	}else if function=="fobPolicy"{
+		return t.fobPolicy(stub,args)
 	}
 
 	fmt.Println("invoke did not find func: " + function)
@@ -261,5 +325,255 @@ func (t *SimpleChaincode) userLogin(stub shim.ChaincodeStubInterface, args []str
 	}
 	return nil, nil
 }
+//cifPolicy-invoke function to store values in ledger.
+func (t *SimpleChaincode) cifPolicy(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+    var err error
 
+    if len(args) != 4 {
+        return nil, errors.New("Incorrect number of arguments. Expecting 4")
+    }
 
+    //input sanitation
+    fmt.Println("- start filling detail")
+    if len(args[0]) <= 0 {
+        return nil, errors.New("1st argument must be a non-empty string")
+    }
+    if len(args[1]) <= 0 {
+        return nil, errors.New("2nd argument must be a non-empty string")
+    }
+    if len(args[2]) <= 0 {
+        return nil, errors.New("3rd argument must be a non-empty string")
+    }
+    if len(args[3]) <= 0 {
+        return nil, errors.New("4th argument must be a non-empty string")
+    }
+    
+	
+	ciftransport := CifTransport{}
+
+	ciftransport.Id, err = strconv.Atoi(args[0])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+
+	ciftransport.ConsignmentWeight, err = strconv.Atoi(args[1])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+
+	ciftransport.ConsignmentValue, err = strconv.Atoi(args[2])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+    ciftransport.TransportMode=args[3]
+
+    fmt.Println("ciftransport", ciftransport)
+
+    CifTransportAsBytes, err := stub.GetState("get")
+    if err != nil {
+        return nil, errors.New("Failed to get agreement")
+    }
+    var allagreement AllAgreement
+    json.Unmarshal(CifTransportAsBytes, &allagreement) //un stringify it aka JSON.parse()
+
+    allagreement.Querylist = append(allagreement.Querylist, ciftransport)
+    fmt.Println("allagreement",  allagreement.Querylist) //append to allusers
+    fmt.Println("! appended agreement to allagreement")
+    jsonAsBytes, _ := json.Marshal(allagreement)
+    fmt.Println("json", jsonAsBytes)
+    err = stub.PutState("get", jsonAsBytes) //rewrite allusers
+    if err != nil {
+        return nil, err
+    }
+    fmt.Println("- end of the agreement")
+    return nil, nil
+}
+//cisPolicy-invoke function to store values in ledger.
+func (t *SimpleChaincode) cisPolicy(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+    var err error
+
+    if len(args) != 4 {
+        return nil, errors.New("Incorrect number of arguments. Expecting 4")
+    }
+
+    //input sanitation
+    fmt.Println("- start filling detail")
+    if len(args[0]) <= 0 {
+        return nil, errors.New("1st argument must be a non-empty string")
+    }
+    if len(args[1]) <= 0 {
+        return nil, errors.New("2nd argument must be a non-empty string")
+    }
+    if len(args[2]) <= 0 {
+        return nil, errors.New("3rd argument must be a non-empty string")
+    }
+    if len(args[3]) <= 0 {
+        return nil, errors.New("4th argument must be a non-empty string")
+    }
+    
+	
+	cistransport := CisTransport{}
+
+	cistransport.Id, err = strconv.Atoi(args[0])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+
+	cistransport.ConsignmentWeight, err = strconv.Atoi(args[1])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+
+	cistransport.ConsignmentValue, err = strconv.Atoi(args[2])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+    cistransport.TransportMode=args[3]
+
+    fmt.Println("cistransport", cistransport)
+
+    CisTransportAsBytes, err := stub.GetState("getcis")
+    if err != nil {
+        return nil, errors.New("Failed to get agreement")
+    }
+    var cisagreement CisAgreement
+    json.Unmarshal(CisTransportAsBytes, &cisagreement) //un stringify it aka JSON.parse()
+
+    cisagreement.Policylist = append(cisagreement.Policylist, cistransport)
+    fmt.Println("cisagreement",  cisagreement.Policylist) //append to allusers
+    fmt.Println("! appended agreement to allagreement")
+    jsonAsBytes, _ := json.Marshal(cisagreement)
+    fmt.Println("json", jsonAsBytes)
+    err = stub.PutState("getcis", jsonAsBytes) //rewrite allusers
+    if err != nil {
+        return nil, err
+    }
+    fmt.Println("- end of the agreement")
+    return nil, nil
+}
+//cipPolicy-invoke function to store values in ledger.
+func (t *SimpleChaincode) cipPolicy(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+    var err error
+
+    if len(args) != 4 {
+        return nil, errors.New("Incorrect number of arguments. Expecting 4")
+    }
+
+    //input sanitation
+    fmt.Println("- start filling detail")
+    if len(args[0]) <= 0 {
+        return nil, errors.New("1st argument must be a non-empty string")
+    }
+    if len(args[1]) <= 0 {
+        return nil, errors.New("2nd argument must be a non-empty string")
+    }
+    if len(args[2]) <= 0 {
+        return nil, errors.New("3rd argument must be a non-empty string")
+    }
+    if len(args[3]) <= 0 {
+        return nil, errors.New("4th argument must be a non-empty string")
+    }
+    
+	
+	ciptransport := CipTransport{}
+
+	ciptransport.Id, err = strconv.Atoi(args[0])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+
+	ciptransport.ConsignmentWeight, err = strconv.Atoi(args[1])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+
+	ciptransport.ConsignmentValue, err = strconv.Atoi(args[2])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+    ciptransport.TransportMode=args[3]
+
+    fmt.Println("ciptransport", ciptransport)
+
+    CipTransportAsBytes, err := stub.GetState("getcip")
+    if err != nil {
+        return nil, errors.New("Failed to get agreement")
+    }
+    var cipagreement CipAgreement
+    json.Unmarshal(CipTransportAsBytes, &cipagreement) //un stringify it aka JSON.parse()
+
+    cipagreement.Ciplist = append(cipagreement.Ciplist, ciptransport)
+    fmt.Println("cipagreement",  cipagreement.Ciplist) //append to allusers
+    fmt.Println("! appended agreement to allagreement")
+    jsonAsBytes, _ := json.Marshal(cipagreement)
+    fmt.Println("json", jsonAsBytes)
+    err = stub.PutState("getcip", jsonAsBytes) //rewrite allusers
+    if err != nil {
+        return nil, err
+    }
+    fmt.Println("- end of the agreement")
+    return nil, nil
+}
+//fobPolicy-invoke function to store values in ledger.
+func (t *SimpleChaincode) fobPolicy(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+    var err error
+
+    if len(args) != 4 {
+        return nil, errors.New("Incorrect number of arguments. Expecting 4")
+    }
+
+    //input sanitation
+    fmt.Println("- start filling detail")
+    if len(args[0]) <= 0 {
+        return nil, errors.New("1st argument must be a non-empty string")
+    }
+    if len(args[1]) <= 0 {
+        return nil, errors.New("2nd argument must be a non-empty string")
+    }
+    if len(args[2]) <= 0 {
+        return nil, errors.New("3rd argument must be a non-empty string")
+    }
+    if len(args[3]) <= 0 {
+        return nil, errors.New("4th argument must be a non-empty string")
+    }
+    
+	
+	fobtransport := FobTransport{}
+
+	fobtransport.Id, err = strconv.Atoi(args[0])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+
+	fobtransport.ConsignmentWeight, err = strconv.Atoi(args[1])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+
+	fobtransport.ConsignmentValue, err = strconv.Atoi(args[2])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+    fobtransport.TransportMode=args[3]
+
+    fmt.Println("fobtransport", fobtransport)
+
+   	FobTransportAsBytes, err := stub.GetState("getfob")
+    if err != nil {
+        return nil, errors.New("Failed to get agreement")
+    }
+    var fobagreement FobAgreement
+    json.Unmarshal(FobTransportAsBytes, &fobagreement) //un stringify it aka JSON.parse()
+
+    fobagreement.Foblist = append(fobagreement.Foblist, fobtransport)
+    fmt.Println("fobagreement",  fobagreement.Foblist) //append to allusers
+    fmt.Println("! appended agreement to allagreement")
+    jsonAsBytes, _ := json.Marshal(fobagreement)
+    fmt.Println("json", jsonAsBytes)
+    err = stub.PutState("getfob", jsonAsBytes) //rewrite allusers
+    if err != nil {
+        return nil, err
+    }
+    fmt.Println("- end of the agreement")
+    return nil, nil
+}
