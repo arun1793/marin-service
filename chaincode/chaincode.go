@@ -348,7 +348,6 @@ func (t *SimpleChaincode) cifPolicy(stub shim.ChaincodeStubInterface, args []str
         return nil, errors.New("4th argument must be a non-empty string")
     }
     
-	
 	ciftransport := CifTransport{}
 
 	ciftransport.Id, err = strconv.Atoi(args[0])
@@ -411,7 +410,6 @@ func (t *SimpleChaincode) cisPolicy(stub shim.ChaincodeStubInterface, args []str
         return nil, errors.New("4th argument must be a non-empty string")
     }
     
-	
 	cistransport := CisTransport{}
 
 	cistransport.Id, err = strconv.Atoi(args[0])
@@ -474,7 +472,6 @@ func (t *SimpleChaincode) cipPolicy(stub shim.ChaincodeStubInterface, args []str
         return nil, errors.New("4th argument must be a non-empty string")
     }
     
-	
 	ciptransport := CipTransport{}
 
 	ciptransport.Id, err = strconv.Atoi(args[0])
@@ -537,7 +534,6 @@ func (t *SimpleChaincode) fobPolicy(stub shim.ChaincodeStubInterface, args []str
         return nil, errors.New("4th argument must be a non-empty string")
     }
     
-	
 	fobtransport := FobTransport{}
 
 	fobtransport.Id, err = strconv.Atoi(args[0])

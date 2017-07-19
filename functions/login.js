@@ -48,6 +48,14 @@ exports.userLogin = (email, password) =>
                         for (var i = 0; i < 10; i++)
                             token += possible.charAt(Math.floor(Math.random() * possible.length));
 
+                        var expires = new Date();
+                        expires.setHours(expires.getHours() + 6);
+
+                        Ui_login.resetToken = {
+                            token: token,
+                            expires: expires
+                        };
+
                         objBD.query('INSERT INTO user_session( uid, token) values ( ?, ?)', [resultLength[0].uid, token], function(error, results, fields) {});
                     }
                 }

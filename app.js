@@ -11,6 +11,7 @@
 'use strict';
 
 const express = require('express');
+var nodemailer = require("nodemailer");
 const app = express();
 const bodyParser = require('body-parser');
 const loggerpac = require('morgan');
@@ -37,7 +38,6 @@ var http = require('http');
 var mysql = require('mysql');
 module.exports = router;
 
-
 app.use(bodyParser.json());
 app.use(require('./controller'));
 app.use(cors());
@@ -52,9 +52,42 @@ app.use(loggerpac('dev'));
 require('./routes')(router);
 app.use('/', router);
 
-
+// app.use(bodyParser.urlencoded({ extended: true }));
 console.log(`App Runs on ${port}`);
 
+// var smtpTransport = nodemailer.createTransport({
+//     service: "ipage",
+//     auth: {
+//         port: "587",
+//         user: "dhananjay.patil@rapidqube.com",
+//         pass: "Rpqb@12345"
+//     }
+// });
+// var rand, mailOptions, host, link;
+
+// app.get('/', function(req, res) {
+//     res.sendfile('index.html');
+// });
+// app.get('/send', function(req, res) {
+//     rand = Math.floor((Math.random() * 100) + 54);
+//     host = req.get('smtp.ipage.com');
+//     link = req.get('host') + "/verify?id=" + rand;
+//     mailOptions = {
+//         to: "dhananjay.patil@rapidqube.com",
+//         subject: "Please confirm your Email account",
+//         html: "Hello" + link + "verify mail"
+//     }
+//     console.log(mailOptions);
+//     smtpTransport.sendMail(mailOptions, function(error, response) {
+//         if (error) {
+//             console.log(error);
+//             res.end("error");
+//         } else {
+//             console.log("Message sent: " + response.message);
+//             res.end("sent");
+//         }
+//     });
+// });
 //connection for mysql
 function BD() {
     var connection = mysql.createConnection({
@@ -97,13 +130,11 @@ function runClient() {
             app.listen(port);
             return ("hello")
         })
+        .catch(function(err) {
+            console.log("runClient", "Error Occurred", err);
 
 
-    .catch(function(err) {
-        console.log("runClient", "Error Occurred", err);
-
-
-    })
+        })
 };
 
 function setup() {
@@ -121,7 +152,6 @@ function setup() {
                 logHelper.logError(logger, 'Could not initialize datastore', result);
                 return reject({ statusCode: 500, body: '' });
             }
-
             //Setup Cloudant based KeyValueStore
             var cloudantSetupDone = false;
             getCloudantKeyValStore(datastore, config.databases[constants.APP_MASTER_DB])

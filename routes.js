@@ -65,7 +65,6 @@ module.exports = router => {
             .catch(err => res.status(err.status).json({ message: err.message }));
         }
     });
-
     //fetchPolicyQuotes- routes policy quotes to function fetchpolicy
     router.get('/fetchPolicyQuotes', (req, res) => {
         res.send({
@@ -111,6 +110,129 @@ module.exports = router => {
             }]
         })
 
+    });
+    //cifPolicy- routes user input to function cifPolicy
+    router.post('/cifPolicy', (req, res) => {
+        const id = req.body.id;
+        console.log(`Id from ui side`, id);
+        const consignmentweight = req.body.consignmentweight;
+        console.log(`consignmentweight from ui side`, consignmentweight);
+        const consignmentvalue = req.body.consignmentvalue;
+        console.log(`consignmentvalue from ui side`, consignmentvalue);
+        const transportmode = req.body.transportmode;
+        console.log(`transportmode from ui side`, transportmode);
+        if (!id || !consignmentweight || !consignmentvalue || !transportmode || !id.trim() || !consignmentweight.trim() || !consignmentvalue.trim() || !transportmode.trim()) {
+
+            res.status(400).json({ message: 'Invalid Request !' });
+        } else {
+
+            cif.cifPolicy(id, consignmentweight, consignmentvalue, transportmode)
+
+            .then(result => {
+                res.status(result.status).json({ message: result.message, transportmode: transportmode });
+            })
+
+            .catch(err => res.status(err.status).json({ message: err.message }));
+        }
+
+    });
+    //cisPolicy- routes user input to function cisPolicy
+    router.post('/cisPolicy', (req, res) => {
+        const id = req.body.id;
+        console.log(`Id from ui side`, id);
+        const consignmentweight = req.body.consignmentweight;
+        console.log(`consignmentweight from ui side`, consignmentweight);
+        const consignmentvalue = req.body.consignmentvalue;
+        console.log(`consignmentvalue from ui side`, consignmentvalue);
+        const transportmode = req.body.transportmode;
+        console.log(`transportmode from ui side`, transportmode);
+        if (!id || !consignmentweight || !consignmentvalue || !transportmode || !id.trim() || !consignmentweight.trim() || !consignmentvalue.trim() || !transportmode.trim()) {
+
+            res.status(400).json({ message: 'Invalid Request !' });
+        } else {
+
+            cif.cisPolicy(id, consignmentweight, consignmentvalue, transportmode)
+
+            .then(result => {
+                res.status(result.status).json({ message: result.message, transportmode: transportmode });
+            })
+
+            .catch(err => res.status(err.status).json({ message: err.message }));
+        }
+
+    });
+    //cipPolicy- routes user input to function cipPolicy
+    router.post('/cipPolicy', (req, res) => {
+        const id = req.body.id;
+        console.log(`Id from ui side`, id);
+        const consignmentweight = req.body.consignmentweight;
+        console.log(`consignmentweight from ui side`, consignmentweight);
+        const consignmentvalue = req.body.consignmentvalue;
+        console.log(`consignmentvalue from ui side`, consignmentvalue);
+        const transportmode = req.body.transportmode;
+        console.log(`transportmode from ui side`, transportmode);
+        if (!id || !consignmentweight || !consignmentvalue || !transportmode || !id.trim() || !consignmentweight.trim() || !consignmentvalue.trim() || !transportmode.trim()) {
+
+            res.status(400).json({ message: 'Invalid Request !' });
+        } else {
+
+            cif.cipPolicy(id, consignmentweight, consignmentvalue, transportmode)
+
+            .then(result => {
+                res.status(result.status).json({ message: result.message, transportmode: transportmode });
+            })
+
+            .catch(err => res.status(err.status).json({ message: err.message }));
+        }
+
+    });
+    //fobPolicy- routes user input to function fobPolicy
+    router.post('/fobPolicy', (req, res) => {
+        const id = req.body.id;
+        console.log(`Id from ui side`, id);
+        const consignmentweight = req.body.consignmentweight;
+        console.log(`consignmentweight from ui side`, consignmentweight);
+        const consignmentvalue = req.body.consignmentvalue;
+        console.log(`consignmentvalue from ui side`, consignmentvalue);
+        const transportmode = req.body.transportmode;
+        console.log(`transportmode from ui side`, transportmode);
+        if (!id || !consignmentweight || !consignmentvalue || !transportmode || !id.trim() || !consignmentweight.trim() || !consignmentvalue.trim() || !transportmode.trim()) {
+
+            res.status(400).json({ message: 'Invalid Request !' });
+        } else {
+
+            cif.fobPolicy(id, consignmentweight, consignmentvalue, transportmode)
+
+            .then(result => {
+                res.status(result.status).json({ message: result.message, transportmode: transportmode });
+            })
+
+            .catch(err => res.status(err.status).json({ message: err.message }));
+        }
+
+    });
+    //issuedpolicy- routes users issued policies 
+    router.get('/fetchissuedpolicy', (req, res) => {
+        res.send({
+            IssuedPolicy_Details: [{
+                "policyName": "ICICI Lombard",
+                "BookedOn": "21 may 2017",
+                "Issued": "12000-INR"
+            }, {
+
+                "policyName": "Blue Dart",
+                "BookedOn": "2 june 2017",
+                "Issued": "14500-INR"
+            }, {
+                "policyName": "New India Insurence",
+                "BookedOn": "21 jan 2017",
+                "Issued": "25000-INR"
+            }, {
+                "policyName": "Oriental",
+                "BookedOn": "24 feb 2017",
+                "Issued": "25340-INR"
+            }]
+        })
     });
     //userLogout- routes token  to function logout 
     router.post('/userLogout', (req, res) => {
