@@ -6,6 +6,12 @@ const register = require('./functions/register');
 const login = require('./functions/login');
 const logout = require('./functions/logout');
 
+// connection for nexmo free sms service
+const Nexmo = require('nexmo');
+const nexmo = new Nexmo({
+    apiKey: '6a64ffbc',
+    apiSecret: '38c40b9428f981e1'
+});
 
 module.exports = router => {
     //registerUser- routes user input to function register.
@@ -42,6 +48,15 @@ module.exports = router => {
             .catch(err => res.status(err.status).json({ message: err.message }));
         }
     });
+    // otp- generates otp
+    router.post('/otp', (req, res) => {
+        // Send SMS
+        nexmo.message.sendSms(
+
+            req.body.fromnumber, req.body.toNumber, req.body.message, { type: 'unicode' },
+            (err, responseData) => { if (responseData) { console.log(responseData) } }
+        );
+    });
     //userLogin- routes user input to function login
     router.post('/userLogin', (req, res) => {
 
@@ -67,42 +82,46 @@ module.exports = router => {
     });
     //fetchPolicyQuotes- routes policy quotes to function fetchpolicy
     router.get('/fetchPolicyQuotes', (req, res) => {
+
         res.send({
             Consignment_Detail: [{
                 "policyName": "Marine Insurance",
-                "Roadways Eligibility": "Available",
-                "Ship Eligibility ": "Available",
-                "Train Eligibilty": "Available",
-                "Air Eligibilty": "Not_Available",
+
+                "Roadways_Eligibility": "Available",
+                "Ship_Eligibility ": "Available",
+                "Train_Eligibilty": "Available",
                 "policyAmount": "1Lac",
                 "sumInsured": "50k",
                 "Annually": "6k"
             }, {
 
                 "policyName": "Blue Dart",
-                "Roadways Eligibility": "Available",
-                "Ship Eligibility ": "Available",
-                "Train Eligibilty": "Available",
-                "Air Eligibilty": "Not_Available",
+                Transport: [{
+                    "Roadways_Eligibility": "Available",
+                    "Ship_Eligibility ": "Available",
+                    "Air_Eligibilty": "Available"
+                }],
                 "policyAmount": "2Lac",
                 "sumInsured": "1.25ac",
                 "Annually": "20k"
 
             }, {
                 "policyName": "DHFL",
-                "Roadways Eligibility": "Available",
-                "Ship Eligibility ": "Available",
-                "Train Eligibilty": "Available",
-                "Air Eligibilty": "Not_Available",
+                Transport: [{
+                    "Roadways_Eligibility": "Available",
+                    "Train_Eligibilty": "Available",
+                    "Air_Eligibilty": "Available"
+                }],
                 "policyAmount": "1.5Lac",
                 "sumInsured": "7.25k",
                 "Annually": "15k"
             }, {
                 "policyName": "Blue Dart",
-                "Roadways Eligibility": "Available",
-                "Ship Eligibility ": "Available",
-                "Train Eligibilty": "Available",
-                "Air Eligibilty": "Not_Available",
+                Transport: [{
+                    "Roadways_Eligibility": "Available",
+                    "Ship_Eligibility ": "Available",
+                    "Train_Eligibilty": "Available"
+                }],
                 "policyAmount": "2Lac",
                 "sumInsured": "1.25ac",
                 "Annually": "20k"

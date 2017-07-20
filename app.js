@@ -11,7 +11,7 @@
 'use strict';
 
 const express = require('express');
-var nodemailer = require("nodemailer");
+var nodemailer = require('nodemailer');
 const app = express();
 const bodyParser = require('body-parser');
 const loggerpac = require('morgan');
@@ -21,6 +21,12 @@ var logger;
 var Promise = require('bluebird');
 var log4js = require('log4js');
 var config = require('config');
+//nexmo sms
+const Nexmo = require('nexmo');
+const nexmo = new Nexmo({
+    apiKey: '6a64ffbc',
+    apiSecret: '38c40b9428f981e1'
+});
 
 var blockchainNetwork = require('./src/blockchain/blockchain_network.js');
 var datastore = require('./src/database/datastore.js');
@@ -34,7 +40,7 @@ var CloudantKeyValueStore = require('./src/database/model/kv_store_model.js');
 var bcSdk = require('./src/blockchain/blockchain_sdk.js');
 
 var cors = require('cors');
-var http = require('http');
+var https = require('https');
 var mysql = require('mysql');
 module.exports = router;
 
@@ -52,13 +58,14 @@ app.use(loggerpac('dev'));
 require('./routes')(router);
 app.use('/', router);
 
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 console.log(`App Runs on ${port}`);
 
 // var smtpTransport = nodemailer.createTransport({
-//     service: "ipage",
+//     service: "smtp.ipage.com",
+//     port: "587",
+//     secure: false,
 //     auth: {
-//         port: "587",
 //         user: "dhananjay.patil@rapidqube.com",
 //         pass: "Rpqb@12345"
 //     }
@@ -70,12 +77,15 @@ console.log(`App Runs on ${port}`);
 // });
 // app.get('/send', function(req, res) {
 //     rand = Math.floor((Math.random() * 100) + 54);
-//     host = req.get('smtp.ipage.com');
-//     link = req.get('host') + "/verify?id=" + rand;
+//     host = 'smtp.ipage.com';
+//     link = host + "/verify?id=" + rand;
 //     mailOptions = {
-//         to: "dhananjay.patil@rapidqube.com",
-//         subject: "Please confirm your Email account",
-//         html: "Hello" + link + "verify mail"
+//         transport: smtpTransport,
+//         from: '"dhananjay.patil@rapidqube.com"',
+//         to: 'dhananjay.patil@rapidqube.com',
+//         subject: 'Please confirm your Email account',
+//         //html: "Hello" + link + "verify mail"
+//         html: '<b>Test Messge</b>'
 //     }
 //     console.log(mailOptions);
 //     smtpTransport.sendMail(mailOptions, function(error, response) {
@@ -88,6 +98,7 @@ console.log(`App Runs on ${port}`);
 //         }
 //     });
 // });
+
 //connection for mysql
 function BD() {
     var connection = mysql.createConnection({

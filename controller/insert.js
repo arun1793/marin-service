@@ -36,8 +36,8 @@ router.post("/user/registerUser", function(req, res) {
 
     objBD.query('INSERT INTO user_detail SET ?', user, function(error) {
         return res.json({
-            message: 'success',
-            error: false
+            "status": true,
+            "message": "Registration Successfull"
         });
     });
 });
@@ -69,20 +69,22 @@ router.post("/user/userLogin", cors(), function(req, res) {
                     objBD.query('INSERT INTO user_session( uid, token) values ( ?, ?)', [resultLength[0].uid, token], function(error, results, fields) {});
 
                     res.send({
-                        "code": 200,
-                        "success": "login sucessfull",
-                        "token": token
+                        "status": true,
+                        "token": token,
+                        "message": "Login Successfull"
                     });
                 } else {
                     res.send({
-                        "code": 204,
-                        "success": "Email and password does not match"
+                        "status": false,
+                        "token": "null",
+                        "message": "Email and password does not match"
                     });
                 }
             } else {
                 res.send({
-                    "code": 204,
-                    "success": "Email does not exist"
+                    "status": false,
+                    "token": "null",
+                    "message": "Email does not exist"
                 });
             }
         }
@@ -110,13 +112,13 @@ router.post("/user/userLogout", cors(), function(req, res) {
                     objBD.query('delete  from user_session where uid = ?', [resultLength[0].uid, token], function(error, results, fields) {});
                     console.log(token);
                     res.send({
-                        "code": 200,
-                        "success": "logout sucessfull"
+                        "status": true,
+                        "message": "Logout Successfull"
                     });
                 } else {
                     res.send({
-                        "code": 204,
-                        "success": "already ended session"
+                        "status": false,
+                        "message": "already ended session"
                     });
                 }
             }
