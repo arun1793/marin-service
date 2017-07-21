@@ -5,14 +5,23 @@
 const register = require('./functions/register');
 const login = require('./functions/login');
 const logout = require('./functions/logout');
-
+const nodemailer = require('nodemailer');
 // connection for nexmo free sms service
 const Nexmo = require('nexmo');
 const nexmo = new Nexmo({
     apiKey: '6a64ffbc',
     apiSecret: '38c40b9428f981e1'
 });
-
+// connection to email API 
+var transporter = nodemailer.createTransport("SMTP", {
+    host: 'smtp.ipage.com',
+    port: 587,
+    secure: true,
+    auth: {
+        user: "dhananjay.patil@rapidqube.com",
+        pass: "Rpqb@12345"
+    }
+});
 module.exports = router => {
     //registerUser- routes user input to function register.
     router.post('/registerUser', (req, res) => {
@@ -48,14 +57,44 @@ module.exports = router => {
             .catch(err => res.status(err.status).json({ message: err.message }));
         }
     });
-    // otp- generates otp
+    // otp- generates sms otp
     router.post('/otp', (req, res) => {
-        // Send SMS
+        // Sends SMS
         nexmo.message.sendSms(
 
             req.body.fromnumber, req.body.toNumber, req.body.message, { type: 'unicode' },
             (err, responseData) => { if (responseData) { console.log(responseData) } }
         );
+        res.send({
+            "status": true,
+            "message": "Message sent wait a moment"
+        });
+    });
+    // sendmail-sends email of verification after registration
+    router.post('/sendmail', function(req, res) {
+        // rand = Math.floor((Math.random() * 100) + 54);
+        // link = host + "/verify?id=" 
+        var mailOptions = {
+            transport: transporter,
+            from: req.body.from, //'"Dj✔"<dhananjay.patil@rapidqube.com>',
+            to: req.body.to, //'vikram.viswanathan@rapidqube.com',
+            subject: req.body.subject, //'Please confirm your Email account',
+            text: req.body.text, //'Hello',
+            html: '<b>Test Messge</b>'
+        }
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+
+            }
+            console.log("Message sent: " + info.messageId);
+            res.send({
+                "status": true,
+                "message": "mail sent wait a moment"
+            });
+
+        });
     });
     //userLogin- routes user input to function login
     router.post('/userLogin', (req, res) => {
@@ -86,7 +125,6 @@ module.exports = router => {
         res.send({
             Consignment_Detail: [{
                 "policyName": "Marine Insurance",
-
                 "Roadways_Eligibility": "Available",
                 "Ship_Eligibility ": "Available",
                 "Train_Eligibilty": "Available",
@@ -94,41 +132,33 @@ module.exports = router => {
                 "sumInsured": "50k",
                 "Annually": "6k"
             }, {
-
                 "policyName": "Blue Dart",
-                Transport: [{
-                    "Roadways_Eligibility": "Available",
-                    "Ship_Eligibility ": "Available",
-                    "Air_Eligibilty": "Available"
-                }],
+                "Roadways_Eligibility": "Available",
+                "Ship_Eligibility ": "Available",
+                "Air_Eligibilty": "Available",
                 "policyAmount": "2Lac",
                 "sumInsured": "1.25ac",
                 "Annually": "20k"
 
             }, {
                 "policyName": "DHFL",
-                Transport: [{
-                    "Roadways_Eligibility": "Available",
-                    "Train_Eligibilty": "Available",
-                    "Air_Eligibilty": "Available"
-                }],
+                "Roadways_Eligibility": "Available",
+                "Train_Eligibilty": "Available",
+                "Air_Eligibilty": "Available",
                 "policyAmount": "1.5Lac",
                 "sumInsured": "7.25k",
                 "Annually": "15k"
             }, {
                 "policyName": "Blue Dart",
-                Transport: [{
-                    "Roadways_Eligibility": "Available",
-                    "Ship_Eligibility ": "Available",
-                    "Train_Eligibilty": "Available"
-                }],
+                "Roadways_Eligibility": "Available",
+                "Ship_Eligibility ": "Available",
+                "Train_Eligibilty": "Available",
                 "policyAmount": "2Lac",
                 "sumInsured": "1.25ac",
                 "Annually": "20k"
 
             }]
         })
-
     });
     //cifPolicy- routes user input to function cifPolicy
     router.post('/cifPolicy', (req, res) => {
@@ -153,7 +183,6 @@ module.exports = router => {
 
             .catch(err => res.status(err.status).json({ message: err.message }));
         }
-
     });
     //cisPolicy- routes user input to function cisPolicy
     router.post('/cisPolicy', (req, res) => {
@@ -178,7 +207,6 @@ module.exports = router => {
 
             .catch(err => res.status(err.status).json({ message: err.message }));
         }
-
     });
     //cipPolicy- routes user input to function cipPolicy
     router.post('/cipPolicy', (req, res) => {
@@ -203,7 +231,6 @@ module.exports = router => {
 
             .catch(err => res.status(err.status).json({ message: err.message }));
         }
-
     });
     //fobPolicy- routes user input to function fobPolicy
     router.post('/fobPolicy', (req, res) => {
@@ -228,7 +255,6 @@ module.exports = router => {
 
             .catch(err => res.status(err.status).json({ message: err.message }));
         }
-
     });
     //issuedpolicy- routes users issued policies 
     router.get('/fetchissuedpolicy', (req, res) => {

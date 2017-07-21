@@ -21,7 +21,8 @@ var logger;
 var Promise = require('bluebird');
 var log4js = require('log4js');
 var config = require('config');
-//nexmo sms
+
+//nexmo sms Api
 const Nexmo = require('nexmo');
 const nexmo = new Nexmo({
     apiKey: '6a64ffbc',
@@ -60,44 +61,6 @@ app.use('/', router);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 console.log(`App Runs on ${port}`);
-
-// var smtpTransport = nodemailer.createTransport({
-//     service: "smtp.ipage.com",
-//     port: "587",
-//     secure: false,
-//     auth: {
-//         user: "dhananjay.patil@rapidqube.com",
-//         pass: "Rpqb@12345"
-//     }
-// });
-// var rand, mailOptions, host, link;
-
-// app.get('/', function(req, res) {
-//     res.sendfile('index.html');
-// });
-// app.get('/send', function(req, res) {
-//     rand = Math.floor((Math.random() * 100) + 54);
-//     host = 'smtp.ipage.com';
-//     link = host + "/verify?id=" + rand;
-//     mailOptions = {
-//         transport: smtpTransport,
-//         from: '"dhananjay.patil@rapidqube.com"',
-//         to: 'dhananjay.patil@rapidqube.com',
-//         subject: 'Please confirm your Email account',
-//         //html: "Hello" + link + "verify mail"
-//         html: '<b>Test Messge</b>'
-//     }
-//     console.log(mailOptions);
-//     smtpTransport.sendMail(mailOptions, function(error, response) {
-//         if (error) {
-//             console.log(error);
-//             res.end("error");
-//         } else {
-//             console.log("Message sent: " + response.message);
-//             res.end("sent");
-//         }
-//     });
-// });
 
 //connection for mysql
 function BD() {
