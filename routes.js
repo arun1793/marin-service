@@ -6,6 +6,8 @@ const register = require('./functions/register');
 const login = require('./functions/login');
 const logout = require('./functions/logout');
 const nodemailer = require('nodemailer');
+const cif = require('./functions/cif');
+
 // connection for nexmo free sms service
 const Nexmo = require('nexmo');
 const nexmo = new Nexmo({
@@ -22,6 +24,7 @@ var transporter = nodemailer.createTransport("SMTP", {
         pass: "Rpqb@12345"
     }
 });
+
 module.exports = router => {
     //registerUser- routes user input to function register.
     router.post('/registerUser', (req, res) => {
@@ -45,6 +48,27 @@ module.exports = router => {
             res.status(400).json({ message: 'Invalid Request !' });
 
         } else {
+            var mailOptions = {
+                transport: transporter,
+                from: '"Dj✔"<dhananjay.patil@rapidqube.com>',
+                email: req.body.email, //'vikram.viswanathan@rapidqube.com',
+                subject: req.body.subject, //'Please confirm your Email account',
+                text: req.body.text, //'Hello',
+                html: '<b>Test Messge</b>'
+            }
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+
+                }
+                console.log("Message sent: " + info.messageId);
+                res.send({
+                    "status": true,
+                    "message": "mail sent wait a moment"
+                });
+
+            });
             console.log("register object" + register)
 
             register.registerUser(fname, lname, phone, email, usertype, password)
@@ -120,46 +144,268 @@ module.exports = router => {
         }
     });
     //fetchPolicyQuotes- routes policy quotes to function fetchpolicy
-    router.get('/fetchPolicyQuotes', (req, res) => {
+    router.post('/fetchPolicyQuotes', (req, res) => {
+        const contract = req.body.contract;
 
-        res.send({
-            Consignment_Detail: [{
-                "policyName": "Marine Insurance",
-                "Roadways_Eligibility": "Available",
-                "Ship_Eligibility ": "Available",
-                "Train_Eligibilty": "Available",
+        console.log(`contract from ui`, contract);
+        var policyList;
+        var cifPolicy;
+        var cisPolicy;
+        var cipPolicy;
+        var fobPolicy;
+        if (contract == "cifPolicy") {
+            // res.send({
+            // res.send({
+            policyList = [{
+                    "policyName": "Marine Insurance",
+                    "Roadways": "Available",
+                    "Shipping": "N.A",
+                    "Railway": "Available",
+                    "Airways": "N.A",
+                    "policyAmount": "1Lac",
+                    "sumInsured": "50k",
+                    "Annually": "12k"
+                }, {
+                    "policyName": "Blue Dart",
+                    "Roadways": "N.A",
+                    "Shipping": "Available",
+                    "Railway": "N.A",
+                    "Airways": "Available",
+                    "sumInsured": "1.25ac",
+                    "Annually": "20k"
+
+                }, {
+                    "policyName": "DHFL",
+                    "Roadways": "N.A",
+                    "Shipping": "N.A",
+                    "Railway": "Available",
+                    "Airways": "Available",
+                    "sumInsured": "7.25k",
+                    "Annually": "15k"
+                }, {
+                    "policyName": "Blue Dart",
+                    "Roadways": "Available",
+                    "Shipping": "Available",
+                    "Railway": "N.A",
+                    "Airways": "N.A",
+                    "sumInsured": "1.25ac",
+                    "Annually": "20k"
+
+                },
+                {
+                    "policyName": "Maersk",
+                    "Roadways": "Available",
+                    "Shipping": "N.A",
+                    "Railway": "Available",
+                    "Airways": "N.A",
+                    "policyAmount": "5Lac",
+                    "sumInsured": "2.25ac",
+                    "Annually": "55k"
+
+                },
+                {
+                    "policyName": "ICICI Lombard",
+                    "Roadways": "N.A",
+                    "Shipping": "N.A",
+                    "Railway": "Available",
+                    "Airways": "Available",
+                    "policyAmount": "1Lac",
+                    "sumInsured": "50k",
+                    "Annually": "6k"
+                }
+            ]
+
+        } else if (contract == "cisPolicy") {
+
+            policyList = [{
+                    "policyName": "ICICI Insurance",
+                    "Roadways": "N.A",
+                    "Shipping": "Available",
+                    "Railway": "N.A",
+                    "Airways": "Available",
+                    "policyAmount": "3Lac",
+                    "sumInsured": "1.5Lac",
+                    "Annually": "60k"
+                }, {
+                    "policyName": "Maersk",
+                    "Roadways": "Available",
+                    "Shipping": "N.A",
+                    "Railway": "Available",
+                    "Airways": "N.A",
+                    "policyAmount": "5Lac",
+                    "sumInsured": "2.25ac",
+                    "Annually": "55k"
+
+                }, {
+                    "policyName": "Doodle",
+                    "Roadways": "Available",
+                    "Shipping": "Available",
+                    "Railway": "N.A",
+                    "Airways": "N.A",
+                    "policyAmount": "5Lac",
+                    "sumInsured": "7.25k",
+                    "Annually": "15k"
+                }, {
+                    "policyName": "MineDart",
+                    "Roadways": "N.A",
+                    "Shipping": "N.A",
+                    "Railway": "Available",
+                    "Airways": "Available",
+                    "policyAmount": "5Lac",
+                    "sumInsured": "1.25ac",
+                    "Annually": "20k"
+
+                },
+                {
+                    "policyName": "Marine Insurance",
+                    "Roadways": "Available",
+                    "Shipping": "N.A",
+                    "Railway": "Available",
+                    "Airways": "N.A",
+                    "policyAmount": "1Lac",
+                    "sumInsured": "50k",
+                    "Annually": "12k"
+                }, {
+                    "policyName": "Blue Dart",
+                    "Roadways": "N.A",
+                    "Shipping": "Available",
+                    "Railway": "N.A",
+                    "Airways": "Available",
+                    "sumInsured": "1.25ac",
+                    "Annually": "20k"
+
+                }
+            ]
+
+        } else if (contract == "cipPolicy") {
+            policyList = [{
+                    "policyName": "All India Insurance",
+                    "Roadways": "Available",
+                    "Shipping": "N.A",
+                    "Railway": "Available",
+                    "Airways": "N.A",
+                    "policyAmount": "1Lac",
+                    "sumInsured": "50k",
+                    "Annually": "6k"
+                }, {
+                    "policyName": "wizCraft",
+                    "Roadways": "N.A",
+                    "Shipping": "N.A",
+                    "Railway": "Available",
+                    "Airways": "Available",
+                    "policyAmount": "5Lac",
+                    "sumInsured": "1.25ac",
+                    "Annually": "20k"
+
+                }, {
+                    "policyName": "DreamWork",
+                    "Roadways": "N.A",
+                    "Shipping": "Available",
+                    "Railway": "N.A",
+                    "Airways": "Available",
+                    "policyAmount": "5Lac",
+                    "sumInsured": "7.25k",
+                    "Annually": "15k"
+                }, {
+                    "policyName": "Emirates",
+                    "Roadways": "Available",
+                    "Shipping": "Available",
+                    "Railway": "N.A",
+                    "Airways": "N.A",
+                    "policyAmount": "5Lac",
+                    "sumInsured": "1.25ac",
+                    "Annually": "20k"
+
+                },
+                {
+                    "policyName": "Marine Insurance",
+                    "Roadways": "Available",
+                    "Shipping": "N.A",
+                    "Railway": "Available",
+                    "Airways": "N.A",
+                    "policyAmount": "1Lac",
+                    "sumInsured": "50k",
+                    "Annually": "12k"
+                }, {
+                    "policyName": "Blue Dart",
+                    "Roadways": "N.A",
+                    "Shipping": "Available",
+                    "Railway": "N.A",
+                    "Airways": "Available",
+                    "sumInsured": "1.25ac",
+                    "Annually": "20k"
+
+                }
+            ]
+
+        } else if (contract == "fobPolicy") {
+
+            policyList = [{
+                "policyName": "ICICI Lombard",
+                "Roadways": "N.A",
+                "Shipping": "N.A",
+                "Railway": "Available",
+                "Airways": "Available",
                 "policyAmount": "1Lac",
                 "sumInsured": "50k",
                 "Annually": "6k"
             }, {
-                "policyName": "Blue Dart",
-                "Roadways_Eligibility": "Available",
-                "Ship_Eligibility ": "Available",
-                "Air_Eligibilty": "Available",
-                "policyAmount": "2Lac",
+                "policyName": "Oriental",
+                "Roadways": "Available",
+                "Shipping": "Available",
+                "Railway": "N.A",
+                "Airways": "N.A",
+                "policyAmount": "5Lac",
                 "sumInsured": "1.25ac",
                 "Annually": "20k"
 
             }, {
                 "policyName": "DHFL",
-                "Roadways_Eligibility": "Available",
-                "Train_Eligibilty": "Available",
-                "Air_Eligibilty": "Available",
-                "policyAmount": "1.5Lac",
+                "Roadways": "N.A",
+                "Shipping": "Available",
+                "Railway": "N.A",
+                "Airways": "Available",
+                "policyAmount": "5Lac",
                 "sumInsured": "7.25k",
                 "Annually": "15k"
             }, {
-                "policyName": "Blue Dart",
-                "Roadways_Eligibility": "Available",
-                "Ship_Eligibility ": "Available",
-                "Train_Eligibilty": "Available",
-                "policyAmount": "2Lac",
+                "policyName": "Harwlett Packards",
+                "Roadways": "Available",
+                "Shipping": "N.A",
+                "Railway": "Available",
+                "Airways": "N.A",
+                "policyAmount": "5Lac",
                 "sumInsured": "1.25ac",
                 "Annually": "20k"
 
+            }, {
+                "policyName": "Maersk",
+                "Roadways": "Available",
+                "Shipping": "N.A",
+                "Railway": "Available",
+                "Airways": "N.A",
+                "policyAmount": "5Lac",
+                "sumInsured": "2.25ac",
+                "Annually": "55k"
+
+            }, {
+                "policyName": "Doodle",
+                "Roadways": "Available",
+                "Shipping": "Available",
+                "Railway": "N.A",
+                "Airways": "N.A",
+                "policyAmount": "5Lac",
+                "sumInsured": "7.25k",
+                "Annually": "15k"
             }]
-        })
+
+        }
+        res.send({
+            policyList
+        });
     });
+
+
     //cifPolicy- routes user input to function cifPolicy
     router.post('/cifPolicy', (req, res) => {
         const id = req.body.id;
@@ -184,6 +430,8 @@ module.exports = router => {
             .catch(err => res.status(err.status).json({ message: err.message }));
         }
     });
+    // getcifPolicy- fetches stored 
+
     //cisPolicy- routes user input to function cisPolicy
     router.post('/cisPolicy', (req, res) => {
         const id = req.body.id;

@@ -92,7 +92,7 @@ router.post("/user/userLogin", cors(), function(req, res) {
 });
 
 //userLogout link compares tokens taken from header with database if it matches deletes token.
-router.post("/user/userLogout", cors(), function(req, res) {
+router.get("/user/userLogout", cors(), function(req, res) {
     var objBD = BD();
     objBD.connect();
     var token = req.get('Authorization');
