@@ -5,8 +5,9 @@ CREATE TABLE user_detail (
     phone BIGINT(100) NOT NULL,
     email VARCHAR(40) NOT NULL,
     usertype VARCHAR(20) NOT NULL,
-    password VARCHAR(255) NOT NULL
-     );
+    password VARCHAR(255) NOT NULL,
+    status VARCHAR(20)  NULL
+);
 
 CREATE TABLE user_session(
     uid int,
@@ -16,4 +17,9 @@ CREATE TABLE user_session(
     FOREIGN KEY (uid) REFERENCES user_detail(uid)
 );
 
-
+CREATE TABLE validation(
+uid int,
+otp VARCHAR(20) NOT NULL,
+email VARCHAR(40) NOT NULL,
+FOREIGN KEY (uid) REFERENCES user_detail(uid)
+);

@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var cors = require('cors');
 var bodyParser = require('body-parser');
-
+var nodemailer = require('nodemailer');
 
 //database connection done here.
 function BD() {
@@ -15,14 +15,28 @@ function BD() {
     });
     return connection;
 }
-
+const Nexmo = require('nexmo');
+const nexmo = new Nexmo({
+    apiKey: '6a64ffbc',
+    apiSecret: '38c40b9428f981e1'
+});
+// connection to email API 
+var transporter = nodemailer.createTransport("SMTP", {
+    host: 'smtp.ipage.com',
+    port: 587,
+    secure: true,
+    auth: {
+        user: "dhananjay.patil@rapidqube.com",
+        pass: "Rpqb@12345"
+    }
+});
 //registerUser link stores user input in database. 
 router.post("/user/registerUser", function(req, res) {
     var objBD = BD();
+
     console.log(req.body.email)
     console.log(req.body.password)
     console.log(req.body.usertype)
-
     objBD.connect();
     var user = {
         fname: req.body.fname,
@@ -33,12 +47,61 @@ router.post("/user/registerUser", function(req, res) {
         password: req.body.password
 
     };
-
     objBD.query('INSERT INTO user_detail SET ?', user, function(error) {
-        return res.json({
-            "status": true,
-            "message": "Registration Successfull"
-        });
+        if (error) {
+            res.send({
+                "status": false,
+                "message": "try again"
+            })
+        } else {
+            var otp = "" + "your otp";
+            var possible = "0123456789";
+
+            for (var i = 0; i < 4; i++)
+                otp += possible.charAt(Math.floor(Math.random() * possible.length));
+
+            var encodedMail = new Buffer(req.body.email).toString('base64');
+            var link = "http://" + req.get('host') + "/verify?mail=" + encodedMail;
+            var decodedMail = new Buffer(encodedMail, 'base64').toString('ascii');
+            var userResults, emailtosend, phonetosend;
+            // console.log(req.body.email);
+            objBD.query('select * from user_detail WHERE email = ?', [req.body.email], function(error, results, fields) {
+                userResults = JSON.parse(JSON.stringify(results));
+                console.log("results: " + userResults[0].email);
+                console.log("results:" + userResults[0].phone);
+                emailtosend = userResults[0].email;
+                phonetosend = userResults[0].phone;
+                objBD.query('INSERT INTO validation( uid, otp,encodedMail) values ( ?, ?, ?)', [userResults[0].uid, otp, encodedMail], function(error, results, fields) {});
+
+                var mailOptions = {
+                    transport: transporter,
+                    from: '"Dj✔"<dhananjay.patil@rapidqube.com>',
+                    to: emailtosend, //req.body.to, 
+                    subject: 'Please confirm your Email account',
+                    text: req.body.text,
+                    html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
+                };
+
+                transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                        return console.log(error);
+
+                    }
+                    console.log("Message sent: " + info.messageId);
+
+                });
+                nexmo.message.sendSms(
+
+                    '919619372165', phonetosend, otp, { type: 'unicode' },
+                    (err, responseData) => { if (responseData) { console.log(responseData) } }
+                );
+                return res.json({
+                    "status": true,
+                    "message": "Registration Successfull & mail Sent for verification"
+                });
+
+            });
+        }
     });
 });
 

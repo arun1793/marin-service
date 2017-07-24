@@ -95,17 +95,19 @@ module.exports = router => {
         });
     });
     // sendmail-sends email of verification after registration
-    router.post('/sendmail', function(req, res) {
-        // rand = Math.floor((Math.random() * 100) + 54);
-        // link = host + "/verify?id=" 
+    router.get('/sendmail', function(req, res) {
+
+        var encodedMail = new Buffer('dhananjay.patil@rapidqube.com').toString('base64');
+        var link = "http://" + req.get('host') + "/verify?mail=" + encodedMail;
+        var decodedMail = new Buffer(encodedMail, 'base64').toString('ascii');
         var mailOptions = {
             transport: transporter,
-            from: req.body.from, //'"Dj✔"<dhananjay.patil@rapidqube.com>',
-            to: req.body.to, //'vikram.viswanathan@rapidqube.com',
-            subject: req.body.subject, //'Please confirm your Email account',
+            from: '"Dj✔"<dhananjay.patil@rapidqube.com>',
+            to: 'dhananjay.patil@rapidqube.com', //req.body.to, //'vikram.viswanathan@rapidqube.com',
+            subject: 'Please confirm your Email account', //req.body.subject, 
             text: req.body.text, //'Hello',
-            html: '<b>Test Messge</b>'
-        }
+            html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
+        };
 
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
