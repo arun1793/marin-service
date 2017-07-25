@@ -46,8 +46,8 @@ router.post("/user/registerUser", function(req, res) {
         phone: req.body.phone,
         email: req.body.email,
         usertype: req.body.usertype,
-        password: req.body.password
-
+        password: req.body.password,
+        status: "Inactive"
     };
     objBD.query('INSERT INTO user_detail SET ?', user, function(error) {
         if (error) {
@@ -84,7 +84,6 @@ router.post("/user/registerUser", function(req, res) {
                     text: req.body.text,
                     html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
                 };
-                // objBD.query('UPDATE user_detail Set status = active where phone = phonetosend ', [userResults[0].phone], function(error, results, fields) {});
                 transporter.sendMail(mailOptions, (error, info) => {
                     if (error) {
                         return console.log(error);
@@ -156,6 +155,9 @@ router.post('/user/phoneverification', function(req, res) {
             if (otplength.length > 0) {
                 if (otplength[0].otp === otp) {
                     console.log(otp);
+                    console.log(otplength[0].uid);
+                    // objBD.query('UPDATE user_detail Set status = active where uid= ? ', otplength[0].uid, function(error, results, fields) {});
+
                     res.send({
                         "status": true,
                         "message": "phone number verified"
