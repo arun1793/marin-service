@@ -4,7 +4,8 @@ var router = express.Router();
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
-
+var http = require('http');
+var https = require('https');
 //database connection done here.
 function BD() {
     var connection = mysql.createConnection({
@@ -15,6 +16,7 @@ function BD() {
     });
     return connection;
 }
+//connection To Sms API
 const Nexmo = require('nexmo');
 const nexmo = new Nexmo({
     apiKey: '6a64ffbc',
@@ -54,61 +56,124 @@ router.post("/user/registerUser", function(req, res) {
                 "message": "try again"
             })
         } else {
-            var otp = "" + "your otp";
+            //To validate email and phone number of user otp will be send via sms and mail.
+            var otp = "";
             var possible = "0123456789";
 
             for (var i = 0; i < 4; i++)
                 otp += possible.charAt(Math.floor(Math.random() * possible.length));
-
+            var remoteHost = "192.168.0.14:3000";
+            console.log(remoteHost);
             var encodedMail = new Buffer(req.body.email).toString('base64');
-            var link = "http://" + req.get('host') + "/verify?mail=" + encodedMail;
-            var decodedMail = new Buffer(encodedMail, 'base64').toString('ascii');
-            var userResults, emailtosend, phonetosend;
-            // console.log(req.body.email);
+            var link = "http://" + remoteHost + "/marine/user/verify?mail=" + encodedMail;
+            var userResults, emailtosend, phonetosend, otptosend;
+
             objBD.query('select * from user_detail WHERE email = ?', [req.body.email], function(error, results, fields) {
                 userResults = JSON.parse(JSON.stringify(results));
                 console.log("results: " + userResults[0].email);
                 console.log("results:" + userResults[0].phone);
                 emailtosend = userResults[0].email;
                 phonetosend = userResults[0].phone;
-                objBD.query('INSERT INTO validation( uid, otp,encodedMail) values ( ?, ?, ?)', [userResults[0].uid, otp, encodedMail], function(error, results, fields) {});
-
+                objBD.query('INSERT INTO verification( uid, otp,encodedMail) values ( ?, ?, ?)', [userResults[0].uid, otp, encodedMail], function(error, results, fields) {});
+                //after generating otp mail will be sent to regsitered user.
                 var mailOptions = {
                     transport: transporter,
-                    from: '"Dj✔"<dhananjay.patil@rapidqube.com>',
+                    from: '"Dhananjay"<dhananjay.patil@rapidqube.com>',
                     to: emailtosend, //req.body.to, 
                     subject: 'Please confirm your Email account',
                     text: req.body.text,
                     html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
                 };
-
+                // objBD.query('UPDATE user_detail Set status = active where phone = phonetosend ', [userResults[0].phone], function(error, results, fields) {});
                 transporter.sendMail(mailOptions, (error, info) => {
                     if (error) {
                         return console.log(error);
 
                     }
                     console.log("Message sent: " + info.messageId);
-
                 });
+                //otp will be sent via sms to validate phone number.
+                otptosend = "OTP: " + otp;
                 nexmo.message.sendSms(
-
-                    '919619372165', phonetosend, otp, { type: 'unicode' },
+                    '919619372165', phonetosend, otptosend, { type: 'unicode' },
                     (err, responseData) => { if (responseData) { console.log(responseData) } }
                 );
                 return res.json({
                     "status": true,
-                    "message": "Registration Successfull & mail Sent for verification"
+                    "message": "Registration Successfull"
                 });
 
             });
         }
     });
 });
+//verify link will validate user here.
+router.get('/user/verify', function(req, res, next) {
+    var querymail = req.query.mail;
+    console.log("URL: " + querymail);
+    var objBD = BD();
+    objBD.connect();
 
+    objBD.query('SELECT * FROM verification WHERE encodedMail = ?', [querymail], function(error, results, fields) {
+        if (error) {
+            res.send({
+                "code": 400,
+                "failed": "error ocurred"
+            })
+        } else {
+            var resultLength = JSON.parse(JSON.stringify(results));
+            if (resultLength.length > 0) {
+                if (resultLength[0].encodedMail === querymail) {
+                    console.log(querymail);
+                    res.send({
+                        "status": true,
+                        "message": "verification Successfull"
+                    });
+                } else {
+                    res.send({
+                        "status": false,
+                        "message": "already verified"
+                    });
+                }
+            }
+        }
+    });
+});
+router.post('/user/phoneverification', function(req, res) {
+    var objBD = BD();
+    objBD.connect();
+    var otp = req.body.otp;
+    console.log(otp);
+    objBD.query('SELECT * FROM verification where otp=?', [otp], function(error, results, fields) {
+        if (error) {
+            res.send({
+                "status": false,
+                "message": "error"
+            })
+        } else {
+            var otplength = JSON.parse(JSON.stringify(results));
+            console.log(results);
+            if (otplength.length > 0) {
+                if (otplength[0].otp === otp) {
+                    console.log(otp);
+                    res.send({
+                        "status": true,
+                        "message": "phone number verified"
+                    });
+                } else {
+                    res.send({
+                        "status": false,
+                        "message": "phone number is invalid"
+                    });
+                }
+            }
+        }
+    })
+});
 //userLogin link compares userinput with database data and gives response as token.
 router.post("/user/userLogin", cors(), function(req, res) {
     var objBD = BD();
-    objBD.connect()
+    objBD.connect();
     console.log(req.body);
     var email = req.body.email;
     var password = req.body.password;
@@ -124,13 +189,11 @@ router.post("/user/userLogin", cors(), function(req, res) {
                 if (resultLength[0].password === password) {
                     var token = "";
                     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789rapidqubepvtltd";
-
                     for (var i = 0; i < 10; i++)
                         token += possible.charAt(Math.floor(Math.random() * possible.length));
                     console.log(token);
 
                     objBD.query('INSERT INTO user_session( uid, token) values ( ?, ?)', [resultLength[0].uid, token], function(error, results, fields) {});
-
                     res.send({
                         "status": true,
                         "token": token,

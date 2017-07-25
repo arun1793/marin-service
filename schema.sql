@@ -17,9 +17,10 @@ CREATE TABLE user_session(
     FOREIGN KEY (uid) REFERENCES user_detail(uid)
 );
 
-CREATE TABLE validation(
+
+CREATE TABLE verification(
 uid int,
 otp VARCHAR(20) NOT NULL,
-email VARCHAR(40) NOT NULL,
+encodedMail VARCHAR(40) NOT NULL,
 FOREIGN KEY (uid) REFERENCES user_detail(uid)
 );
