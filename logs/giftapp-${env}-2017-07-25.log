@@ -11264,3 +11264,5 @@
 [34m[2017-07-25 18:57:16.064] [TRACE] blockchain_sdk - [39mdoLogin : entry
 [32m[2017-07-25 18:57:16.067] [INFO] blockchain_sdk - [39mdoLogin : Successfully logged in user on blockchain: dhananjay.p - undefined
 [32m[2017-07-25 18:57:16.068] [INFO] console - [39mserver is running on3000
+[32m[2017-07-25 19:05:04.067] [INFO] console - [39mURL: ZGhhbmFuamF5LnBhdGlsQHJhcGlkcXViZS5jb20=
+[32m[2017-07-25 19:05:04.084] [INFO] console - [39mZGhhbmFuamF5LnBhdGlsQHJhcGlkcXViZS5jb20=

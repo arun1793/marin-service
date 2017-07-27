@@ -59,7 +59,6 @@ router.post("/user/registerUser", function(req, res) {
             //To validate email and phone number of user otp will be send via sms and mail.
             var otp = "";
             var possible = "0123456789";
-
             for (var i = 0; i < 4; i++)
                 otp += possible.charAt(Math.floor(Math.random() * possible.length));
             var remoteHost = "192.168.0.14:3000";
@@ -156,7 +155,7 @@ router.post('/user/phoneverification', function(req, res) {
                 if (otplength[0].otp === otp) {
                     console.log(otp);
                     console.log(otplength[0].uid);
-                    // objBD.query('UPDATE user_detail Set status = active where uid= ? ', otplength[0].uid, function(error, results, fields) {});
+                    objBD.query('UPDATE user_detail Set status ="Active" where uid= ? ', otplength[0].uid, function(error, results, fields) {});
 
                     res.send({
                         "status": true,
