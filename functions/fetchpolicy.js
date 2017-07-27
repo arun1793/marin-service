@@ -2,20 +2,23 @@ var express = require('express');
 var router = express.Router();
 var cors = require('cors');
 var bodyParser = require('body-parser');
-// var bcSdk = require('../src/blockchain/blockchain_sdk');
+var bcSdk = require('../src/blockchain/blockchain_sdk');
 var user = 'dhananjay.p';
 var affiliation = 'marine';
 
 
-exports.cif = (consignmentweight, consignmentvalue, transportmode) =>
+exports.fetchpolicy = (id, ContractType, ConsignmentWeight, Consignmentvalue, transportMode) =>
     new Promise((resolve, reject) => {
         const policy = ({
-            consignmentweight: consignmentweight,
-            consignmentvalue: consignmentvalue,
-            transportmode: transportmode
+
+            id: id,
+            ContractType: ContractType,
+            ConsignmentWeight: ConsignmentWeight,
+            Consignmentvalue: Consignmentvalue,
+            transportMode: transportMode
         })
 
-        // bcSdk.cifPolicy({ user: user, UserDetails: policy })
+        bcSdk.fetchpolicy({ user: user, UserDetails: policy })
 
         .then(() => resolve({ "status": true, "message": "policy fetched " }))
 

@@ -268,7 +268,15 @@ router.get("/user/get", cors(), function(req, res) {
         });
     });
 });
-router.post("/user/fetchPolicyQuotes", cors(), function(req, res) {
+router.post("/user/fetchPolicyQuoes", cors(), function(req, res) {
+    var objBD = BD();
+    objBD.connect();
+    var policy = {
+        consignmentWeight: req.body.consignmentWeight,
+        consignmentValue: req.body.consignmentValue,
+        transportMode: req.body.transportMode,
+        contractType: req.body.contractType
+    };
     const consignmentWeight = req.body.consignmentWeight;
     console.log("consignmentWeight" + consignmentWeight);
     const consignmentValue = req.body.consignmentValue;
@@ -277,7 +285,9 @@ router.post("/user/fetchPolicyQuotes", cors(), function(req, res) {
     console.log("transportMode" + transportMode);
     const contractType = req.body.contractType;
     console.log("contractType" + contractType);
+    objBD.query('INSERT INTO savepolicy SET ? ', policy, function(error) {
 
+    });
     var policyList;
     var cifPolicy;
     var cisPolicy;
@@ -534,9 +544,11 @@ router.post("/user/fetchPolicyQuotes", cors(), function(req, res) {
         }]
 
     }
-    res.send({
+    console.log(policyList);
+    return res.json({
         "policyList": policyList
     });
+
 });
 
 module.exports = router;

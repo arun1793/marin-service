@@ -24,3 +24,30 @@ otp VARCHAR(20) NOT NULL,
 encodedMail VARCHAR(40) NOT NULL,
 FOREIGN KEY (uid) REFERENCES user_detail(uid)
 );
+
+CREATE TABLE savepolicy(
+uid int,
+ID int NOT NULL AUTO_INCREMENT,
+consignmentWeight int NOT NULL,
+consignmentValue int NOT NULL,
+transportMode VARCHAR(100) NOT NULL,
+contractType VARCHAR(100) NOT NULL,
+PRIMARY KEY(ID),
+FOREIGN KEY (uid) REFERENCES user_detail(uid)
+);
+
+CREATE TABLE issuedpolicy(
+uid int,
+ID int NOT NULL AUTO_INCREMENT,
+policyName VARCHAR(100) NOT NULL,
+premiumAmount BIGINT(100) NOT NULL,
+sumInsured BIGINT(100) NOT NULL,
+consignmentType VARCHAR(100) NOT NULL,
+packingMode VARCHAR(100) NOT NULL, 
+consignmentWeight int NOT NULL,
+consignmentValue int NOT NULL,
+transportMode VARCHAR(100) NOT NULL,
+contractType VARCHAR(100) NOT NULL,
+PRIMARY KEY(ID),
+FOREIGN KEY (uid) REFERENCES user_detail(uid)
+);
