@@ -5,15 +5,21 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
+	// "time"
+	//"strings"
+	//"reflect"
+
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
 var userIndexStr = "_userindex"
 
+//var campaignIndexStr= "_campaignindex"
+//var transactionIndexStr= "_transactionindex"
+
 type User struct {
-	//the field tags of user are needed to store in the ledger	
 	Id       	int    `json:"id"`
-	FirstName   string `json:"fname"` 
+	FirstName   string `json:"fname"` //the fieldtags of user are needed to store in the ledger
 	LastName 	string `json:"lname"`
 	Phone    	int    `json:"phone"`
 	Email    	string `json:"email"`
@@ -26,10 +32,9 @@ type AllUsers struct {
 	Userlist []User `json:"userlist"`
 }
 
-type CifTransport struct{
-	//the field tags of user are needed to store in the ledger	
-
+type Agreement struct{
 	Id	  			   int     `json:"id"`
+	ContractType	   string  `json:"contracttype"`
 	ConsignmentWeight  int 	   `json:"consignmentweight"`
 	ConsignmentValue   int	   `json:"consignmentvalue"`
 	TransportMode	   string  `json:"transportmode"`
@@ -37,55 +42,14 @@ type CifTransport struct{
 }
 
 type AllAgreement struct{
-	Querylist []CifTransport `json:"querylist"`
-}
-
-type CisTransport struct{
-	//the field tags of user are needed to store in the ledger	
-
-	Id	  			   int     `json:"id"`
-	ConsignmentWeight  int 	   `json:"consignmentweight"`
-	ConsignmentValue   int	   `json:"consignmentvalue"`
-	TransportMode	   string  `json:"transportmode"`
-
-}
-
-type CisAgreement struct{
-	Policylist []CisTransport `json:"policylist"`
-}
-
-type CipTransport struct{
-	//the field tags of user are needed to store in the ledger	
-
-	Id	  			   int     `json:"id"`
-	ConsignmentWeight  int 	   `json:"consignmentweight"`
-	ConsignmentValue   int	   `json:"consignmentvalue"`
-	TransportMode	   string  `json:"transportmode"`
-
-}
-
-type CipAgreement struct{
-	Ciplist []CipTransport `json:"ciplist"`
-}
-
-type FobTransport struct{
-	//the field tags of user are needed to store in the ledger	
-
-	Id	  			   int     `json:"id"`
-	ConsignmentWeight  int 	   `json:"consignmentweight"`
-	ConsignmentValue   int	   `json:"consignmentvalue"`
-	TransportMode	   string  `json:"transportmode"`
-
-}
-
-type FobAgreement struct{
-	Foblist []FobTransport `json:"foblist"`
+	Querylist []Agreement `json:"querylist"`
 }
 
 type SessionAunthentication struct {
 	Token string `json:"token"`
 	Email string `json:"email"`
 }
+
 type Session struct {
 	StoreSession []SessionAunthentication `json:"session"`
 }
@@ -99,7 +63,7 @@ func main() {
 		fmt.Printf("Error starting Simple chaincode: %s", err)
 	}
 }
-//Init-initializes your chaincode.
+
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 
 	//_, args := stub.GetFunctionAndParameters()
@@ -143,16 +107,10 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return t.write(stub, args)
 	} else if function == "registerUser" {
 		return t.registerUser(stub, args)
-	}else if function =="cifPolicy"{
-		return t.cifPolicy(stub,args)
-	}else if function =="cisPolicy"{
-		return t.cisPolicy(stub,args)
-	}else if function=="cipPolicy"{
-		return t.cipPolicy(stub,args)
-	}else if function=="fobPolicy"{
-		return t.fobPolicy(stub,args)
+	}else if function =="fetchPolicyQuotes"{
+		return t.fetchPolicyQuotes(stub,args)
 	}
-
+	
 	fmt.Println("invoke did not find func: " + function)
 
 	return nil, errors.New("Received unknown function invocation: " + function)
@@ -184,25 +142,21 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	// Handle different functions
 	if function == "readuser" { //read a variable
 		return t.readuser(stub, args)
-	}  
-
-	// } else if function == "auntheticatetoken" {
-	// 	return t.SetUserForSession(stub, args)
-
-	// }
+	} else if function == "userLogin"{
+		return t.userLogin(stub,args)
+	} 
 	fmt.Println("query did not find func: " + function)
 
 	return nil, errors.New("Received unknown function query: " + function)
 }
 
 // read - query function to read key/value pair
-
 func (t *SimpleChaincode) readuser(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var name, jsonResp string
 	var err error
 
 	if len(args) != 1 {
-		return nil, errors.New("Incorrect number of arguments. Expecting name of the var to query")
+		return nil, errors.New("Incorrect number of arguments. Expecting fname of the var to query")
 	}
 
 	name = args[0]
@@ -214,12 +168,13 @@ func (t *SimpleChaincode) readuser(stub shim.ChaincodeStubInterface, args []stri
 
 	return valAsbytes, nil //send it onward
 }
+
 //registeruser - invoke function to store values in ledger. 
 func (t *SimpleChaincode) registerUser(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
     var err error
 
-    if len(args) != 7 {
-        return nil, errors.New("Incorrect number of arguments. Expecting 6")
+    if len(args) != 8 {
+        return nil, errors.New("Incorrect number of arguments. Expecting 7")
     }
 
     //input sanitation
@@ -255,7 +210,8 @@ func (t *SimpleChaincode) registerUser(stub shim.ChaincodeStubInterface, args []
 	if err != nil {
 		return nil, errors.New("Failed to get id as cannot convert it to int")
 	}
-	user.FirstName=args[1]
+
+    user.FirstName=args[1]
     user.LastName = args[2]
     user.Phone, err = strconv.Atoi(args[3])
     if err != nil {
@@ -272,14 +228,13 @@ func (t *SimpleChaincode) registerUser(stub shim.ChaincodeStubInterface, args []
     if err != nil {
         return nil, errors.New("Failed to get users")
     }
-    
-	var allusers AllUsers
+    var allusers AllUsers
     json.Unmarshal(UserAsBytes, &allusers) //un stringify it aka JSON.parse()
-	allusers.Userlist = append(allusers.Userlist, user)
+
+    allusers.Userlist = append(allusers.Userlist, user)
     fmt.Println("allusers", allusers.Userlist) //append to allusers
     fmt.Println("! appended user to allusers")
-    
-	jsonAsBytes, _ := json.Marshal(allusers)
+    jsonAsBytes, _ := json.Marshal(allusers)
     fmt.Println("json", jsonAsBytes)
     err = stub.PutState("getusers", jsonAsBytes) //rewrite allusers
     if err != nil {
@@ -306,13 +261,14 @@ func (t *SimpleChaincode) userLogin(stub shim.ChaincodeStubInterface, args []str
 	}
 
 	email := args[0]
+
 	password := args[1]
 	
+
 	UserAsBytes, err := stub.GetState("getusers")
 	if err != nil {
 		return nil, errors.New("Failed to get users")
 	}
-	
 	var allusers AllUsers
 	json.Unmarshal(UserAsBytes, &allusers) //un stringify it aka JSON.parse()
 
@@ -325,12 +281,12 @@ func (t *SimpleChaincode) userLogin(stub shim.ChaincodeStubInterface, args []str
 	}
 	return nil, nil
 }
-//cifPolicy-invoke function to store values in ledger.
-func (t *SimpleChaincode) cifPolicy(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+//fetchPolicyQuotes- invoke function stores details to fetch Quotes.
+func (t *SimpleChaincode) fetchPolicyQuotes(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
     var err error
 
-    if len(args) != 4 {
-        return nil, errors.New("Incorrect number of arguments. Expecting 4")
+    if len(args) != 5 {
+        return nil, errors.New("Incorrect number of arguments. Expecting 5")
     }
 
     //input sanitation
@@ -346,36 +302,42 @@ func (t *SimpleChaincode) cifPolicy(stub shim.ChaincodeStubInterface, args []str
     }
     if len(args[3]) <= 0 {
         return nil, errors.New("4th argument must be a non-empty string")
-    }
+	}
+	if len(args[4]) <= 0 {
+        return nil, errors.New("5th argument must be a non-empty string")
+	}
     
-	ciftransport := CifTransport{}
+	
+	agreement := Agreement{}
 
-	ciftransport.Id, err = strconv.Atoi(args[0])
+	agreement.Id, err = strconv.Atoi(args[0])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+	agreement.ContractType=args[1]
+
+    fmt.Println("agreement", agreement)
+	agreement.ConsignmentWeight, err = strconv.Atoi(args[2])
 	if err != nil {
 		return nil, errors.New("Failed to get id as cannot convert it to int")
 	}
 
-	ciftransport.ConsignmentWeight, err = strconv.Atoi(args[1])
+	agreement.ConsignmentValue, err = strconv.Atoi(args[3])
 	if err != nil {
 		return nil, errors.New("Failed to get id as cannot convert it to int")
 	}
+    agreement.TransportMode=args[4]
 
-	ciftransport.ConsignmentValue, err = strconv.Atoi(args[2])
-	if err != nil {
-		return nil, errors.New("Failed to get id as cannot convert it to int")
-	}
-    ciftransport.TransportMode=args[3]
+    fmt.Println("agreement", agreement)
 
-    fmt.Println("ciftransport", ciftransport)
-
-    CifTransportAsBytes, err := stub.GetState("get")
+    AgreementAsBytes, err := stub.GetState("get")
     if err != nil {
         return nil, errors.New("Failed to get agreement")
     }
     var allagreement AllAgreement
-    json.Unmarshal(CifTransportAsBytes, &allagreement) //un stringify it aka JSON.parse()
+    json.Unmarshal(AgreementAsBytes, &allagreement) //un stringify it aka JSON.parse()
 
-    allagreement.Querylist = append(allagreement.Querylist, ciftransport)
+    allagreement.Querylist = append(allagreement.Querylist, agreement)
     fmt.Println("allagreement",  allagreement.Querylist) //append to allusers
     fmt.Println("! appended agreement to allagreement")
     jsonAsBytes, _ := json.Marshal(allagreement)
@@ -387,189 +349,4 @@ func (t *SimpleChaincode) cifPolicy(stub shim.ChaincodeStubInterface, args []str
     fmt.Println("- end of the agreement")
     return nil, nil
 }
-//cisPolicy-invoke function to store values in ledger.
-func (t *SimpleChaincode) cisPolicy(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-    var err error
 
-    if len(args) != 4 {
-        return nil, errors.New("Incorrect number of arguments. Expecting 4")
-    }
-
-    //input sanitation
-    fmt.Println("- start filling detail")
-    if len(args[0]) <= 0 {
-        return nil, errors.New("1st argument must be a non-empty string")
-    }
-    if len(args[1]) <= 0 {
-        return nil, errors.New("2nd argument must be a non-empty string")
-    }
-    if len(args[2]) <= 0 {
-        return nil, errors.New("3rd argument must be a non-empty string")
-    }
-    if len(args[3]) <= 0 {
-        return nil, errors.New("4th argument must be a non-empty string")
-    }
-    
-	cistransport := CisTransport{}
-
-	cistransport.Id, err = strconv.Atoi(args[0])
-	if err != nil {
-		return nil, errors.New("Failed to get id as cannot convert it to int")
-	}
-
-	cistransport.ConsignmentWeight, err = strconv.Atoi(args[1])
-	if err != nil {
-		return nil, errors.New("Failed to get id as cannot convert it to int")
-	}
-
-	cistransport.ConsignmentValue, err = strconv.Atoi(args[2])
-	if err != nil {
-		return nil, errors.New("Failed to get id as cannot convert it to int")
-	}
-    cistransport.TransportMode=args[3]
-
-    fmt.Println("cistransport", cistransport)
-
-    CisTransportAsBytes, err := stub.GetState("getcis")
-    if err != nil {
-        return nil, errors.New("Failed to get agreement")
-    }
-    var cisagreement CisAgreement
-    json.Unmarshal(CisTransportAsBytes, &cisagreement) //un stringify it aka JSON.parse()
-
-    cisagreement.Policylist = append(cisagreement.Policylist, cistransport)
-    fmt.Println("cisagreement",  cisagreement.Policylist) //append to allusers
-    fmt.Println("! appended agreement to allagreement")
-    jsonAsBytes, _ := json.Marshal(cisagreement)
-    fmt.Println("json", jsonAsBytes)
-    err = stub.PutState("getcis", jsonAsBytes) //rewrite allusers
-    if err != nil {
-        return nil, err
-    }
-    fmt.Println("- end of the agreement")
-    return nil, nil
-}
-//cipPolicy-invoke function to store values in ledger.
-func (t *SimpleChaincode) cipPolicy(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-    var err error
-
-    if len(args) != 4 {
-        return nil, errors.New("Incorrect number of arguments. Expecting 4")
-    }
-
-    //input sanitation
-    fmt.Println("- start filling detail")
-    if len(args[0]) <= 0 {
-        return nil, errors.New("1st argument must be a non-empty string")
-    }
-    if len(args[1]) <= 0 {
-        return nil, errors.New("2nd argument must be a non-empty string")
-    }
-    if len(args[2]) <= 0 {
-        return nil, errors.New("3rd argument must be a non-empty string")
-    }
-    if len(args[3]) <= 0 {
-        return nil, errors.New("4th argument must be a non-empty string")
-    }
-    
-	ciptransport := CipTransport{}
-
-	ciptransport.Id, err = strconv.Atoi(args[0])
-	if err != nil {
-		return nil, errors.New("Failed to get id as cannot convert it to int")
-	}
-
-	ciptransport.ConsignmentWeight, err = strconv.Atoi(args[1])
-	if err != nil {
-		return nil, errors.New("Failed to get id as cannot convert it to int")
-	}
-
-	ciptransport.ConsignmentValue, err = strconv.Atoi(args[2])
-	if err != nil {
-		return nil, errors.New("Failed to get id as cannot convert it to int")
-	}
-    ciptransport.TransportMode=args[3]
-
-    fmt.Println("ciptransport", ciptransport)
-
-    CipTransportAsBytes, err := stub.GetState("getcip")
-    if err != nil {
-        return nil, errors.New("Failed to get agreement")
-    }
-    var cipagreement CipAgreement
-    json.Unmarshal(CipTransportAsBytes, &cipagreement) //un stringify it aka JSON.parse()
-
-    cipagreement.Ciplist = append(cipagreement.Ciplist, ciptransport)
-    fmt.Println("cipagreement",  cipagreement.Ciplist) //append to allusers
-    fmt.Println("! appended agreement to allagreement")
-    jsonAsBytes, _ := json.Marshal(cipagreement)
-    fmt.Println("json", jsonAsBytes)
-    err = stub.PutState("getcip", jsonAsBytes) //rewrite allusers
-    if err != nil {
-        return nil, err
-    }
-    fmt.Println("- end of the agreement")
-    return nil, nil
-}
-//fobPolicy-invoke function to store values in ledger.
-func (t *SimpleChaincode) fobPolicy(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-    var err error
-
-    if len(args) != 4 {
-        return nil, errors.New("Incorrect number of arguments. Expecting 4")
-    }
-
-    //input sanitation
-    fmt.Println("- start filling detail")
-    if len(args[0]) <= 0 {
-        return nil, errors.New("1st argument must be a non-empty string")
-    }
-    if len(args[1]) <= 0 {
-        return nil, errors.New("2nd argument must be a non-empty string")
-    }
-    if len(args[2]) <= 0 {
-        return nil, errors.New("3rd argument must be a non-empty string")
-    }
-    if len(args[3]) <= 0 {
-        return nil, errors.New("4th argument must be a non-empty string")
-    }
-    
-	fobtransport := FobTransport{}
-
-	fobtransport.Id, err = strconv.Atoi(args[0])
-	if err != nil {
-		return nil, errors.New("Failed to get id as cannot convert it to int")
-	}
-
-	fobtransport.ConsignmentWeight, err = strconv.Atoi(args[1])
-	if err != nil {
-		return nil, errors.New("Failed to get id as cannot convert it to int")
-	}
-
-	fobtransport.ConsignmentValue, err = strconv.Atoi(args[2])
-	if err != nil {
-		return nil, errors.New("Failed to get id as cannot convert it to int")
-	}
-    fobtransport.TransportMode=args[3]
-
-    fmt.Println("fobtransport", fobtransport)
-
-   	FobTransportAsBytes, err := stub.GetState("getfob")
-    if err != nil {
-        return nil, errors.New("Failed to get agreement")
-    }
-    var fobagreement FobAgreement
-    json.Unmarshal(FobTransportAsBytes, &fobagreement) //un stringify it aka JSON.parse()
-
-    fobagreement.Foblist = append(fobagreement.Foblist, fobtransport)
-    fmt.Println("fobagreement",  fobagreement.Foblist) //append to allusers
-    fmt.Println("! appended agreement to allagreement")
-    jsonAsBytes, _ := json.Marshal(fobagreement)
-    fmt.Println("json", jsonAsBytes)
-    err = stub.PutState("getfob", jsonAsBytes) //rewrite allusers
-    if err != nil {
-        return nil, err
-    }
-    fmt.Println("- end of the agreement")
-    return nil, nil
-}
