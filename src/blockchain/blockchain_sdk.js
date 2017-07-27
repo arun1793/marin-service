@@ -53,7 +53,7 @@ function UserRegisteration(params) {
             }
             //here in function name we use the actual function name which is used for registeration i.e User_register
             //args: [UserDetails.name,UserDetails.email,UserDetails.phone,UserDetails.pan,UserDetails.aadhar,UserDetails.usertype,UserDetails.upi,UserDetails.passpin]})
-            var reqSpec = getRequestSpec({ functionName: 'registerUser', args: [UserDetails.id, UserDetails.fname, UserDetails.lname, UserDetails.phone, UserDetails.email, UserDetails.password] });
+            var reqSpec = getRequestSpec({ functionName: 'registerUser', args: [UserDetails.uid, UserDetails.fname, UserDetails.lname, UserDetails.phone, UserDetails.email, UserDetails.password] });
             recursiveInvoke({ requestSpec: reqSpec, user: user })
                 .then(function(resp) {
                     logHelper.logMessage(logger, 'UserRegisteration', 'Successfully registered user', resp.body);
@@ -72,63 +72,7 @@ function UserRegisteration(params) {
     });
 }
 
-function User_login(params) {
-    return new Promise(function(resolve, reject) {
-        var ui_login;
-        try {
-            logHelper.logEntryAndInput(logger, 'get login details try ', params);
 
-            if (!validate.isValidJson(params)) {
-                logHelper.logError(logger, 'get login details', 'Invalid params');
-                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not fetch login details. Invalid params' })
-            }
-
-
-
-            var user = params.user;
-            console.log(user)
-            if (!validate.isValidString(user)) {
-                logHelper.logError(logger, 'UserRegisteration', 'Invalid user');
-                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create UserRegisteration. Invalid user' })
-            }
-
-
-            var emailid = params.ui_login.email;
-            if (!validate.isValidString(emailid)) {
-                logHelper.logError(logger, 'get login details', 'Invalid user');
-                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not fetch login details. Invalid email' })
-            }
-
-            var password = params.ui_login.password;
-            if (!validate.isValidString(password)) {
-                logHelper.logError(logger, 'login details', 'Invalid passpin');
-                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not fetch user details. Invalid password' })
-            }
-
-            var reqSpec = getRequestSpec({ functionName: 'login', args: [emailid, password] });
-            recursiveQuery1({ requestSpec: reqSpec, user: user })
-                .then(function(resp) {
-                    logHelper.logMessage(logger, 'get login details', 'Successfully fetched login details', resp.body);
-
-                    return resolve({ statusCode: constants.SUCCESS, body: resp.body });
-                })
-
-            .catch(function(err) {
-                logHelper.logError(logger, 'user login details', 'Could not fetch user details', err);
-                return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not fetch user details' });
-
-            });
-
-        } catch (err) {
-            logHelper.logError(logger, 'getUserDetails', 'Could not fetch property ad ', err);
-            return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not fetch user details' });
-        }
-    });
-}
-/**
-Create a new Mortgage application
-**/
-//function UserRegisteration receives all the data required for registeration from functions/register.js file 
 function read(params) {
     console.log(params, 'data in params for query method')
     return new Promise(function(resolve, reject) {
@@ -607,6 +551,7 @@ function isUserEnrolled(params) {
 
 module.exports = {
     read: read,
+    UserRegisteration: UserRegisteration,
     recursiveRegister: recursiveRegister,
     recursiveLogin: recursiveLogin,
     isUserEnrolled: isUserEnrolled,

@@ -39,7 +39,8 @@ var transporter = nodemailer.createTransport("SMTP", {
 module.exports = router => {
     //registerUser- routes user input to function register.
     router.post('/registerUser', (req, res) => {
-        // const uid = Math.floor(Math.random() * (100000 - 1)) + 1;
+        const id = Math.floor(Math.random() * (100000 - 1)) + 1;
+        const uid = id.toString();
         const fname = req.body.fname;
         console.log("data in name:" + fname);
         const lname = req.body.lname;

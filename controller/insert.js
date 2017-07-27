@@ -535,10 +535,7 @@ router.post("/user/fetchPolicyQuotes", cors(), function(req, res) {
 
     }
     res.send({
-        // "policyList": policyList,
-        "message": "hello",
-        "token": "null",
-        "status": true
+        "policyList": policyList
     });
 });
 

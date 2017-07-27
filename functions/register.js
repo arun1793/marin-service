@@ -23,6 +23,7 @@ var objBD = BD();
 exports.registerUser = (fname, lname, phone, email, usertype, password) =>
     new Promise((resolve, reject) => {
         const newUser = ({
+            uid: uid,
             fname: fname,
             lname: lname,
             phone: phone,
@@ -32,7 +33,8 @@ exports.registerUser = (fname, lname, phone, email, usertype, password) =>
         });
         objBD.connect()
         objBD.query('INSERT INTO user_detail SET ?', newUser)
-            // bcSdk.UserRegisteration({ user: user, UserDetails: newUser })
+
+        bcSdk.UserRegisteration({ user: user, UserDetails: newUser })
 
         .then(() => resolve({ "status": true, "message": "Registration Successfull" }))
 
