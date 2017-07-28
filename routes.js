@@ -3,13 +3,11 @@
 'use strict';
 
 const register = require('./functions/register');
-const login = require('./functions/login');
-const logout = require('./functions/logout');
 const nodemailer = require('nodemailer');
-const cif = require('./functions/cif');
-var mysql = require('mysql');
-var cors = require('cors');
-var fetchpolicy = require('./functions/fetchpolicy');
+// const fetchpolicy = require('./functions/fetchpolicy');
+const mysql = require('mysql');
+const cors = require('cors');
+
 //connection to database.
 function BD() {
     var connection = mysql.createConnection({
@@ -39,7 +37,7 @@ var transporter = nodemailer.createTransport("SMTP", {
 
 module.exports = router => {
     //registerUser- routes user input to function register.
-    router.post('/user/registerUser', (req, res) => {
+    router.post('/registerUser', (req, res) => {
         const id = Math.floor(Math.random() * (100000 - 1)) + 1;
         const uid = id.toString();
         const fname = req.body.fname;
@@ -135,28 +133,28 @@ module.exports = router => {
 
         });
     });
-    router.post('/user/fetchPolicyQuotes', (req, res) => {
+    // router.post('/user/fetchPolicyQuotes', (req, res) => {
 
-        const uid = Math.floor(Math.random() * (100000 - 1)) + 1;
-        const id = uid.toString();
-        const ContractType = req.body.contractType;
-        const ConsignmentWeight = req.body.consignmentWeight;
-        const ConsignmentValue = req.body.consignmentvalue;
-        const transportMode = req.body.transportMode;
+    //     const uid = Math.floor(Math.random() * (100000 - 1)) + 1;
+    //     const id = uid.toString();
+    //     const ContractType = req.body.contractType;
+    //     const ConsignmentWeight = req.body.consignmentWeight;
+    //     const ConsignmentValue = req.body.consignmentvalue;
+    //     const transportMode = req.body.transportMode;
 
-        if (!ContractType) {
+    //     if (!ContractType) {
 
-            res.status(400).json({ message: 'Invalid Request !' });
+    //         res.status(400).json({ message: 'Invalid Request !' });
 
-        } else {
-            fetchpolicy.fetchpolicy(id, ContractType, ConsignmentWeight, ConsignmentValue, transportMode)
-                .then((result) => {
-                    res.status(200).json({ message: "added successfully" });
-                })
-        }
+    //     } else {
+    //         fetchpolicy.fetchpolicy(id, ContractType, ConsignmentWeight, ConsignmentValue, transportMode)
+    //             .then((result) => {
+    //                 res.status(200).json({ message: "added successfully" });
+    //             })
+    //     }
 
 
-    });
+    // });
     //userLogin- routes user input to function login
     router.post('/userLogin', (req, res) => {
 

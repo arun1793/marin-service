@@ -61,7 +61,7 @@ router.post("/user/registerUser", function(req, res) {
             var possible = "0123456789";
             for (var i = 0; i < 4; i++)
                 otp += possible.charAt(Math.floor(Math.random() * possible.length));
-            var remoteHost = "192.168.0.14:3000";
+            var remoteHost = "192.168.0.16:3000";
             console.log(remoteHost);
             var encodedMail = new Buffer(req.body.email).toString('base64');
             var link = "http://" + remoteHost + "/marine/user/verify?mail=" + encodedMail;
@@ -268,15 +268,10 @@ router.get("/user/get", cors(), function(req, res) {
         });
     });
 });
-router.post("/user/fetchPolicyQuoes", cors(), function(req, res) {
+router.post("/user/fetchPolicyQuotes", function(req, res) {
     var objBD = BD();
     objBD.connect();
-    var policy = {
-        consignmentWeight: req.body.consignmentWeight,
-        consignmentValue: req.body.consignmentValue,
-        transportMode: req.body.transportMode,
-        contractType: req.body.contractType
-    };
+
     const consignmentWeight = req.body.consignmentWeight;
     console.log("consignmentWeight" + consignmentWeight);
     const consignmentValue = req.body.consignmentValue;
@@ -285,67 +280,217 @@ router.post("/user/fetchPolicyQuoes", cors(), function(req, res) {
     console.log("transportMode" + transportMode);
     const contractType = req.body.contractType;
     console.log("contractType" + contractType);
-    objBD.query('INSERT INTO savepolicy SET ? ', policy, function(error) {
+    objBD.query('SELECT * from user_detail', function(error, results, fields) {
+        var id = JSON.parse(JSON.stringify(results));
+        id[0].uid;
+        console.log(id);
 
-    });
-    var policyList;
-    var cifPolicy;
-    var cisPolicy;
-    var cipPolicy;
-    var fobPolicy;
-    if (contractType == "cifPolicy") {
+        var policy = {
+            consignmentWeight: req.body.consignmentWeight,
+            consignmentValue: req.body.consignmentValue,
+            transportMode: req.body.transportMode,
+            contractType: req.body.contractType,
+            uid: id[0].uid
+        };
 
-        policyList = [{
-                "policyName": "Marine Insurance",
-                "Roadways": "True",
-                "Shipping": "False",
-                "Railway": "True",
-                "Airways": "False",
-                "premiumAmount": "1Lac",
-                "sumInsured": "50k",
-                "premiumPayment": "12k"
-            }, {
-                "policyName": "Blue Dart",
-                "Roadways": "False",
-                "Shipping": "True",
-                "Railway": "False",
-                "Airways": "True",
-                "premiumAmount": "3Lac",
-                "sumInsured": "1.25ac",
-                "premiumPayment": "20k"
+        objBD.query('INSERT INTO savepolicy SET ? ', policy, function(error) {});
+        var policyList;
+        var cifPolicy;
+        var cisPolicy;
+        var cipPolicy;
+        var fobPolicy;
+        if (contractType == "cifPolicy") {
 
-            }, {
-                "policyName": "DHFL",
-                "Roadways": "True",
-                "Shipping": "False",
-                "Railway": "True",
-                "Airways": "True",
-                "premiumAmount": "3Lac",
-                "sumInsured": "7.25k",
-                "premiumPayment": "15k"
-            }, {
-                "policyName": "Blue Dart",
-                "Roadways": "True",
-                "Shipping": "True",
-                "Railway": "False",
-                "Airways": "False",
-                "premiumAmount": "3Lac",
-                "sumInsured": "1.25ac",
-                "premiumPayment": "20k"
+            policyList = [{
+                    "policyName": "Marine Insurance",
+                    "Roadways": "True",
+                    "Shipping": "False",
+                    "Railway": "True",
+                    "Airways": "False",
+                    "premiumAmount": "1Lac",
+                    "sumInsured": "50k",
+                    "premiumPayment": "12k"
+                }, {
+                    "policyName": "Blue Dart",
+                    "Roadways": "False",
+                    "Shipping": "True",
+                    "Railway": "False",
+                    "Airways": "True",
+                    "premiumAmount": "3Lac",
+                    "sumInsured": "1.25ac",
+                    "premiumPayment": "20k"
 
-            },
-            {
-                "policyName": "Maersk",
-                "Roadways": "True",
-                "Shipping": "False",
-                "Railway": "True",
-                "Airways": "False",
-                "premiumAmount": "5Lac",
-                "sumInsured": "2.25ac",
-                "premiumPayment": "55k"
+                }, {
+                    "policyName": "DHFL",
+                    "Roadways": "True",
+                    "Shipping": "False",
+                    "Railway": "True",
+                    "Airways": "True",
+                    "premiumAmount": "3Lac",
+                    "sumInsured": "7.25k",
+                    "premiumPayment": "15k"
+                }, {
+                    "policyName": "Blue Dart",
+                    "Roadways": "True",
+                    "Shipping": "True",
+                    "Railway": "False",
+                    "Airways": "False",
+                    "premiumAmount": "3Lac",
+                    "sumInsured": "1.25ac",
+                    "premiumPayment": "20k"
 
-            },
-            {
+                },
+                {
+                    "policyName": "Maersk",
+                    "Roadways": "True",
+                    "Shipping": "False",
+                    "Railway": "True",
+                    "Airways": "False",
+                    "premiumAmount": "5Lac",
+                    "sumInsured": "2.25ac",
+                    "premiumPayment": "55k"
+
+                },
+                {
+                    "policyName": "ICICI Lombard",
+                    "Roadways": "False",
+                    "Shipping": "False",
+                    "Railway": "True",
+                    "Airways": "True",
+                    "premiumAmount": "1Lac",
+                    "sumInsured": "50k",
+                    "premiumPayment": "6k"
+                }
+            ]
+
+        } else if (contractType == "cisPolicy") {
+
+            policyList = [{
+                    "policyName": "ICICI Insurance",
+                    "Roadways": "True",
+                    "Shipping": "False",
+                    "Railway": "True",
+                    "Airways": "False",
+                    "premiumAmount": "3Lac",
+                    "sumInsured": "1.5Lac",
+                    "premiumPayment": "60k"
+                }, {
+                    "policyName": "Maersk",
+                    "Roadways": "False",
+                    "Shipping": "True",
+                    "Railway": "False",
+                    "Airways": "True",
+                    "premiumAmount": "5Lac",
+                    "sumInsured": "2.25ac",
+                    "premiumPayment": "55k"
+
+                }, {
+                    "policyName": "Doodle",
+                    "Roadways": "True",
+                    "Shipping": "False",
+                    "Railway": "True",
+                    "Airways": "True",
+                    "premiumAmount": "5Lac",
+                    "sumInsured": "7.25k",
+                    "premiumPayment": "15k"
+                }, {
+                    "policyName": "MineDart",
+                    "Roadways": "True",
+                    "Shipping": "True",
+                    "Railway": "False",
+                    "Airways": "False",
+                    "premiumAmount": "5Lac",
+                    "sumInsured": "1.25ac",
+                    "premiumPayment": "20k"
+
+                },
+                {
+                    "policyName": "Marine Insurance",
+                    "Roadways": "True",
+                    "Shipping": "False",
+                    "Railway": "True",
+                    "Airways": "False",
+                    "premiumAmount": "1Lac",
+                    "sumInsured": "50k",
+                    "premiumPayment": "12k"
+                }, {
+                    "policyName": "Blue Dart",
+                    "Roadways": "False",
+                    "Shipping": "True",
+                    "Railway": "False",
+                    "Airways": "True",
+                    "premiumAmount": "3Lac",
+                    "sumInsured": "1.25ac",
+                    "premiumPayment": "20k"
+
+                }
+            ]
+
+        } else if (contractType == "cipPolicy") {
+            policyList = [{
+                    "policyName": "All India Insurance",
+                    "Roadways": "True",
+                    "Shipping": "False",
+                    "Railway": "True",
+                    "Airways": "False",
+                    "premiumAmount": "1Lac",
+                    "sumInsured": "50k",
+                    "premiumPayment": "6k"
+                }, {
+                    "policyName": "wizCraft",
+                    "Roadways": "False",
+                    "Shipping": "False",
+                    "Railway": "True",
+                    "Airways": "True",
+                    "premiumAmount": "5Lac",
+                    "sumInsured": "1.25ac",
+                    "premiumPayment": "20k"
+
+                }, {
+                    "policyName": "DreamWork",
+                    "Roadways": "False",
+                    "Shipping": "True",
+                    "Railway": "False",
+                    "Airways": "True",
+                    "premiumAmount": "5Lac",
+                    "sumInsured": "7.25k",
+                    "premiumPayment": "15k"
+                }, {
+                    "policyName": "Emirates",
+                    "Roadways": "True",
+                    "Shipping": "True",
+                    "Railway": "False",
+                    "Airways": "False",
+                    "premiumAmount": "5Lac",
+                    "sumInsured": "1.25ac",
+                    "premiumPayment": "20k"
+
+                },
+                {
+                    "policyName": "Marine Insurance",
+                    "Roadways": "True",
+                    "Shipping": "False",
+                    "Railway": "True",
+                    "Airways": "False",
+                    "premiumAmount": "1Lac",
+                    "sumInsured": "50k",
+                    "premiumPayment": "12k"
+                }, {
+                    "policyName": "Blue Dart",
+                    "Roadways": "False",
+                    "Shipping": "True",
+                    "Railway": "False",
+                    "Airways": "True",
+                    "premiumAmount": "3Lac",
+                    "sumInsured": "1.25ac",
+                    "premiumPayment": "20k"
+
+                }
+            ]
+
+        } else if (contractType == "fobPolicy") {
+
+            policyList = [{
                 "policyName": "ICICI Lombard",
                 "Roadways": "False",
                 "Shipping": "False",
@@ -354,26 +499,41 @@ router.post("/user/fetchPolicyQuoes", cors(), function(req, res) {
                 "premiumAmount": "1Lac",
                 "sumInsured": "50k",
                 "premiumPayment": "6k"
-            }
-        ]
-
-    } else if (contractType == "cisPolicy") {
-
-        policyList = [{
-                "policyName": "ICICI Insurance",
-                "Roadways": "True",
-                "Shipping": "False",
-                "Railway": "True",
-                "Airways": "False",
-                "premiumAmount": "3Lac",
-                "sumInsured": "1.5Lac",
-                "premiumPayment": "60k"
             }, {
-                "policyName": "Maersk",
+                "policyName": "Oriental",
+                "Roadways": "True",
+                "Shipping": "True",
+                "Railway": "False",
+                "Airways": "False",
+                "premiumAmount": "5Lac",
+                "sumInsured": "1.25ac",
+                "premiumPayment": "20k"
+
+            }, {
+                "policyName": "DHFL",
                 "Roadways": "False",
                 "Shipping": "True",
                 "Railway": "False",
                 "Airways": "True",
+                "premiumAmount": "5Lac",
+                "sumInsured": "7.25k",
+                "premiumPayment": "15k"
+            }, {
+                "policyName": "Harwlett Packards",
+                "Roadways": "True",
+                "Shipping": "False",
+                "Railway": "True",
+                "Airways": "False",
+                "premiumAmount": "5Lac",
+                "sumInsured": "1.25ac",
+                "premiumPayment": "20k"
+
+            }, {
+                "policyName": "Maersk",
+                "Roadways": "True",
+                "Shipping": "False",
+                "Railway": "True",
+                "Airways": "False",
                 "premiumAmount": "5Lac",
                 "sumInsured": "2.25ac",
                 "premiumPayment": "55k"
@@ -381,174 +541,19 @@ router.post("/user/fetchPolicyQuoes", cors(), function(req, res) {
             }, {
                 "policyName": "Doodle",
                 "Roadways": "True",
-                "Shipping": "False",
-                "Railway": "True",
-                "Airways": "True",
+                "Shipping": "True",
+                "Railway": "False",
+                "Airways": "False",
                 "premiumAmount": "5Lac",
                 "sumInsured": "7.25k",
                 "premiumPayment": "15k"
-            }, {
-                "policyName": "MineDart",
-                "Roadways": "True",
-                "Shipping": "True",
-                "Railway": "False",
-                "Airways": "False",
-                "premiumAmount": "5Lac",
-                "sumInsured": "1.25ac",
-                "premiumPayment": "20k"
+            }]
 
-            },
-            {
-                "policyName": "Marine Insurance",
-                "Roadways": "True",
-                "Shipping": "False",
-                "Railway": "True",
-                "Airways": "False",
-                "premiumAmount": "1Lac",
-                "sumInsured": "50k",
-                "premiumPayment": "12k"
-            }, {
-                "policyName": "Blue Dart",
-                "Roadways": "False",
-                "Shipping": "True",
-                "Railway": "False",
-                "Airways": "True",
-                "premiumAmount": "3Lac",
-                "sumInsured": "1.25ac",
-                "premiumPayment": "20k"
-
-            }
-        ]
-
-    } else if (contractType == "cipPolicy") {
-        policyList = [{
-                "policyName": "All India Insurance",
-                "Roadways": "True",
-                "Shipping": "False",
-                "Railway": "True",
-                "Airways": "False",
-                "premiumAmount": "1Lac",
-                "sumInsured": "50k",
-                "premiumPayment": "6k"
-            }, {
-                "policyName": "wizCraft",
-                "Roadways": "False",
-                "Shipping": "False",
-                "Railway": "True",
-                "Airways": "True",
-                "premiumAmount": "5Lac",
-                "sumInsured": "1.25ac",
-                "premiumPayment": "20k"
-
-            }, {
-                "policyName": "DreamWork",
-                "Roadways": "False",
-                "Shipping": "True",
-                "Railway": "False",
-                "Airways": "True",
-                "premiumAmount": "5Lac",
-                "sumInsured": "7.25k",
-                "premiumPayment": "15k"
-            }, {
-                "policyName": "Emirates",
-                "Roadways": "True",
-                "Shipping": "True",
-                "Railway": "False",
-                "Airways": "False",
-                "premiumAmount": "5Lac",
-                "sumInsured": "1.25ac",
-                "premiumPayment": "20k"
-
-            },
-            {
-                "policyName": "Marine Insurance",
-                "Roadways": "True",
-                "Shipping": "False",
-                "Railway": "True",
-                "Airways": "False",
-                "premiumAmount": "1Lac",
-                "sumInsured": "50k",
-                "premiumPayment": "12k"
-            }, {
-                "policyName": "Blue Dart",
-                "Roadways": "False",
-                "Shipping": "True",
-                "Railway": "False",
-                "Airways": "True",
-                "premiumAmount": "3Lac",
-                "sumInsured": "1.25ac",
-                "premiumPayment": "20k"
-
-            }
-        ]
-
-    } else if (contractType == "fobPolicy") {
-
-        policyList = [{
-            "policyName": "ICICI Lombard",
-            "Roadways": "False",
-            "Shipping": "False",
-            "Railway": "True",
-            "Airways": "True",
-            "premiumAmount": "1Lac",
-            "sumInsured": "50k",
-            "premiumPayment": "6k"
-        }, {
-            "policyName": "Oriental",
-            "Roadways": "True",
-            "Shipping": "True",
-            "Railway": "False",
-            "Airways": "False",
-            "premiumAmount": "5Lac",
-            "sumInsured": "1.25ac",
-            "premiumPayment": "20k"
-
-        }, {
-            "policyName": "DHFL",
-            "Roadways": "False",
-            "Shipping": "True",
-            "Railway": "False",
-            "Airways": "True",
-            "premiumAmount": "5Lac",
-            "sumInsured": "7.25k",
-            "premiumPayment": "15k"
-        }, {
-            "policyName": "Harwlett Packards",
-            "Roadways": "True",
-            "Shipping": "False",
-            "Railway": "True",
-            "Airways": "False",
-            "premiumAmount": "5Lac",
-            "sumInsured": "1.25ac",
-            "premiumPayment": "20k"
-
-        }, {
-            "policyName": "Maersk",
-            "Roadways": "True",
-            "Shipping": "False",
-            "Railway": "True",
-            "Airways": "False",
-            "premiumAmount": "5Lac",
-            "sumInsured": "2.25ac",
-            "premiumPayment": "55k"
-
-        }, {
-            "policyName": "Doodle",
-            "Roadways": "True",
-            "Shipping": "True",
-            "Railway": "False",
-            "Airways": "False",
-            "premiumAmount": "5Lac",
-            "sumInsured": "7.25k",
-            "premiumPayment": "15k"
-        }]
-
-    }
-    console.log(policyList);
-    return res.json({
-        "policyList": policyList
+        }
+        return res.json({
+            "policyList": policyList
+        });
     });
-
 });
 
 module.exports = router;
