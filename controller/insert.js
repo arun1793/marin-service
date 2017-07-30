@@ -10,7 +10,7 @@ var https = require('https');
 function BD() {
     var connection = mysql.createConnection({
         user: 'root',
-        password: 'rpqb123',
+        password: 'root',
         host: 'localhost',
         database: 'marine_db'
     });
@@ -93,7 +93,7 @@ router.post("/user/registerUser", function(req, res) {
                 //otp will be sent via sms to validate phone number.
                 otptosend = "OTP: " + otp;
                 nexmo.message.sendSms(
-                    '919619372165', phonetosend, otptosend, { type: 'unicode' },
+                    '919768135452', phonetosend, otptosend, { type: 'unicode' },
                     (err, responseData) => { if (responseData) { console.log(responseData) } }
                 );
                 return res.json({
@@ -276,8 +276,6 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
     console.log("consignmentWeight" + consignmentWeight);
     const consignmentValue = req.body.consignmentValue;
     console.log("consignmentvalue" + consignmentValue);
-    const transportMode = req.body.transportMode;
-    console.log("transportMode" + transportMode);
     const contractType = req.body.contractType;
     console.log("contractType" + contractType);
     objBD.query('SELECT * from user_detail', function(error, results, fields) {
@@ -288,7 +286,6 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
         var policy = {
             consignmentWeight: req.body.consignmentWeight,
             consignmentValue: req.body.consignmentValue,
-            transportMode: req.body.transportMode,
             contractType: req.body.contractType,
             uid: id[0].uid
         };
