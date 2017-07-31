@@ -7,7 +7,6 @@
 //this is the start of the application 
 //from here the blockchain enviornment setup would start and our node js port for webservice would also start running
 
-
 'use strict';
 
 const express = require('express');
@@ -155,9 +154,9 @@ function setup() {
 
 
 }
-/**
-Instantiates CloudantKeyValueStoreModel object with dbName and corresponding dbInstance
-**/
+
+// Instantiates CloudantKeyValueStoreModel object with dbName and corresponding dbInstance
+
 function getCloudantKeyValStore(datastore, dbName) {
     return new Promise(function(resolve, reject) {
         logHelper.logEntryAndInput(logger, 'getCloudantKeyValStore', dbName);

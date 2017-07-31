@@ -8,14 +8,10 @@ import (
 	// "time"
 	//"strings"
 	//"reflect"
-
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
 var userIndexStr = "_userindex"
-
-//var campaignIndexStr= "_campaignindex"
-//var transactionIndexStr= "_transactionindex"
 
 type User struct {
 	Id       	int    `json:"id"`
@@ -37,20 +33,38 @@ type Agreement struct{
 	ConsignmentWeight  int 	   `json:"consignmentweight"`
 	ConsignmentValue   int	   `json:"consignmentvalue"`
 	TransportMode	   string  `json:"transportmode"`
-
 }
 
 type AllAgreement struct{
 	Querylist []Agreement `json:"querylist"`
 }
 
-type SessionAunthentication struct {
-	Token string `json:"token"`
-	Email string `json:"email"`
+type Policy struct{
+	Id 				   int 	   `json:"id"`
+	ConsignmentWeight  int 	   `json:"consignmentweight"`
+	ConsignmentValue   int	   `json:"consignmentvalue"`
+	ContractType	   string  `json:"contracttype"`
 }
 
-type Session struct {
-	StoreSession []SessionAunthentication `json:"session"`
+type AllPolicy struct{
+	Policylist []Policy `json:"policylist"`
+}
+
+type Consignment struct{
+	Id					int		`json:"id"`
+	PolicyName 	     	string 	`json:"policyname"`
+    PremiumAmount    	int 	`json:"premiumamount"`
+    SumInsured 	     	int 	`json:"suminsured"`
+	ConsignmentType  	string 	`json:"consignmenttype"`
+	PackingMode 	 	string 	`json:"packingmode"`
+	ConsignmentWeight 	int 	`json:"consignmentweight"`
+    ConsignmentValue 	int 	`json:"consignmentvalue"`
+    TransportMode 		string 	`json:"transportmode"`
+    ContractType 		string 	`json:"contracttype"`        
+}
+
+type AllConsignment struct{
+	Consignmentlist []Consignment `json:"consignmentlist"`
 }
 
 type SimpleChaincode struct {
@@ -108,6 +122,10 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return t.registerUser(stub, args)
 	}else if function =="fetchPolicyQuotes"{
 		return t.fetchPolicyQuotes(stub,args)
+	}else if function=="savePolicy"{
+		return t.savePolicy(stub,args)
+	}else if function=="consignmentDetail"{
+		return t.consignmentDetail(stub,args)
 	}
 	
 	fmt.Println("invoke did not find func: " + function)
@@ -200,7 +218,6 @@ func (t *SimpleChaincode) registerUser(stub shim.ChaincodeStubInterface, args []
         return nil, errors.New("6th argument must be a non-empty string")
     }
 	
-	
 	user := User{}
 
 	user.Id, err = strconv.Atoi(args[0])
@@ -240,43 +257,6 @@ func (t *SimpleChaincode) registerUser(stub shim.ChaincodeStubInterface, args []
     return nil, nil
 }
 
-func (t *SimpleChaincode) userLogin(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-	var err error
-
-	if len(args) != 2 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 2")
-	}
-
-	//input sanitation
-	fmt.Println("login")
-	if len(args[0]) <= 0 {
-		return nil, errors.New("1st argument must be a non-empty string")
-	}
-	if len(args[1]) <= 0 {
-		return nil, errors.New("2nd argument must be a non-empty string")
-	}
-
-	email := args[0]
-
-	password := args[1]
-	
-
-	UserAsBytes, err := stub.GetState("getusers")
-	if err != nil {
-		return nil, errors.New("Failed to get users")
-	}
-	var allusers AllUsers
-	json.Unmarshal(UserAsBytes, &allusers) //un stringify it aka JSON.parse()
-
-	for i := 0; i < len(allusers.Userlist); i++ {
-
-		if allusers.Userlist[i].Email == email && allusers.Userlist[i].Password == password {
-
-			return []byte(allusers.Userlist[i].Email), nil
-		}
-	}
-	return nil, nil
-}
 //fetchPolicyQuotes- invoke function stores details to fetch Quotes.
 func (t *SimpleChaincode) fetchPolicyQuotes(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
     var err error
@@ -346,3 +326,175 @@ func (t *SimpleChaincode) fetchPolicyQuotes(stub shim.ChaincodeStubInterface, ar
     return nil, nil
 }
 
+func(t*simplechaincode) savePolicy(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	var err error
+	
+	if len(args) != 4 {
+        return nil, errors.New("Incorrect number of arguments. Expecting 4")
+	}
+	 //input sanitation
+    fmt.Println("- start filling policy detail")
+    if len(args[0]) <= 0 {
+        return nil, errors.New("1st argument must be a non-empty string")
+    }
+    if len(args[1]) <= 0 {
+        return nil, errors.New("2nd argument must be a non-empty string")
+    }
+    if len(args[2]) <= 0 {
+        return nil, errors.New("3rd argument must be a non-empty string")
+	}
+	 if len(args[3]) <= 0 {
+        return nil, errors.New("4th argument must be a non-empty string")
+    }
+	
+	policy := Policy{}
+
+	policy.Id, err = strconv.Atoi(args[0])
+	
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+
+	policy.ContractType=args[1]
+	fmt.Println("policy", policy)
+	
+	policy.ConsignmentWeight, err = strconv.Atoi(args[2])
+	
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+
+	policy.ConsignmentValue, err = strconv.Atoi(args[3])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+	
+	policy.TransportMode=args[4]
+    fmt.Println("policy", policy)
+
+    policyAsBytes, err := stub.GetState("getpolicy")
+    if err != nil {
+        return nil, errors.New("Failed to get policy")
+    }
+	
+	var allpolicy AllPolicy
+    json.Unmarshal(policyAsBytes, &allpolicy) //un stringify it aka JSON.parse()
+
+    allpolicy.Policylist = append(allpolicy.Policylist, policy)
+    fmt.Println("allpolicy",  allpolicy.Policylist) //append to allpolicy
+    fmt.Println("! appended policy to allpolicy")
+	
+	jsonAsBytes, _ := json.Marshal(allpolicy)
+    fmt.Println("json", jsonAsBytes)
+    err = stub.PutState("getpolicy", jsonAsBytes) //rewrite allpolicy
+    if err != nil {
+        return nil, err
+    }
+	
+	fmt.Println("- end of the savepolicy")
+    return nil, nil
+}
+func(t*simplechaincode) consignmentDetail(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	var err error
+			
+	if len(args) != 10 {
+        return nil, errors.New("Incorrect number of arguments. Expecting 10")
+	}
+	 //input sanitation
+    fmt.Println("- start filling policy detail")
+	if len(args[0])<= 0
+	if len(args[1]) <= 0 {
+        return nil, errors.New("1st argument must be a non-empty string")
+    }
+    if len(args[2]) <= 0 {
+        return nil, errors.New("2nd argument must be a non-empty string")
+    }
+    if len(args[3]) <= 0 {
+        return nil, errors.New("3rd argument must be a non-empty string")
+	}
+	 if len(args[4]) <= 0 {
+        return nil, errors.New("4th argument must be a non-empty string")
+	}
+	if len(args[5] <= 0){
+		return nil, errors.New("5th argument must be a non-empty string")
+	}
+	if len(args[6] <= 0){
+		return nil, errors.New("6th argument must be a non-empty string")
+	}
+	if len(args[7] <= 0){
+		return nil, errors.New("7th argument must be a non-empty string")
+	}
+	if len(args[8] <= 0){
+		return nil, errors.New("8th argument must be a non-empty string")
+	}
+	if len(args[9] <= 0){
+		return nil, errors.New("9th argument must be a non-empty string")
+	}
+
+	consignment:=Consignment{}
+
+	consignment.Id, err = strconv.Atoi(args[0])
+	
+	if err != nil {
+		return nil, errors.New("Failed to get premiumamount as cannot convert it to int")
+	}
+
+	consignment.PolicyName=args[1]
+	fmt.Println("consignment", consignment)
+	
+	consignment.PremiumAmount, err = strconv.Atoi(args[2])
+	
+	if err != nil {
+		return nil, errors.New("Failed to get premiumamount as cannot convert it to int")
+	}
+	consignment.SumInsured, err = strconv.Atoi(args[3])
+	
+	if err != nil {
+		return nil, errors.New("Failed to get suminsured as cannot convert it to int")
+	}
+
+	consignment.ConsignmentType=args[4]
+	fmt.Println("consignment", consignment)
+
+	consignment.PackingMode=args[5]
+	fmt.Println("consignment", consignment)
+
+	consignment.ConsignmentWeight, err = strconv.Atoi(args[6])
+	
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+
+	consignment.ConsignmentValue, err = strconv.Atoi(args[7])
+	if err != nil {
+		return nil, errors.New("Failed to get id as cannot convert it to int")
+	}
+	
+	consignment.TransportMode=args[8]
+    fmt.Println("consignment", consignment)
+	
+	consignment.ContractType=args[9]
+	fmt.Println("consignment", consignment)
+
+    consignmentAsBytes, err := stub.GetState("getconsignment")
+    if err != nil {
+        return nil, errors.New("Failed to get consignment")
+    }
+	
+	var allconsignment AllConsignment
+    json.Unmarshal(consignmentAsBytes, &allconsignment) //un stringify it aka JSON.parse()
+
+    allconsignment.Consignmentlist = append(allconsignment.Consignmentlist, consignment)
+    fmt.Println("allconsignment",  allconsignment.Consignmentlist) //append to allconsignment
+    fmt.Println("! appended policy to allconsignment")
+	
+	jsonAsBytes, _ := json.Marshal(allconsignment)
+    fmt.Println("json", jsonAsBytes)
+    err = stub.PutState("getconsignment", jsonAsBytes) //rewrite allconsignment
+    if err != nil {
+        return nil, err
+    }
+	
+	fmt.Println("- end of the consignmentdetail")
+    return nil, nil
+}

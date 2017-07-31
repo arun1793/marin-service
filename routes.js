@@ -180,7 +180,6 @@ module.exports = router => {
     });
 
     //Consignment-routes user input to payment gateway
-
     router.post('/user/consignmentDetail', cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
@@ -219,7 +218,7 @@ module.exports = router => {
     });
 
     //issuedpolicy- routes users issued policies 
-    router.get('/user/fetchissuedpolicy', (req, res) => {
+    router.get('/user/fetchissuedpolicy', cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
@@ -261,7 +260,7 @@ module.exports = router => {
         });
     });
     //userLogout- routes token  to function logout 
-    router.post('/userLogout', (req, res) => {
+    router.post('/userLogout', cors(), (req, res) => {
         const token = req.get('Authorization');
         if (!token || !token.trim()) {
             res.status(400).json({ message: 'Invalid Request!' });

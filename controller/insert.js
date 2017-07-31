@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
 var http = require('http');
 var https = require('https');
+
 //database connection done here.
 function BD() {
     var connection = mysql.createConnection({
@@ -32,14 +33,15 @@ var transporter = nodemailer.createTransport("SMTP", {
         pass: "Rpqb@12345"
     }
 });
+
 //registerUser link stores user input in database. 
 router.post("/user/registerUser", function(req, res) {
     var objBD = BD();
-
+    objBD.connect();
     console.log(req.body.email)
     console.log(req.body.password)
     console.log(req.body.usertype)
-    objBD.connect();
+
     var user = {
         fname: req.body.fname,
         lname: req.body.lname,
@@ -74,6 +76,7 @@ router.post("/user/registerUser", function(req, res) {
                 emailtosend = userResults[0].email;
                 phonetosend = userResults[0].phone;
                 objBD.query('INSERT INTO verification( uid, otp,encodedMail) values ( ?, ?, ?)', [userResults[0].uid, otp, encodedMail], function(error, results, fields) {});
+
                 //after generating otp mail will be sent to regsitered user.
                 var mailOptions = {
                     transport: transporter,
@@ -90,6 +93,7 @@ router.post("/user/registerUser", function(req, res) {
                     }
                     console.log("Message sent: " + info.messageId);
                 });
+
                 //otp will be sent via sms to validate phone number.
                 otptosend = "OTP: " + otp;
                 nexmo.message.sendSms(
@@ -100,12 +104,12 @@ router.post("/user/registerUser", function(req, res) {
                     "status": true,
                     "message": "Registration Successfull"
                 });
-
             });
         }
     });
 });
-//verify link will validate user here.
+
+//verify link will validate user email here.
 router.get('/user/verify', function(req, res, next) {
     var querymail = req.query.mail;
     console.log("URL: " + querymail);
@@ -137,11 +141,15 @@ router.get('/user/verify', function(req, res, next) {
         }
     });
 });
+
+//phoneverification link will validate phone number
 router.post('/user/phoneverification', function(req, res) {
     var objBD = BD();
     objBD.connect();
+
     var otp = req.body.otp;
     console.log(otp);
+
     objBD.query('SELECT * FROM verification where otp=?', [otp], function(error, results, fields) {
         if (error) {
             res.send({
@@ -171,6 +179,7 @@ router.post('/user/phoneverification', function(req, res) {
         }
     })
 });
+
 //userLogin link compares userinput with database data and gives response as token.
 router.post("/user/userLogin", cors(), function(req, res) {
     var objBD = BD();
@@ -268,6 +277,8 @@ router.get("/user/get", cors(), function(req, res) {
         });
     });
 });
+
+//fetchPolicyQuotes link will fetch policies as per user requirement
 router.post("/user/fetchPolicyQuotes", function(req, res) {
     var objBD = BD();
     objBD.connect();
@@ -304,8 +315,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "False",
                     "Railway": "True",
                     "Airways": "False",
-                    "premiumAmount": "1Lac",
-                    "sumInsured": "50k",
+                    "premiumAmount": "3,500",
+                    "sumInsured": "50,000",
                     "premiumPayment": "12k"
                 }, {
                     "policyName": "Blue Dart",
@@ -313,8 +324,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "True",
                     "Railway": "False",
                     "Airways": "True",
-                    "premiumAmount": "3Lac",
-                    "sumInsured": "1.25ac",
+                    "premiumAmount": "4,000",
+                    "sumInsured": "1,25,000",
                     "premiumPayment": "20k"
 
                 }, {
@@ -323,8 +334,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "False",
                     "Railway": "True",
                     "Airways": "True",
-                    "premiumAmount": "3Lac",
-                    "sumInsured": "7.25k",
+                    "premiumAmount": "3,000",
+                    "sumInsured": "1,00,000",
                     "premiumPayment": "15k"
                 }, {
                     "policyName": "Blue Dart",
@@ -332,8 +343,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "True",
                     "Railway": "False",
                     "Airways": "False",
-                    "premiumAmount": "3Lac",
-                    "sumInsured": "1.25ac",
+                    "premiumAmount": "3,750",
+                    "sumInsured": "1,25,000",
                     "premiumPayment": "20k"
 
                 },
@@ -343,8 +354,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "False",
                     "Railway": "True",
                     "Airways": "False",
-                    "premiumAmount": "5Lac",
-                    "sumInsured": "2.25ac",
+                    "premiumAmount": "5,000",
+                    "sumInsured": "2,25,000",
                     "premiumPayment": "55k"
 
                 },
@@ -354,8 +365,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "False",
                     "Railway": "True",
                     "Airways": "True",
-                    "premiumAmount": "1Lac",
-                    "sumInsured": "50k",
+                    "premiumAmount": "1,500",
+                    "sumInsured": "50,000",
                     "premiumPayment": "6k"
                 }
             ]
@@ -368,8 +379,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "False",
                     "Railway": "True",
                     "Airways": "False",
-                    "premiumAmount": "3Lac",
-                    "sumInsured": "1.5Lac",
+                    "premiumAmount": "3,000",
+                    "sumInsured": "1,50,000",
                     "premiumPayment": "60k"
                 }, {
                     "policyName": "Maersk",
@@ -377,8 +388,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "True",
                     "Railway": "False",
                     "Airways": "True",
-                    "premiumAmount": "5Lac",
-                    "sumInsured": "2.25ac",
+                    "premiumAmount": "5,000",
+                    "sumInsured": "2,25,000",
                     "premiumPayment": "55k"
 
                 }, {
@@ -387,8 +398,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "False",
                     "Railway": "True",
                     "Airways": "True",
-                    "premiumAmount": "5Lac",
-                    "sumInsured": "7.25k",
+                    "premiumAmount": "5,000",
+                    "sumInsured": "7,25,000",
                     "premiumPayment": "15k"
                 }, {
                     "policyName": "MineDart",
@@ -396,8 +407,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "True",
                     "Railway": "False",
                     "Airways": "False",
-                    "premiumAmount": "5Lac",
-                    "sumInsured": "1.25ac",
+                    "premiumAmount": "5,000",
+                    "sumInsured": "1,25,000",
                     "premiumPayment": "20k"
 
                 },
@@ -407,8 +418,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "False",
                     "Railway": "True",
                     "Airways": "False",
-                    "premiumAmount": "1Lac",
-                    "sumInsured": "50k",
+                    "premiumAmount": "1,000",
+                    "sumInsured": "50,000",
                     "premiumPayment": "12k"
                 }, {
                     "policyName": "Blue Dart",
@@ -416,8 +427,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "True",
                     "Railway": "False",
                     "Airways": "True",
-                    "premiumAmount": "3Lac",
-                    "sumInsured": "1.25ac",
+                    "premiumAmount": "3,000",
+                    "sumInsured": "1,25,000",
                     "premiumPayment": "20k"
 
                 }
@@ -430,8 +441,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "False",
                     "Railway": "True",
                     "Airways": "False",
-                    "premiumAmount": "1Lac",
-                    "sumInsured": "50k",
+                    "premiumAmount": "1,000",
+                    "sumInsured": "50,000",
                     "premiumPayment": "6k"
                 }, {
                     "policyName": "wizCraft",
@@ -439,8 +450,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "False",
                     "Railway": "True",
                     "Airways": "True",
-                    "premiumAmount": "5Lac",
-                    "sumInsured": "1.25ac",
+                    "premiumAmount": "5,000",
+                    "sumInsured": "1,25,000",
                     "premiumPayment": "20k"
 
                 }, {
@@ -449,8 +460,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "True",
                     "Railway": "False",
                     "Airways": "True",
-                    "premiumAmount": "5Lac",
-                    "sumInsured": "7.25k",
+                    "premiumAmount": "5,000",
+                    "sumInsured": "7,25,000",
                     "premiumPayment": "15k"
                 }, {
                     "policyName": "Emirates",
@@ -458,8 +469,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "True",
                     "Railway": "False",
                     "Airways": "False",
-                    "premiumAmount": "5Lac",
-                    "sumInsured": "1.25ac",
+                    "premiumAmount": "5,000",
+                    "sumInsured": "1,25,000",
                     "premiumPayment": "20k"
 
                 },
@@ -469,8 +480,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "False",
                     "Railway": "True",
                     "Airways": "False",
-                    "premiumAmount": "1Lac",
-                    "sumInsured": "50k",
+                    "premiumAmount": "1,000",
+                    "sumInsured": "50,000",
                     "premiumPayment": "12k"
                 }, {
                     "policyName": "Blue Dart",
@@ -478,8 +489,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                     "Shipping": "True",
                     "Railway": "False",
                     "Airways": "True",
-                    "premiumAmount": "3Lac",
-                    "sumInsured": "1.25ac",
+                    "premiumAmount": "3,000",
+                    "sumInsured": "1,25,000",
                     "premiumPayment": "20k"
 
                 }
@@ -493,8 +504,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                 "Shipping": "False",
                 "Railway": "True",
                 "Airways": "True",
-                "premiumAmount": "1Lac",
-                "sumInsured": "50k",
+                "premiumAmount": "1,000",
+                "sumInsured": "50,000",
                 "premiumPayment": "6k"
             }, {
                 "policyName": "Oriental",
@@ -502,8 +513,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                 "Shipping": "True",
                 "Railway": "False",
                 "Airways": "False",
-                "premiumAmount": "5Lac",
-                "sumInsured": "1.25ac",
+                "premiumAmount": "5,000",
+                "sumInsured": "1,25,000",
                 "premiumPayment": "20k"
 
             }, {
@@ -512,8 +523,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                 "Shipping": "True",
                 "Railway": "False",
                 "Airways": "True",
-                "premiumAmount": "5Lac",
-                "sumInsured": "7.25k",
+                "premiumAmount": "5,000",
+                "sumInsured": "7,25,000",
                 "premiumPayment": "15k"
             }, {
                 "policyName": "Harwlett Packards",
@@ -521,8 +532,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                 "Shipping": "False",
                 "Railway": "True",
                 "Airways": "False",
-                "premiumAmount": "5Lac",
-                "sumInsured": "1.25ac",
+                "premiumAmount": "5,000",
+                "sumInsured": "1,25,000",
                 "premiumPayment": "20k"
 
             }, {
@@ -531,8 +542,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                 "Shipping": "False",
                 "Railway": "True",
                 "Airways": "False",
-                "premiumAmount": "5Lac",
-                "sumInsured": "2.25ac",
+                "premiumAmount": "5,000",
+                "sumInsured": "2,25,000",
                 "premiumPayment": "55k"
 
             }, {
@@ -541,8 +552,8 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                 "Shipping": "True",
                 "Railway": "False",
                 "Airways": "False",
-                "premiumAmount": "5Lac",
-                "sumInsured": "7.25k",
+                "premiumAmount": "5,000",
+                "sumInsured": "7,25,000",
                 "premiumPayment": "15k"
             }]
 
