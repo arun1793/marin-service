@@ -57,3 +57,36 @@
 [34m[2017-07-30 20:34:35.200] [TRACE] blockchain_sdk - [39mdoLogin : entry
 [32m[2017-07-30 20:34:35.204] [INFO] blockchain_sdk - [39mdoLogin : Successfully logged in user on blockchain: dhananjay.p - undefined
 [32m[2017-07-30 20:34:35.205] [INFO] console - [39mserver is running on3000
+[32m[2017-07-30 21:56:57.544] [INFO] console - [39mconsignmentWeight10
+[32m[2017-07-30 21:56:57.545] [INFO] console - [39mconsignmentvalue10000
+[32m[2017-07-30 21:56:57.545] [INFO] console - [39mcontractTypecipPolicy
+[32m[2017-07-30 21:56:57.596] [INFO] console - [39m[ { uid: 3,
+    fname: 'Vikram',
+    lname: 'Viswanathan',
+    phone: 919768135452,
+    email: 'vikram.viswanathan@rapidqube.com',
+    usertype: 'Marine Aggregator',
+    password: '12345',
+    status: 'Active' } ]
+[32m[2017-07-30 23:57:20.472] [INFO] console - [39mconsignmentWeight10
+[32m[2017-07-30 23:57:20.512] [INFO] console - [39mconsignmentvalue10000
+[32m[2017-07-30 23:57:20.546] [INFO] console - [39mcontractTypecisPolicy
+[32m[2017-07-30 23:57:21.240] [INFO] console - [39m[ { uid: 3,
+    fname: 'Vikram',
+    lname: 'Viswanathan',
+    phone: 919768135452,
+    email: 'vikram.viswanathan@rapidqube.com',
+    usertype: 'Marine Aggregator',
+    password: '12345',
+    status: 'Active' } ]
+[32m[2017-07-30 23:58:56.201] [INFO] console - [39mconsignmentWeight10
+[32m[2017-07-30 23:58:56.201] [INFO] console - [39mconsignmentvalue1000
+[32m[2017-07-30 23:58:56.202] [INFO] console - [39mcontractTypecifPolicy
+[32m[2017-07-30 23:58:56.246] [INFO] console - [39m[ { uid: 3,
+    fname: 'Vikram',
+    lname: 'Viswanathan',
+    phone: 919768135452,
+    email: 'vikram.viswanathan@rapidqube.com',
+    usertype: 'Marine Aggregator',
+    password: '12345',
+    status: 'Active' } ]
