@@ -119,12 +119,10 @@ module.exports = router => {
                 });
                 register.registerUser(uid, fname, lname, phone, email, usertype, password)
 
-                .then(result => {
-
-                    res.status(result.status).json({ status: result.status, message: result.message })
-                })
-
-                .catch(err => res.status(err.status).json({ message: err.message }));
+                .then((result) => {
+                        res.status(200).json({ "message": "true", "status": "Registration successful" });
+                    })
+                    .catch(err => res.status(err.status).json({ message: err.message }));
             }
         });
     });
@@ -265,6 +263,7 @@ module.exports = router => {
 
         } else {
             objBD.query('SELECT * FROM user_session WHERE token = ?', token, function(error, results, fields) {
+
                 var id = JSON.parse(JSON.stringify(results));
 
                 var policy = {
@@ -536,11 +535,11 @@ module.exports = router => {
 
                 fetchpolicy.fetchPolicyQuotes(id, consignmentWeight, consignmentValue, contractType, policyType)
                     .then((result) => {
-                        res.status(200).json({ message: "added successfully" });
+                        res.status(200).json({ "policyList": policyList });
                     })
-                return res.json({
-                    "policyList": policyList
-                })
+                    // return res.json({
+                    //     "policyList": policyList
+                    // })
             });
         }
     });
@@ -550,6 +549,8 @@ module.exports = router => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
+        const uid = Math.floor(Math.random() * (100000 - 1)) + 1;
+        const id = uid.toString();
         const policyType = req.body.policyType;
         console.log(policyType);
         const consignmentType = req.body.consignmentType;
@@ -595,16 +596,17 @@ module.exports = router => {
 
 
 
-                consignment.consignmentDetail(policyType, consignmentType, packingMode, consignmentWeight, consignmentValue, contractType, policyName, premiumAmount, sumInsured)
+                consignment.consignmentDetail(id, policyType, consignmentType, packingMode, consignmentWeight, consignmentValue, contractType, policyName, premiumAmount, sumInsured)
 
-                .then(result => {
-                    res.status(result.status).json({ message: result.message, message: result.message });
-                })
-                res.send({
-                    "message": "true",
-                    "status": "success"
-                })
-            }); // .catch(err => res.status(err.status).json({ message: err.message }));
+                .then((result) => {
+                        res.status(200).json({ "message": "true", "status": "success" });
+                    })
+                    // res.send({
+                    //         "message": "true",
+                    //         "status": "success"
+                    //     })
+                    // .catch(err => res.status(err.status).json({ message: err.message }));
+            });
         }
     });
 

@@ -62,7 +62,6 @@ function UserRegisteration(params) {
                 .catch(function(err) {
                     logHelper.logError(logger, 'UserRegisteration', 'Could not register user', err);
                     return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not register user' });
-
                 });
 
         } catch (err) {
@@ -76,38 +75,38 @@ function fetchpolicy(params) {
 
     console.log("calling SDK for policy");
     return new Promise(function(resolve, reject) {
-        var UserDetails;
+        var PolicyDetails;
         try {
-            logHelper.logEntryAndInput(logger, 'UserRegisteration', params);
+            logHelper.logEntryAndInput(logger, 'fetchpolicy', params);
 
             if (!validate.isValidJson(params)) {
-                logHelper.logError(logger, 'UserRegisteration', 'Invalid params');
-                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create UserRegisteration. Invalid params' })
+                logHelper.logError(logger, 'fetchpolicy', 'Invalid params');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not  fetchpolicy. Invalid params' })
             }
 
             var user = params.user;
             if (!validate.isValidString(user)) {
-                logHelper.logError(logger, 'UserRegisteration', 'Invalid user');
-                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create UserRegisteration. Invalid user' })
+                logHelper.logError(logger, 'fetchpolicy', 'Invalid user');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not  fetchpolicy. Invalid user' })
             }
 
-            UserDetails = params.UserDetails;
+            PolicyDetails = params.PolicyDetails;
 
-            if (!validate.isValidJson(UserDetails)) {
-                logHelper.logError(logger, 'UserRegisteration', 'Invalid UserDetails');
-                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create  userRegisteration. Invalid json object' })
+            if (!validate.isValidJson(PolicyDetails)) {
+                logHelper.logError(logger, 'fetchpolicy', 'Invalid UserDetails');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not   fetchpolicy. Invalid json object' })
             }
             //here in function name we use the actual function name which is used for registeration i.e User_register
             //args: [UserDetails.name,UserDetails.email,UserDetails.phone,UserDetails.pan,UserDetails.aadhar,UserDetails.usertype,UserDetails.upi,UserDetails.passpin]})
-            var reqSpec = getRequestSpec({ functionName: 'fetchPolicyQuotes', args: [UserDetails.id, UserDetails.consignmentWeight, UserDetails.consignmentValue, UserDetails.contractType, UserDetails.policyType] });
+            var reqSpec = getRequestSpec({ functionName: 'fetchPolicyQuotes', args: [PolicyDetails.id, PolicyDetails.consignmentWeight, PolicyDetails.consignmentValue, PolicyDetails.contractType, PolicyDetails.policyType] });
             recursiveInvoke({ requestSpec: reqSpec, user: user })
                 .then(function(resp) {
-                    logHelper.logMessage(logger, 'UserRegisteration', 'Successfully registered user', resp.body);
-                    return resolve({ statusCode: constants.SUCCESS, body: UserDetails });
+                    logHelper.logMessage(logger, 'fetchpolicy', 'Successfully fetchpolicy', resp.body);
+                    return resolve({ statusCode: constants.SUCCESS, body: PolicyDetails });
                 })
                 .catch(function(err) {
-                    logHelper.logError(logger, 'UserRegisteration', 'Could not register user', err);
-                    return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not register user' });
+                    logHelper.logError(logger, 'fetchpolicy', 'Could not register user', err);
+                    return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not fetchpolicy' });
 
                 });
 
@@ -122,38 +121,38 @@ function consignmentdetail(params) {
 
     console.log("calling SDK for policy");
     return new Promise(function(resolve, reject) {
-        var UserDetails;
+        var ConsignmentDetails;
         try {
-            logHelper.logEntryAndInput(logger, 'UserRegisteration', params);
+            logHelper.logEntryAndInput(logger, 'consignmentdetail', params);
 
             if (!validate.isValidJson(params)) {
-                logHelper.logError(logger, 'UserRegisteration', 'Invalid params');
-                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create UserRegisteration. Invalid params' })
+                logHelper.logError(logger, 'consignmentdetail', 'Invalid params');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create consignmentdetail. Invalid params' })
             }
 
             var user = params.user;
             if (!validate.isValidString(user)) {
-                logHelper.logError(logger, 'UserRegisteration', 'Invalid user');
-                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create UserRegisteration. Invalid user' })
+                logHelper.logError(logger, 'consignmentdetail', 'Invalid user');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create consignmentdetail. Invalid user' })
             }
 
-            UserDetails = params.UserDetails;
+            ConsignmentDetails = params.ConsignmentDetails;
 
-            if (!validate.isValidJson(UserDetails)) {
-                logHelper.logError(logger, 'UserRegisteration', 'Invalid UserDetails');
-                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create  userRegisteration. Invalid json object' })
+            if (!validate.isValidJson(ConsignmentDetails)) {
+                logHelper.logError(logger, 'consignmentdetail', 'Invalid ConsignmentDetails');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create  consignmentdetail. Invalid json object' })
             }
             //here in function name we use the actual function name which is used for registeration i.e User_register
             //args: [UserDetails.name,UserDetails.email,UserDetails.phone,UserDetails.pan,UserDetails.aadhar,UserDetails.usertype,UserDetails.upi,UserDetails.passpin]})
-            var reqSpec = getRequestSpec({ functionName: 'consignmentDetail', args: [UserDetails.id, UserDetails.policyType, UserDetails.consignmentType, UserDetails.packingMode, UserDetails.consignmentWeight, UserDetails.consignmentValue, UserDetails.contractType, UserDetails.policyName, UserDetails.premiumAmount, UserDetails.sumInsured] });
+            var reqSpec = getRequestSpec({ functionName: 'consignmentDetail', args: [ConsignmentDetails.id, ConsignmentDetails.policyType, ConsignmentDetails.consignmentType, ConsignmentDetails.packingMode, ConsignmentDetails.consignmentWeight, ConsignmentDetails.consignmentValue, ConsignmentDetails.contractType, ConsignmentDetails.policyName, ConsignmentDetails.premiumAmount, ConsignmentDetails.sumInsured] });
             recursiveInvoke({ requestSpec: reqSpec, user: user })
                 .then(function(resp) {
-                    logHelper.logMessage(logger, 'UserRegisteration', 'Successfully registered user', resp.body);
-                    return resolve({ statusCode: constants.SUCCESS, body: UserDetails });
+                    logHelper.logMessage(logger, 'consignmentdetail', 'Successfully registered user', resp.body);
+                    return resolve({ statusCode: constants.SUCCESS, body: ConsignmentDetails });
                 })
                 .catch(function(err) {
-                    logHelper.logError(logger, 'UserRegisteration', 'Could not register user', err);
-                    return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not register user' });
+                    logHelper.logError(logger, 'consignmentdetail', 'Could not register user', err);
+                    return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not post consignmentdetail ' });
 
                 });
 

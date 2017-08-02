@@ -22,7 +22,7 @@ exports.consignmentDetail = (id, policyType, consignmentType, packingMode, consi
             sumInsured: sumInsured
         })
 
-        bcSdk.consignmentdetail({ user: user, UserDetails: policy })
+        bcSdk.consignmentdetail({ user: user, ConsignmentDetails: policy })
 
         .then(() => resolve({ "status": true, "message": "policy fetched" }))
 

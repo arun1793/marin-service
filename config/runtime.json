@@ -6,7 +6,7 @@
     },
 
     "chaincode": {
-        "id": "674dc9becaa4d1f823fc7dd5b6040bb566dc08491436a8cacf8daf90a861eb039ab8e89fc99a7fcb7deed28f0b4e6865189c0b8a1c89fe52cebbd73226ce9c50",
+        "id": "86fd8f182176fb5117cda7dd0712286958748f814a9acb4b85d8f40cf53943d0e47e238988ab5f2d311c4a902d121d969daabd61d19899e9848acd9665aad804",
         "name": "cp_chaincode"
     },
 

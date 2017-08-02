@@ -18,7 +18,7 @@ exports.fetchPolicyQuotes = (id, consignmentWeight, consignmentValue, contractTy
             policyType: policyType
         })
 
-        bcSdk.fetchpolicy({ user: user, UserDetails: policy })
+        bcSdk.fetchpolicy({ user: user, PolicyDetails: policy })
 
         .then(() => resolve({ "status": true, "message": "policy fetched" }))
 
@@ -29,7 +29,7 @@ exports.fetchPolicyQuotes = (id, consignmentWeight, consignmentValue, contractTy
                 reject({ status: 409, message: 'already fetched' });
 
             } else {
-                conslole.log("error occurred" + err);
+                console.log("error occurred" + err);
 
                 reject({ status: 500, message: 'Internal Server Error !' });
             }
