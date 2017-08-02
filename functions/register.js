@@ -20,7 +20,7 @@ function BD() {
 var objBD = BD();
 
 //exports is used here so that registerUser can be exposed for router and blockchainSdk file as well Mysql.
-exports.registerUser = (fname, lname, phone, email, usertype, password) =>
+exports.registerUser = (uid, fname, lname, phone, email, usertype, password) =>
     new Promise((resolve, reject) => {
         const newUser = ({
             uid: uid,

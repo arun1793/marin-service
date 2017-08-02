@@ -8,7 +8,7 @@ const nodemailer = require('nodemailer');
 const mysql = require('mysql');
 const cors = require('cors');
 
-//connection to database.
+// connection to database.
 function BD() {
     var connection = mysql.createConnection({
         user: 'root',
@@ -55,32 +55,24 @@ module.exports = router => {
 
         if (!fname || !lname || !phone || !email || !usertype || !password || !fname.trim() || !lname.trim() || !phone.trim() ||
             !email.trim() || !usertype.trim() || !password.trim()) {
-            //the if statement checks if any of the above paramenters are null or not..if is the it sends an error report.
+            //the if statement checks if any of the above paramenters are null or not..if is then it sends an error report.
             res.status(400).json({ message: 'Invalid Request !' });
 
         } else {
             var mailOptions = {
                 transport: transporter,
                 from: '"Dj✔"<dhananjay.patil@rapidqube.com>',
-                email: req.body.email, //'vikram.viswanathan@rapidqube.com',
-                subject: req.body.subject, //'Please confirm your Email account',
-                text: req.body.text, //'Hello',
+                to: 'dhananjay.patil@rapidqube.com', //'vikram.viswanathan@rapidqube.com',
+                subject: 'Please confirm your Email account', //req.body.subject,
+                text: 'Hello', //req.body.text,
                 html: '<b>Test Messge</b>'
-            }
+            };
 
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
-                    return console.log(error);
 
                 }
-                console.log("Message sent: " + info.messageId);
-                res.send({
-                    "status": true,
-                    "message": "mail sent wait a moment"
-                });
-
-            });
-            console.log("register object" + register)
+            })
 
             register.registerUser(uid, fname, lname, phone, email, usertype, password)
 
@@ -92,12 +84,15 @@ module.exports = router => {
             .catch(err => res.status(err.status).json({ message: err.message }));
         }
     });
-    // otp- generates sms otp
+
+    // otp-generates sms otp
     router.post('/otp', (req, res) => {
         // Sends SMS
         nexmo.message.sendSms(
 
-            req.body.fromnumber, req.body.toNumber, req.body.message, { type: 'unicode' },
+            req.body.fromnumber,
+            req.body.toNumber,
+            req.body.message, { type: 'unicode' },
             (err, responseData) => { if (responseData) { console.log(responseData) } }
         );
         res.send({
@@ -105,6 +100,7 @@ module.exports = router => {
             "message": "Message sent wait a moment"
         });
     });
+
     // sendmail-sends email of verification after registration
     router.get('/sendmail', function(req, res) {
 
@@ -155,6 +151,7 @@ module.exports = router => {
 
 
     // });
+
     //userLogin- routes user input to function login
     router.post('/userLogin', (req, res) => {
 
@@ -183,20 +180,7 @@ module.exports = router => {
     router.post('/user/consignmentDetail', cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
-        var udetail = {
-            policyName: req.body.policyName,
-            premiumAmount: req.body.premiumAmount,
-            sumInsured: req.body.sumInsured,
-            consignmentType: req.body.consignmentType,
-            packingMode: req.body.packingMode,
-            consignmentWeight: req.body.consignmentWeight,
-            consignmentValue: req.body.consignmentValue,
-            transportMode: req.body.transportMode,
-            contractType: req.body.contractType,
-        };
-        objBD.query('INSERT INTO issuedpolicy SET ?', udetail, function(error) {
-
-        });
+        var token = req.get('Authorization');
         const transportMode = req.body.transportMode;
         console.log(transportMode);
         const consignmentType = req.body.consignmentType;
@@ -210,11 +194,31 @@ module.exports = router => {
         const policyName = req.body.policyName;
         const premiumAmount = req.body.premiumAmount;
         const sumInsured = req.body.sumInsured;
-        objBD.query('DELETE from savepolicy where id =?', [ID], function(error) {});
-        res.send({
-            "message": "true",
-            "status": "success"
-        })
+        objBD.query('SELECT * FROM user_session WHERE token = ?', token, function(error, results, fields) {
+            var id = JSON.parse(JSON.stringify(results));
+
+            var udetail = {
+                uid: id[0].uid,
+                transportMode: transportMode,
+                consignmentType: consignmentType,
+                packingMode: packingMode,
+                consignmentWeight: consignmentWeight,
+                consignmentValue: consignmentValue,
+                contractType: contractType,
+                policyName: policyName,
+                premiumAmount: premiumAmount,
+                sumInsured: sumInsured
+            };
+            objBD.query('INSERT INTO issuedpolicy SET ?', udetail, function(error) {
+
+            });
+
+            objBD.query('DELETE from savepolicy where uid = ? ', id[0].uid, function(error) {});
+            res.send({
+                "message": "true",
+                "status": "success"
+            })
+        });
     });
 
     //issuedpolicy- routes users issued policies 

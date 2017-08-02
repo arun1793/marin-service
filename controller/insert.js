@@ -11,7 +11,7 @@ var https = require('https');
 function BD() {
     var connection = mysql.createConnection({
         user: 'root',
-        password: 'root',
+        password: 'rpqb123',
         host: 'localhost',
         database: 'marine_db'
     });
@@ -51,6 +51,7 @@ router.post("/user/registerUser", function(req, res) {
         password: req.body.password,
         status: "Inactive"
     };
+
     objBD.query('INSERT INTO user_detail SET ?', user, function(error) {
         if (error) {
             res.send({
@@ -282,32 +283,36 @@ router.get("/user/get", cors(), function(req, res) {
 router.post("/user/fetchPolicyQuotes", function(req, res) {
     var objBD = BD();
     objBD.connect();
-
+    var token = req.get('Authorization');
     const consignmentWeight = req.body.consignmentWeight;
     console.log("consignmentWeight" + consignmentWeight);
     const consignmentValue = req.body.consignmentValue;
     console.log("consignmentvalue" + consignmentValue);
     const contractType = req.body.contractType;
     console.log("contractType" + contractType);
-    objBD.query('SELECT * from user_detail', function(error, results, fields) {
+    const policyType = req.body.policyType;
+    console.log("policyType" + policyType);
+
+    objBD.query('SELECT * FROM user_session WHERE token = ?', token, function(error, results, fields) {
         var id = JSON.parse(JSON.stringify(results));
-        id[0].uid;
-        console.log(id);
 
         var policy = {
-            consignmentWeight: req.body.consignmentWeight,
-            consignmentValue: req.body.consignmentValue,
-            contractType: req.body.contractType,
+            consignmentWeight: consignmentWeight,
+            consignmentValue: consignmentValue,
+            contractType: contractType,
+            policyType: policyType,
             uid: id[0].uid
-        };
+        }
+        objBD.query('INSERT INTO savepolicy SET ? ', [policy], function(error) {});
+        // objBD.query('UPDATE savepolicy SET (consignmentWeight,consignmentValue,contractType,policyType), values(?,?,?,?) ,  policy.consignmentWeight, policy.consignmentValue, policy.contractType, policy.policyType, WHERE uid = ? ,id[0].uid', function(error) {});
 
-        objBD.query('INSERT INTO savepolicy SET ? ', policy, function(error) {});
         var policyList;
         var cifPolicy;
         var cisPolicy;
         var cipPolicy;
         var fobPolicy;
-        if (contractType == "cifPolicy") {
+
+        if (policyType == "cifPolicy") {
 
             policyList = [{
                     "policyName": "Marine Insurance",
@@ -371,7 +376,7 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                 }
             ]
 
-        } else if (contractType == "cisPolicy") {
+        } else if (policyType == "cisPolicy") {
 
             policyList = [{
                     "policyName": "ICICI Insurance",
@@ -434,7 +439,7 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                 }
             ]
 
-        } else if (contractType == "cipPolicy") {
+        } else if (policyType == "cipPolicy") {
             policyList = [{
                     "policyName": "All India Insurance",
                     "Roadways": "True",
@@ -496,7 +501,7 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
                 }
             ]
 
-        } else if (contractType == "fobPolicy") {
+        } else if (policyType == "fobPolicy") {
 
             policyList = [{
                 "policyName": "ICICI Lombard",
@@ -562,6 +567,24 @@ router.post("/user/fetchPolicyQuotes", function(req, res) {
             "policyList": policyList
         });
     });
+
 });
+//fetchsavepolicy will fetch saved policies for respective user on token
+router.get("/user/fetchSavePolicy", function(req, res) {
+    var objBD = BD();
+    objBD.connect();
+    var token = req.get('Authorization');
+    objBD.query('SELECT * FROM user_session WHERE token = ?', token, function(error, results, fields) {
+        var id = JSON.parse(JSON.stringify(results));
+        var uid = id[0].uid;
+        objBD.query('SELECT * FROM savepolicy WHERE uid = ?', [uid], function(error, results, fields) {
+            res.send({
+                "status": true,
+                "results": results
+            });
+        });
+    });
+});
+
 
 module.exports = router;

@@ -98,14 +98,12 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	if err != nil {
 		return nil, err
 	}
-
 	var empty []string
 	jsonAsBytes, _ := json.Marshal(empty) //marshal an emtpy array of strings to clear the index
 	err = stub.PutState(userIndexStr, jsonAsBytes)
 	if err != nil {
 		return nil, err
 	}
-
 	return nil, nil
 }
 
@@ -121,11 +119,11 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	} else if function == "registerUser" {
 		return t.registerUser(stub, args)
 	}else if function =="fetchPolicyQuotes"{
-		return t.fetchPolicyQuotes(stub,args)
+		return t.fetchPolicyQuotes(stub, args)
 	}else if function=="savePolicy"{
-		return t.savePolicy(stub,args)
+		return t.savePolicy(stub, args)
 	}else if function=="consignmentDetail"{
-		return t.consignmentDetail(stub,args)
+		return t.consignmentDetail(stub, args)
 	}
 	
 	fmt.Println("invoke did not find func: " + function)
@@ -159,8 +157,6 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	// Handle different functions
 	if function == "readuser" { //read a variable
 		return t.readuser(stub, args)
-	} else if function == "userLogin"{
-		return t.userLogin(stub,args)
 	} 
 	fmt.Println("query did not find func: " + function)
 
@@ -283,7 +279,6 @@ func (t *SimpleChaincode) fetchPolicyQuotes(stub shim.ChaincodeStubInterface, ar
         return nil, errors.New("5th argument must be a non-empty string")
 	}
     
-	
 	agreement := Agreement{}
 
 	agreement.Id, err = strconv.Atoi(args[0])
@@ -325,7 +320,7 @@ func (t *SimpleChaincode) fetchPolicyQuotes(stub shim.ChaincodeStubInterface, ar
     fmt.Println("- end of the agreement")
     return nil, nil
 }
-
+//savePolicy- invoke function store details to save policy
 func(t*simplechaincode) savePolicy(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var err error
 	
@@ -394,6 +389,7 @@ func(t*simplechaincode) savePolicy(stub shim.ChaincodeStubInterface, args []stri
 	fmt.Println("- end of the savepolicy")
     return nil, nil
 }
+//consignmentDetail- invoke function store details of consignmentDetails.
 func(t*simplechaincode) consignmentDetail(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var err error
 			
@@ -434,7 +430,6 @@ func(t*simplechaincode) consignmentDetail(stub shim.ChaincodeStubInterface, args
 	consignment:=Consignment{}
 
 	consignment.Id, err = strconv.Atoi(args[0])
-	
 	if err != nil {
 		return nil, errors.New("Failed to get premiumamount as cannot convert it to int")
 	}
@@ -443,12 +438,11 @@ func(t*simplechaincode) consignmentDetail(stub shim.ChaincodeStubInterface, args
 	fmt.Println("consignment", consignment)
 	
 	consignment.PremiumAmount, err = strconv.Atoi(args[2])
-	
 	if err != nil {
 		return nil, errors.New("Failed to get premiumamount as cannot convert it to int")
 	}
-	consignment.SumInsured, err = strconv.Atoi(args[3])
 	
+	consignment.SumInsured, err = strconv.Atoi(args[3])
 	if err != nil {
 		return nil, errors.New("Failed to get suminsured as cannot convert it to int")
 	}
@@ -460,7 +454,6 @@ func(t*simplechaincode) consignmentDetail(stub shim.ChaincodeStubInterface, args
 	fmt.Println("consignment", consignment)
 
 	consignment.ConsignmentWeight, err = strconv.Atoi(args[6])
-	
 	if err != nil {
 		return nil, errors.New("Failed to get id as cannot convert it to int")
 	}

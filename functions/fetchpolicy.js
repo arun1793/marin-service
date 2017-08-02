@@ -20,13 +20,13 @@ exports.fetchpolicy = (id, ContractType, ConsignmentWeight, Consignmentvalue, tr
 
         bcSdk.fetchpolicy({ user: user, UserDetails: policy })
 
-        .then(() => resolve({ "status": true, "message": "policy fetched " }))
+        .then(() => resolve({ "status": true, "message": "policy fetched" }))
 
         .catch(err => {
 
             if (err.code == 409) {
 
-                reject({ status: 409, message: ' already fetched' });
+                reject({ status: 409, message: 'already fetched' });
 
             } else {
                 conslole.log("error occurred" + err);

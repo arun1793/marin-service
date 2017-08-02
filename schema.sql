@@ -30,8 +30,8 @@ uid int,
 ID int NOT NULL AUTO_INCREMENT,
 consignmentWeight int NOT NULL,
 consignmentValue int NOT NULL,
-transportMode VARCHAR(100) NOT NULL,
 contractType VARCHAR(100) NOT NULL,
+policyType VARCHAR(100) NOT NULL,
 PRIMARY KEY(ID),
 FOREIGN KEY (uid) REFERENCES user_detail(uid)
 );
