@@ -99,7 +99,7 @@ function fetchpolicy(params) {
             }
             //here in function name we use the actual function name which is used for registeration i.e User_register
             //args: [UserDetails.name,UserDetails.email,UserDetails.phone,UserDetails.pan,UserDetails.aadhar,UserDetails.usertype,UserDetails.upi,UserDetails.passpin]})
-            var reqSpec = getRequestSpec({ functionName: 'fetchPolicyQuotes', args: [UserDetails.id, UserDetails.ContractType, UserDetails.ConsignmentWeight, UserDetails.Consignmentvalue, UserDetails.transportMode] });
+            var reqSpec = getRequestSpec({ functionName: 'fetchPolicyQuotes', args: [UserDetails.id, UserDetails.consignmentWeight, UserDetails.consignmentValue, UserDetails.contractType, UserDetails.policyType] });
             recursiveInvoke({ requestSpec: reqSpec, user: user })
                 .then(function(resp) {
                     logHelper.logMessage(logger, 'UserRegisteration', 'Successfully registered user', resp.body);
@@ -118,6 +118,51 @@ function fetchpolicy(params) {
     });
 }
 
+function consignmentdetail(params) {
+
+    console.log("calling SDK for policy");
+    return new Promise(function(resolve, reject) {
+        var UserDetails;
+        try {
+            logHelper.logEntryAndInput(logger, 'UserRegisteration', params);
+
+            if (!validate.isValidJson(params)) {
+                logHelper.logError(logger, 'UserRegisteration', 'Invalid params');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create UserRegisteration. Invalid params' })
+            }
+
+            var user = params.user;
+            if (!validate.isValidString(user)) {
+                logHelper.logError(logger, 'UserRegisteration', 'Invalid user');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create UserRegisteration. Invalid user' })
+            }
+
+            UserDetails = params.UserDetails;
+
+            if (!validate.isValidJson(UserDetails)) {
+                logHelper.logError(logger, 'UserRegisteration', 'Invalid UserDetails');
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create  userRegisteration. Invalid json object' })
+            }
+            //here in function name we use the actual function name which is used for registeration i.e User_register
+            //args: [UserDetails.name,UserDetails.email,UserDetails.phone,UserDetails.pan,UserDetails.aadhar,UserDetails.usertype,UserDetails.upi,UserDetails.passpin]})
+            var reqSpec = getRequestSpec({ functionName: 'consignmentDetail', args: [UserDetails.id, UserDetails.policyType, UserDetails.consignmentType, UserDetails.packingMode, UserDetails.consignmentWeight, UserDetails.consignmentValue, UserDetails.contractType, UserDetails.policyName, UserDetails.premiumAmount, UserDetails.sumInsured] });
+            recursiveInvoke({ requestSpec: reqSpec, user: user })
+                .then(function(resp) {
+                    logHelper.logMessage(logger, 'UserRegisteration', 'Successfully registered user', resp.body);
+                    return resolve({ statusCode: constants.SUCCESS, body: UserDetails });
+                })
+                .catch(function(err) {
+                    logHelper.logError(logger, 'UserRegisteration', 'Could not register user', err);
+                    return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not register user' });
+
+                });
+
+        } catch (err) {
+            logHelper.logError(logger, 'UserRegisteration', 'Could not register user application on blockchain ledger: ', err);
+            return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not register user' });
+        }
+    });
+}
 
 function read(params) {
     console.log(params, 'data in params for query method')
@@ -599,6 +644,7 @@ module.exports = {
     read: read,
     UserRegisteration: UserRegisteration,
     fetchpolicy: fetchpolicy,
+    consignmentdetail: consignmentdetail,
     recursiveRegister: recursiveRegister,
     recursiveLogin: recursiveLogin,
     isUserEnrolled: isUserEnrolled,

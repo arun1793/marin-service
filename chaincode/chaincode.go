@@ -321,7 +321,7 @@ func (t *SimpleChaincode) fetchPolicyQuotes(stub shim.ChaincodeStubInterface, ar
     return nil, nil
 }
 //savePolicy- invoke function store details to save policy
-func(t*simplechaincode) savePolicy(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+func(t* SimpleChaincode) savePolicy(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var err error
 	
 	if len(args) != 4 {
@@ -364,7 +364,7 @@ func(t*simplechaincode) savePolicy(stub shim.ChaincodeStubInterface, args []stri
 		return nil, errors.New("Failed to get id as cannot convert it to int")
 	}
 	
-	policy.TransportMode=args[4]
+
     fmt.Println("policy", policy)
 
     policyAsBytes, err := stub.GetState("getpolicy")
@@ -390,7 +390,7 @@ func(t*simplechaincode) savePolicy(stub shim.ChaincodeStubInterface, args []stri
     return nil, nil
 }
 //consignmentDetail- invoke function store details of consignmentDetails.
-func(t*simplechaincode) consignmentDetail(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+func(t* SimpleChaincode) consignmentDetail(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var err error
 			
 	if len(args) != 10 {
@@ -398,7 +398,10 @@ func(t*simplechaincode) consignmentDetail(stub shim.ChaincodeStubInterface, args
 	}
 	 //input sanitation
     fmt.Println("- start filling policy detail")
-	if len(args[0])<= 0
+	if len(args[0])<= 0{
+        return nil, errors.New("1st argument must be a non-empty string")
+    }
+
 	if len(args[1]) <= 0 {
         return nil, errors.New("1st argument must be a non-empty string")
     }
@@ -411,19 +414,19 @@ func(t*simplechaincode) consignmentDetail(stub shim.ChaincodeStubInterface, args
 	 if len(args[4]) <= 0 {
         return nil, errors.New("4th argument must be a non-empty string")
 	}
-	if len(args[5] <= 0){
+	if len(args[5]) <= 0{
 		return nil, errors.New("5th argument must be a non-empty string")
 	}
-	if len(args[6] <= 0){
+	if len(args[6]) <= 0{
 		return nil, errors.New("6th argument must be a non-empty string")
 	}
-	if len(args[7] <= 0){
+	if len(args[7]) <= 0{
 		return nil, errors.New("7th argument must be a non-empty string")
 	}
-	if len(args[8] <= 0){
+	if len(args[8]) <= 0{
 		return nil, errors.New("8th argument must be a non-empty string")
 	}
-	if len(args[9] <= 0){
+	if len(args[9]) <= 0{
 		return nil, errors.New("9th argument must be a non-empty string")
 	}
 

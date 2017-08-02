@@ -3,10 +3,11 @@
 'use strict';
 
 const register = require('./functions/register');
-const nodemailer = require('nodemailer');
-// const fetchpolicy = require('./functions/fetchpolicy');
+const fetchpolicy = require('./functions/fetchpolicy');
+const consignment = require('./functions/consignment');
 const mysql = require('mysql');
 const cors = require('cors');
+const nodemailer = require('nodemailer');
 
 // connection to database.
 function BD() {
@@ -18,12 +19,14 @@ function BD() {
     });
     return connection;
 }
+
 // connection for nexmo free sms service
 const Nexmo = require('nexmo');
 const nexmo = new Nexmo({
     apiKey: '6a64ffbc',
     apiSecret: '38c40b9428f981e1'
 });
+
 // connection to email API 
 var transporter = nodemailer.createTransport("SMTP", {
     host: 'smtp.ipage.com',
@@ -36,8 +39,11 @@ var transporter = nodemailer.createTransport("SMTP", {
 });
 
 module.exports = router => {
+
     //registerUser- routes user input to function register.
     router.post('/registerUser', (req, res) => {
+        var objBD = BD();
+        objBD.connect();
         const id = Math.floor(Math.random() * (100000 - 1)) + 1;
         const uid = id.toString();
         const fname = req.body.fname;
@@ -58,133 +64,498 @@ module.exports = router => {
             //the if statement checks if any of the above paramenters are null or not..if is then it sends an error report.
             res.status(400).json({ message: 'Invalid Request !' });
 
-        } else {
-            var mailOptions = {
-                transport: transporter,
-                from: '"Dj✔"<dhananjay.patil@rapidqube.com>',
-                to: 'dhananjay.patil@rapidqube.com', //'vikram.viswanathan@rapidqube.com',
-                subject: 'Please confirm your Email account', //req.body.subject,
-                text: 'Hello', //req.body.text,
-                html: '<b>Test Messge</b>'
-            };
-
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-
-                }
-            })
-
-            register.registerUser(uid, fname, lname, phone, email, usertype, password)
-
-            .then(result => {
-
-                res.status(result.status).json({ status: result.status, message: result.message })
-            })
-
-            .catch(err => res.status(err.status).json({ message: err.message }));
         }
-    });
-
-    // otp-generates sms otp
-    router.post('/otp', (req, res) => {
-        // Sends SMS
-        nexmo.message.sendSms(
-
-            req.body.fromnumber,
-            req.body.toNumber,
-            req.body.message, { type: 'unicode' },
-            (err, responseData) => { if (responseData) { console.log(responseData) } }
-        );
-        res.send({
-            "status": true,
-            "message": "Message sent wait a moment"
-        });
-    });
-
-    // sendmail-sends email of verification after registration
-    router.get('/sendmail', function(req, res) {
-
-        var encodedMail = new Buffer('dhananjay.patil@rapidqube.com').toString('base64');
-        var link = "http://" + req.get('host') + "/verify?mail=" + encodedMail;
-        var decodedMail = new Buffer(encodedMail, 'base64').toString('ascii');
-        var mailOptions = {
-            transport: transporter,
-            from: '"Dj✔"<dhananjay.patil@rapidqube.com>',
-            to: 'dhananjay.patil@rapidqube.com', //req.body.to, //'vikram.viswanathan@rapidqube.com',
-            subject: 'Please confirm your Email account', //req.body.subject, 
-            text: req.body.text, //'Hello',
-            html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
+        var user = {
+            fname: fname,
+            lname: lname,
+            phone: phone,
+            email: email,
+            usertype: usertype,
+            password: password,
+            status: "Inactive"
         };
-
-        transporter.sendMail(mailOptions, (error, info) => {
+        objBD.query('INSERT INTO user_detail SET ?', user, function(error) {
             if (error) {
-                return console.log(error);
 
+            } else {
+                var otp = "";
+                var possible = "0123456789";
+                for (var i = 0; i < 4; i++)
+                    otp += possible.charAt(Math.floor(Math.random() * possible.length));
+                var remoteHost = "192.168.0.16:3000";
+                console.log(remoteHost);
+                var encodedMail = new Buffer(req.body.email).toString('base64');
+                var link = "http://" + remoteHost + "/marine/user/verify?mail=" + encodedMail;
+                var userResults, emailtosend, phonetosend, otptosend;
+                console.log(userResults);
+                objBD.query('select * from user_detail WHERE email = ?', [req.body.email], function(error, results, fields) {
+                    console.log(userResults)
+                    userResults = JSON.parse(JSON.stringify(results));
+                    console.log("results: " + userResults[0].email);
+                    console.log("results:" + userResults[0].phone);
+                    emailtosend = userResults[0].email;
+                    phonetosend = userResults[0].phone;
+                    objBD.query('INSERT INTO verification( uid, otp,encodedMail) values ( ?, ?, ?)', [userResults[0].uid, otp, encodedMail], function(error, results, fields) {});
+
+                    //after generating otp mail will be sent to regsitered user.
+                    var mailOptions = {
+                        transport: transporter,
+                        from: '"Dhananjay"<dhananjay.patil@rapidqube.com>',
+                        to: emailtosend, //req.body.to, 
+                        subject: 'Please confirm your Email account',
+                        text: req.body.text,
+                        html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
+                    };
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {}
+                    });
+
+                    //otp will be sent via sms to validate phone number.
+                    otptosend = "OTP: " + otp;
+                    nexmo.message.sendSms(
+                        '919768135452', phonetosend, otptosend, { type: 'unicode' },
+                        (err, responseData) => { if (responseData) { console.log(responseData) } }
+                    );
+                });
+                register.registerUser(uid, fname, lname, phone, email, usertype, password)
+
+                .then(result => {
+
+                    res.status(result.status).json({ status: result.status, message: result.message })
+                })
+
+                .catch(err => res.status(err.status).json({ message: err.message }));
             }
-            console.log("Message sent: " + info.messageId);
-            res.send({
-                "status": true,
-                "message": "mail sent wait a moment"
-            });
-
         });
     });
-    // router.post('/user/fetchPolicyQuotes', (req, res) => {
 
-    //     const uid = Math.floor(Math.random() * (100000 - 1)) + 1;
-    //     const id = uid.toString();
-    //     const ContractType = req.body.contractType;
-    //     const ConsignmentWeight = req.body.consignmentWeight;
-    //     const ConsignmentValue = req.body.consignmentvalue;
-    //     const transportMode = req.body.transportMode;
+    //verify-validates user emailid
+    router.get('/verify', cors(), (req, res, next) => {
+        var querymail = req.query.mail;
+        console.log("URL: " + querymail);
+        var objBD = BD();
+        objBD.connect();
 
-    //     if (!ContractType) {
+        objBD.query('SELECT * FROM verification WHERE encodedMail = ?', [querymail], function(error, results, fields) {
+            if (error) {
+                res.send({
+                    "code": 400,
+                    "failed": "error ocurred"
+                })
+            } else {
+                var resultLength = JSON.parse(JSON.stringify(results));
+                if (resultLength.length > 0) {
+                    if (resultLength[0].encodedMail === querymail) {
+                        console.log(querymail);
+                        res.send({
+                            "status": true,
+                            "message": "verification Successfull"
+                        });
+                    } else {
+                        res.send({
+                            "status": false,
+                            "message": "already verified"
+                        });
+                    }
+                }
+            }
+        });
+    });
 
-    //         res.status(400).json({ message: 'Invalid Request !' });
+    //phoneverification- validates phone number
+    router.post('/phoneverification', cors(), (req, res) => {
+        var objBD = BD();
+        objBD.connect();
 
-    //     } else {
-    //         fetchpolicy.fetchpolicy(id, ContractType, ConsignmentWeight, ConsignmentValue, transportMode)
-    //             .then((result) => {
-    //                 res.status(200).json({ message: "added successfully" });
-    //             })
-    //     }
+        var otp = req.body.otp;
+        console.log(otp);
 
+        objBD.query('SELECT * FROM verification where otp=?', [otp], function(error, results, fields) {
+            if (error) {
+                res.send({
+                    "status": false,
+                    "message": "error"
+                })
+            } else {
+                var otplength = JSON.parse(JSON.stringify(results));
+                console.log(results);
+                if (otplength.length > 0) {
+                    if (otplength[0].otp === otp) {
+                        console.log(otp);
+                        console.log(otplength[0].uid);
+                        objBD.query('UPDATE user_detail Set status ="Active" where uid= ? ', otplength[0].uid, function(error, results, fields) {});
 
-    // });
+                        res.send({
+                            "status": true,
+                            "message": "phone number verified"
+                        });
+                    } else {
+                        res.send({
+                            "status": false,
+                            "message": "phone number is invalid"
+                        });
+                    }
+                }
+            }
+        });
+    });
 
-    //userLogin- routes user input to function login
-    router.post('/userLogin', (req, res) => {
+    //userLogin- on user input this service gets invoked
+    router.post("/userLogin", cors(), (req, res) => {
+        var objBD = BD();
+        objBD.connect();
+        console.log(req.body);
+        var email = req.body.email;
+        var password = req.body.password;
+        objBD.query('SELECT * FROM user_detail WHERE email = ?', [email], function(error, results, fields) {
+            if (error) {
+                res.send({
+                    "code": 400,
+                    "failed": "error ocurred"
+                })
+            } else {
+                var resultLength = JSON.parse(JSON.stringify(results));
+                if (resultLength.length > 0) {
+                    if (resultLength[0].password === password) {
+                        var token = "";
+                        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789rapidqubepvtltd";
+                        for (var i = 0; i < 10; i++)
+                            token += possible.charAt(Math.floor(Math.random() * possible.length));
+                        console.log(token);
 
-        const email = req.body.email;
-        console.log(`email from ui side`, email);
-        const password = req.body.password;
-        console.log(password, 'password from ui side');
+                        objBD.query('INSERT INTO user_session( uid, token) values ( ?, ?)', [resultLength[0].uid, token], function(error, results, fields) {});
+                        res.send({
+                            "status": true,
+                            "token": token,
+                            "message": "Login Successfull"
+                        });
+                    } else {
+                        res.send({
+                            "status": false,
+                            "token": "null",
+                            "message": "Email and password does not match"
+                        });
+                    }
+                } else {
+                    res.send({
+                        "status": false,
+                        "token": "null",
+                        "message": "Email does not exist"
+                    });
+                }
+            }
+        });
+    });
 
-        if (!email || !password || !email.trim() || !password.trim()) {
+    //fetchPolicyQuotes- routes user input to function fetchpolicy
+    router.post('/fetchPolicyQuotes', (req, res) => {
+        var objBD = BD();
+        objBD.connect();
+        var token = req.get('Authorization');
+        const uid = Math.floor(Math.random() * (100000 - 1)) + 1;
+        const id = uid.toString();
+        const consignmentWeight = req.body.consignmentWeight;
+        const consignmentValue = req.body.consignmentValue;
+        const contractType = req.body.contractType;
+        const policyType = req.body.policyType;
+
+        if (!contractType || !contractType.trim()) {
 
             res.status(400).json({ message: 'Invalid Request !' });
 
         } else {
+            objBD.query('SELECT * FROM user_session WHERE token = ?', token, function(error, results, fields) {
+                var id = JSON.parse(JSON.stringify(results));
 
-            login.userLogin(email, password)
+                var policy = {
+                    consignmentWeight: consignmentWeight,
+                    consignmentValue: consignmentValue,
+                    contractType: contractType,
+                    policyType: policyType,
+                    uid: id[0].uid
+                }
+                objBD.query('INSERT INTO savepolicy SET ? ', [policy], function(error) {});
 
-            .then(result => {
-                res.status(result.status).json({ message: result.message, token: token });
-            })
+                var policyList;
+                var cifPolicy;
+                var cisPolicy;
+                var cipPolicy;
+                var fobPolicy;
 
-            .catch(err => res.status(err.status).json({ message: err.message }));
+                if (policyType == "cifPolicy") {
+
+                    policyList = [{
+                            "policyName": "Marine Insurance",
+                            "Roadways": "True",
+                            "Shipping": "False",
+                            "Railway": "True",
+                            "Airways": "False",
+                            "premiumAmount": "3,500",
+                            "sumInsured": "50,000",
+                            "premiumPayment": "12k"
+                        }, {
+                            "policyName": "Blue Dart",
+                            "Roadways": "False",
+                            "Shipping": "True",
+                            "Railway": "False",
+                            "Airways": "True",
+                            "premiumAmount": "4,000",
+                            "sumInsured": "1,25,000",
+                            "premiumPayment": "20k"
+
+                        }, {
+                            "policyName": "DHFL",
+                            "Roadways": "True",
+                            "Shipping": "False",
+                            "Railway": "True",
+                            "Airways": "True",
+                            "premiumAmount": "3,000",
+                            "sumInsured": "1,00,000",
+                            "premiumPayment": "15k"
+                        }, {
+                            "policyName": "Blue Dart",
+                            "Roadways": "True",
+                            "Shipping": "True",
+                            "Railway": "False",
+                            "Airways": "False",
+                            "premiumAmount": "3,750",
+                            "sumInsured": "1,25,000",
+                            "premiumPayment": "20k"
+
+                        },
+                        {
+                            "policyName": "Maersk",
+                            "Roadways": "True",
+                            "Shipping": "False",
+                            "Railway": "True",
+                            "Airways": "False",
+                            "premiumAmount": "5,000",
+                            "sumInsured": "2,25,000",
+                            "premiumPayment": "55k"
+
+                        },
+                        {
+                            "policyName": "ICICI Lombard",
+                            "Roadways": "False",
+                            "Shipping": "False",
+                            "Railway": "True",
+                            "Airways": "True",
+                            "premiumAmount": "1,500",
+                            "sumInsured": "50,000",
+                            "premiumPayment": "6k"
+                        }
+                    ]
+
+                } else if (policyType == "cisPolicy") {
+
+                    policyList = [{
+                            "policyName": "ICICI Insurance",
+                            "Roadways": "True",
+                            "Shipping": "False",
+                            "Railway": "True",
+                            "Airways": "False",
+                            "premiumAmount": "3,000",
+                            "sumInsured": "1,50,000",
+                            "premiumPayment": "60k"
+                        }, {
+                            "policyName": "Maersk",
+                            "Roadways": "False",
+                            "Shipping": "True",
+                            "Railway": "False",
+                            "Airways": "True",
+                            "premiumAmount": "5,000",
+                            "sumInsured": "2,25,000",
+                            "premiumPayment": "55k"
+
+                        }, {
+                            "policyName": "Doodle",
+                            "Roadways": "True",
+                            "Shipping": "False",
+                            "Railway": "True",
+                            "Airways": "True",
+                            "premiumAmount": "5,000",
+                            "sumInsured": "7,25,000",
+                            "premiumPayment": "15k"
+                        }, {
+                            "policyName": "MineDart",
+                            "Roadways": "True",
+                            "Shipping": "True",
+                            "Railway": "False",
+                            "Airways": "False",
+                            "premiumAmount": "5,000",
+                            "sumInsured": "1,25,000",
+                            "premiumPayment": "20k"
+
+                        },
+                        {
+                            "policyName": "Marine Insurance",
+                            "Roadways": "True",
+                            "Shipping": "False",
+                            "Railway": "True",
+                            "Airways": "False",
+                            "premiumAmount": "1,000",
+                            "sumInsured": "50,000",
+                            "premiumPayment": "12k"
+                        }, {
+                            "policyName": "Blue Dart",
+                            "Roadways": "False",
+                            "Shipping": "True",
+                            "Railway": "False",
+                            "Airways": "True",
+                            "premiumAmount": "3,000",
+                            "sumInsured": "1,25,000",
+                            "premiumPayment": "20k"
+
+                        }
+                    ]
+
+                } else if (policyType == "cipPolicy") {
+                    policyList = [{
+                            "policyName": "All India Insurance",
+                            "Roadways": "True",
+                            "Shipping": "False",
+                            "Railway": "True",
+                            "Airways": "False",
+                            "premiumAmount": "1,000",
+                            "sumInsured": "50,000",
+                            "premiumPayment": "6k"
+                        }, {
+                            "policyName": "wizCraft",
+                            "Roadways": "False",
+                            "Shipping": "False",
+                            "Railway": "True",
+                            "Airways": "True",
+                            "premiumAmount": "5,000",
+                            "sumInsured": "1,25,000",
+                            "premiumPayment": "20k"
+
+                        }, {
+                            "policyName": "DreamWork",
+                            "Roadways": "False",
+                            "Shipping": "True",
+                            "Railway": "False",
+                            "Airways": "True",
+                            "premiumAmount": "5,000",
+                            "sumInsured": "7,25,000",
+                            "premiumPayment": "15k"
+                        }, {
+                            "policyName": "Emirates",
+                            "Roadways": "True",
+                            "Shipping": "True",
+                            "Railway": "False",
+                            "Airways": "False",
+                            "premiumAmount": "5,000",
+                            "sumInsured": "1,25,000",
+                            "premiumPayment": "20k"
+
+                        },
+                        {
+                            "policyName": "Marine Insurance",
+                            "Roadways": "True",
+                            "Shipping": "False",
+                            "Railway": "True",
+                            "Airways": "False",
+                            "premiumAmount": "1,000",
+                            "sumInsured": "50,000",
+                            "premiumPayment": "12k"
+                        }, {
+                            "policyName": "Blue Dart",
+                            "Roadways": "False",
+                            "Shipping": "True",
+                            "Railway": "False",
+                            "Airways": "True",
+                            "premiumAmount": "3,000",
+                            "sumInsured": "1,25,000",
+                            "premiumPayment": "20k"
+
+                        }
+                    ]
+
+                } else if (policyType == "fobPolicy") {
+
+                    policyList = [{
+                        "policyName": "ICICI Lombard",
+                        "Roadways": "False",
+                        "Shipping": "False",
+                        "Railway": "True",
+                        "Airways": "True",
+                        "premiumAmount": "1,000",
+                        "sumInsured": "50,000",
+                        "premiumPayment": "6k"
+                    }, {
+                        "policyName": "Oriental",
+                        "Roadways": "True",
+                        "Shipping": "True",
+                        "Railway": "False",
+                        "Airways": "False",
+                        "premiumAmount": "5,000",
+                        "sumInsured": "1,25,000",
+                        "premiumPayment": "20k"
+
+                    }, {
+                        "policyName": "DHFL",
+                        "Roadways": "False",
+                        "Shipping": "True",
+                        "Railway": "False",
+                        "Airways": "True",
+                        "premiumAmount": "5,000",
+                        "sumInsured": "7,25,000",
+                        "premiumPayment": "15k"
+                    }, {
+                        "policyName": "Harwlett Packards",
+                        "Roadways": "True",
+                        "Shipping": "False",
+                        "Railway": "True",
+                        "Airways": "False",
+                        "premiumAmount": "5,000",
+                        "sumInsured": "1,25,000",
+                        "premiumPayment": "20k"
+
+                    }, {
+                        "policyName": "Maersk",
+                        "Roadways": "True",
+                        "Shipping": "False",
+                        "Railway": "True",
+                        "Airways": "False",
+                        "premiumAmount": "5,000",
+                        "sumInsured": "2,25,000",
+                        "premiumPayment": "55k"
+
+                    }, {
+                        "policyName": "Doodle",
+                        "Roadways": "True",
+                        "Shipping": "True",
+                        "Railway": "False",
+                        "Airways": "False",
+                        "premiumAmount": "5,000",
+                        "sumInsured": "7,25,000",
+                        "premiumPayment": "15k"
+                    }]
+
+                }
+
+                fetchpolicy.fetchPolicyQuotes(id, consignmentWeight, consignmentValue, contractType, policyType)
+                    .then((result) => {
+                        res.status(200).json({ message: "added successfully" });
+                    })
+                return res.json({
+                    "policyList": policyList
+                })
+            });
         }
     });
 
-    //Consignment-routes user input to payment gateway
-    router.post('/user/consignmentDetail', cors(), (req, res) => {
+    //Consignment-routes user input to function consignment
+    router.post('/consignmentDetail', cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
-        const transportMode = req.body.transportMode;
-        console.log(transportMode);
+        const policyType = req.body.policyType;
+        console.log(policyType);
         const consignmentType = req.body.consignmentType;
+        console.log("consignmenttype:" + consignmentType);
         const packingMode = req.body.packingMode;
+        console.log("packingMode:" + packingMode);
         const consignmentWeight = req.body.consignmentWeight;
         console.log("consignmentWeight" + consignmentWeight);
         const consignmentValue = req.body.consignmentValue;
@@ -192,37 +563,53 @@ module.exports = router => {
         const contractType = req.body.contractType;
         console.log("contractType" + contractType);
         const policyName = req.body.policyName;
+        console.log("policyName:" + policyName);
         const premiumAmount = req.body.premiumAmount;
+        console.log("premiumamount:" + premiumAmount);
         const sumInsured = req.body.sumInsured;
-        objBD.query('SELECT * FROM user_session WHERE token = ?', token, function(error, results, fields) {
-            var id = JSON.parse(JSON.stringify(results));
+        console.log("suminsured:" + sumInsured);
 
-            var udetail = {
-                uid: id[0].uid,
-                transportMode: transportMode,
-                consignmentType: consignmentType,
-                packingMode: packingMode,
-                consignmentWeight: consignmentWeight,
-                consignmentValue: consignmentValue,
-                contractType: contractType,
-                policyName: policyName,
-                premiumAmount: premiumAmount,
-                sumInsured: sumInsured
-            };
-            objBD.query('INSERT INTO issuedpolicy SET ?', udetail, function(error) {
+        if (!policyType || !consignmentType || !packingMode || !consignmentWeight || !consignmentValue || !contractType || !policyName || !premiumAmount || !sumInsured || !policyType.trim() || !consignmentType.trim() || !packingMode.trim() || !consignmentWeight.trim() || !consignmentValue.trim() || !contractType.trim() || !policyName.trim() || !premiumAmount.trim() || !sumInsured.trim()) {
 
-            });
+            res.status(400).json({ message: 'Invalid Request !' });
 
-            objBD.query('DELETE from savepolicy where uid = ? ', id[0].uid, function(error) {});
-            res.send({
-                "message": "true",
-                "status": "success"
-            })
-        });
+        } else {
+            objBD.query('SELECT * FROM user_session WHERE token = ?', token, function(error, results, fields) {
+                var id = JSON.parse(JSON.stringify(results));
+
+                var udetail = {
+                    uid: id[0].uid,
+                    policyType: policyType,
+                    consignmentType: consignmentType,
+                    packingMode: packingMode,
+                    consignmentWeight: consignmentWeight,
+                    consignmentValue: consignmentValue,
+                    contractType: contractType,
+                    policyName: policyName,
+                    premiumAmount: premiumAmount,
+                    sumInsured: sumInsured
+                };
+                objBD.query('INSERT INTO issuedpolicy SET ?', udetail, function(error) {});
+
+                objBD.query('DELETE from savepolicy where uid = ? ', id[0].uid, function(error) {});
+
+
+
+                consignment.consignmentDetail(policyType, consignmentType, packingMode, consignmentWeight, consignmentValue, contractType, policyName, premiumAmount, sumInsured)
+
+                .then(result => {
+                    res.status(result.status).json({ message: result.message, message: result.message });
+                })
+                res.send({
+                    "message": "true",
+                    "status": "success"
+                })
+            }); // .catch(err => res.status(err.status).json({ message: err.message }));
+        }
     });
 
-    //issuedpolicy- routes users issued policies 
-    router.get('/user/fetchissuedpolicy', cors(), (req, res) => {
+    //issuedpolicy- fetches users issued policies 
+    router.get('/fetchissuedpolicy', cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
@@ -263,17 +650,56 @@ module.exports = router => {
 
         });
     });
-    //userLogout- routes token  to function logout 
-    router.post('/userLogout', cors(), (req, res) => {
-        const token = req.get('Authorization');
-        if (!token || !token.trim()) {
-            res.status(400).json({ message: 'Invalid Request!' });
-        } else {
-            logout.userLogout(token)
-                .then(result => {
-                    res.status(result.status).json({ message: result.message, token: token });
+
+    //fetchsavepolicy- fetches saved policies for respective user on token
+    router.get("/fetchSavePolicy", function(req, res) {
+        var objBD = BD();
+        objBD.connect();
+        var token = req.get('Authorization');
+        objBD.query('SELECT * FROM user_session WHERE token = ?', token, function(error, results, fields) {
+            var id = JSON.parse(JSON.stringify(results));
+            var uid = id[0].uid;
+            objBD.query('SELECT * FROM savepolicy WHERE uid = ?', [uid], function(error, results, fields) {
+                res.send({
+                    "status": true,
+                    "results": results
                 })
-                .catch(err => res.status(err.status).json({ message: err.message }));
-        }
+            });
+        });
+    });
+    //userLogout- compares tokens taken from header with database data if it matches deletes token.
+    router.get("/userLogout", cors(), (req, res) => {
+        var objBD = BD();
+        objBD.connect();
+        var token = req.get('Authorization');
+        console.log("Token: " + token);
+
+        objBD.query('SELECT * FROM user_session WHERE token = ?', [token], function(error, results, fields) {
+            if (error) {
+                res.send({
+                    "code": 400,
+                    "failed": "error ocurred"
+                })
+            } else {
+                var resultLength = JSON.parse(JSON.stringify(results));
+                if (resultLength.length > 0) {
+                    if (resultLength[0].token === token) {
+                        console.log(token);
+                        objBD.query('delete  from user_session where uid = ?', [resultLength[0].uid, token], function(error, results, fields) {});
+                        console.log(token);
+                        res.send({
+                            "status": true,
+                            "message": "Logout Successfull"
+                        })
+                    } else {
+                        res.send({
+                            "status": false,
+                            "message": "already ended session"
+                        });
+                    }
+                }
+            }
+
+        });
     });
 }
