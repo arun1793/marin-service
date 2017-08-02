@@ -98,7 +98,7 @@ function fetchpolicy(params) {
             }
             //here in function name we use the actual function name which is used for registeration i.e User_register
             //args: [UserDetails.name,UserDetails.email,UserDetails.phone,UserDetails.pan,UserDetails.aadhar,UserDetails.usertype,UserDetails.upi,UserDetails.passpin]})
-            var reqSpec = getRequestSpec({ functionName: 'fetchPolicyQuotes', args: [PolicyDetails.id, PolicyDetails.consignmentWeight, PolicyDetails.consignmentValue, PolicyDetails.contractType, PolicyDetails.policyType] });
+            var reqSpec = getRequestSpec({ functionName: 'fetchPolicyQuotes', args: [PolicyDetails.id, PolicyDetails.contractType, PolicyDetails.consignmentWeight, PolicyDetails.consignmentValue, PolicyDetails.policyType] });
             recursiveInvoke({ requestSpec: reqSpec, user: user })
                 .then(function(resp) {
                     logHelper.logMessage(logger, 'fetchpolicy', 'Successfully fetchpolicy', resp.body);
@@ -144,7 +144,7 @@ function consignmentdetail(params) {
             }
             //here in function name we use the actual function name which is used for registeration i.e User_register
             //args: [UserDetails.name,UserDetails.email,UserDetails.phone,UserDetails.pan,UserDetails.aadhar,UserDetails.usertype,UserDetails.upi,UserDetails.passpin]})
-            var reqSpec = getRequestSpec({ functionName: 'consignmentDetail', args: [ConsignmentDetails.id, ConsignmentDetails.policyType, ConsignmentDetails.consignmentType, ConsignmentDetails.packingMode, ConsignmentDetails.consignmentWeight, ConsignmentDetails.consignmentValue, ConsignmentDetails.contractType, ConsignmentDetails.policyName, ConsignmentDetails.premiumAmount, ConsignmentDetails.sumInsured] });
+            var reqSpec = getRequestSpec({ functionName: 'consignmentDetail', args: [ConsignmentDetails.id, ConsignmentDetails.policyName, ConsignmentDetails.premiumAmount, ConsignmentDetails.sumInsured, ConsignmentDetails.consignmentType, ConsignmentDetails.packingMode, ConsignmentDetails.consignmentWeight, ConsignmentDetails.consignmentValue, ConsignmentDetails.policyType, ConsignmentDetails.contractType] });
             recursiveInvoke({ requestSpec: reqSpec, user: user })
                 .then(function(resp) {
                     logHelper.logMessage(logger, 'consignmentdetail', 'Successfully registered user', resp.body);

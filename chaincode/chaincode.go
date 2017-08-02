@@ -32,7 +32,7 @@ type Agreement struct{
 	ContractType	   string  `json:"contracttype"`
 	ConsignmentWeight  int 	   `json:"consignmentweight"`
 	ConsignmentValue   int	   `json:"consignmentvalue"`
-	TransportMode	   string  `json:"transportmode"`
+	PolicyType	   	   string  `json:"policyType"`
 }
 
 type AllAgreement struct{
@@ -59,7 +59,7 @@ type Consignment struct{
 	PackingMode 	 	string 	`json:"packingmode"`
 	ConsignmentWeight 	int 	`json:"consignmentweight"`
     ConsignmentValue 	int 	`json:"consignmentvalue"`
-    TransportMode 		string 	`json:"transportmode"`
+    PolicyType		string 	`json:"policytype"`
     ContractType 		string 	`json:"contracttype"`        
 }
 
@@ -297,7 +297,7 @@ func (t *SimpleChaincode) fetchPolicyQuotes(stub shim.ChaincodeStubInterface, ar
 	if err != nil {
 		return nil, errors.New("Failed to get id as cannot convert it to int")
 	}
-    agreement.TransportMode=args[4]
+    agreement.PolicyType=args[4]
 
     fmt.Println("agreement", agreement)
 
@@ -466,7 +466,7 @@ func(t* SimpleChaincode) consignmentDetail(stub shim.ChaincodeStubInterface, arg
 		return nil, errors.New("Failed to get id as cannot convert it to int")
 	}
 	
-	consignment.TransportMode=args[8]
+	consignment.PolicyType=args[8]
     fmt.Println("consignment", consignment)
 	
 	consignment.ContractType=args[9]
