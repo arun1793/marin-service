@@ -71,6 +71,75 @@ function UserRegisteration(params) {
     });
 }
 
+function fetchUserlist(params) {
+    console.log(params, 'data in params for query method')
+    return new Promise(function(resolve, reject) {
+
+        try {
+            logHelper.logEntryAndInput(logger, 'fetch users details', params);
+
+            if (!validate.isValidJson(params)) {
+                logHelper.logError(logger, 'fetch users details', 'Invalid params');
+                return reject({
+                    statusCode: constants.INVALID_INPUT,
+                    body: 'Could not fetch users details. Invalid params'
+                })
+            }
+
+
+
+            var user = params.user;
+            if (!validate.isValidString(user)) {
+                logHelper.logError(logger, 'fetch users details of user', 'Invalid user');
+                return reject({
+                    statusCode: constants.INVALID_INPUT,
+                    body: 'Could not fetch users details. Invalid user'
+                })
+            }
+
+
+            var getusers = params.getusers;
+            if (!validate.isValidString(getusers)) {
+                logHelper.logError(logger, 'fetch users details of user', 'Invalid user');
+                return reject({
+                    statusCode: constants.INVALID_INPUT,
+                    body: 'Could not fetch users details. Invalid user'
+                })
+            }
+            var reqSpec = getRequestSpec({
+                functionName: 'readuser',
+                args: ["getusers"]
+            });
+            recursiveQuery({
+                    requestSpec: reqSpec,
+                    user: user
+                })
+                .then(function(resp) {
+                    logHelper.logMessage(logger, 'fetched users details', 'Successfully fetched users details', resp.body);
+                    return resolve({
+                        statusCode: constants.SUCCESS,
+                        body: resp.body
+                    });
+                })
+                .catch(function(err) {
+                    logHelper.logError(logger, 'getpolicy', 'Could not fetch users details', err);
+                    return reject({
+                        statusCode: constants.INTERNAL_SERVER_ERROR,
+                        body: 'Could not fetch users details'
+                    });
+
+                });
+
+        } catch (err) {
+            logHelper.logError(logger, 'fetchuserdetails', 'Could not fetch property ad ', err);
+            return reject({
+                statusCode: constants.INTERNAL_SERVER_ERROR,
+                body: 'Could not fetch users details'
+            });
+        }
+    });
+}
+
 function fetchpolicy(params) {
 
     console.log("calling SDK for policy");
@@ -117,6 +186,75 @@ function fetchpolicy(params) {
     });
 }
 
+function fetchPolicylist(params) {
+    console.log(params, 'data in params for query method')
+    return new Promise(function(resolve, reject) {
+
+        try {
+            logHelper.logEntryAndInput(logger, 'fetch policy details', params);
+
+            if (!validate.isValidJson(params)) {
+                logHelper.logError(logger, 'fetch policy details', 'Invalid params');
+                return reject({
+                    statusCode: constants.INVALID_INPUT,
+                    body: 'Could not fetch policy details. Invalid params'
+                })
+            }
+
+
+
+            var user = params.user;
+            if (!validate.isValidString(user)) {
+                logHelper.logError(logger, 'fetch policy details of user', 'Invalid user');
+                return reject({
+                    statusCode: constants.INVALID_INPUT,
+                    body: 'Could not fetch policy details. Invalid user'
+                })
+            }
+
+
+            var getpolicy = params.getpolicy;
+            if (!validate.isValidString(getpolicy)) {
+                logHelper.logError(logger, 'fetch policy details of user', 'Invalid user');
+                return reject({
+                    statusCode: constants.INVALID_INPUT,
+                    body: 'Could not fetch policy details. Invalid user'
+                })
+            }
+            var reqSpec = getRequestSpec({
+                functionName: 'readuser',
+                args: ["get"]
+            });
+            recursiveQuery({
+                    requestSpec: reqSpec,
+                    user: user
+                })
+                .then(function(resp) {
+                    logHelper.logMessage(logger, 'fetched policy details', 'Successfully fetched policy details', resp.body);
+                    return resolve({
+                        statusCode: constants.SUCCESS,
+                        body: resp.body
+                    });
+                })
+                .catch(function(err) {
+                    logHelper.logError(logger, 'getpolicy', 'Could not fetch policy details', err);
+                    return reject({
+                        statusCode: constants.INTERNAL_SERVER_ERROR,
+                        body: 'Could not fetch policy details'
+                    });
+
+                });
+
+        } catch (err) {
+            logHelper.logError(logger, 'fetchpolicydetails', 'Could not fetch property ad ', err);
+            return reject({
+                statusCode: constants.INTERNAL_SERVER_ERROR,
+                body: 'Could not fetch policy details'
+            });
+        }
+    });
+}
+
 function consignmentdetail(params) {
 
     console.log("calling SDK for policy");
@@ -144,7 +282,7 @@ function consignmentdetail(params) {
             }
             //here in function name we use the actual function name which is used for registeration i.e User_register
             //args: [UserDetails.name,UserDetails.email,UserDetails.phone,UserDetails.pan,UserDetails.aadhar,UserDetails.usertype,UserDetails.upi,UserDetails.passpin]})
-            var reqSpec = getRequestSpec({ functionName: 'consignmentDetail', args: [ConsignmentDetails.id, ConsignmentDetails.policyName, ConsignmentDetails.premiumAmount, ConsignmentDetails.sumInsured, ConsignmentDetails.consignmentType, ConsignmentDetails.packingMode, ConsignmentDetails.consignmentWeight, ConsignmentDetails.consignmentValue, ConsignmentDetails.policyType, ConsignmentDetails.contractType] });
+            var reqSpec = getRequestSpec({ functionName: 'consignmentDetail', args: [ConsignmentDetails.id, ConsignmentDetails.policyName, ConsignmentDetails.premiumAmount, ConsignmentDetails.sumInsured, ConsignmentDetails.consignmentType, ConsignmentDetails.packingMode, ConsignmentDetails.consignmentWeight, ConsignmentDetails.consignmentValue, ConsignmentDetails.policyType, ConsignmentDetails.contractType, ConsignmentDetails.transportMode] });
             recursiveInvoke({ requestSpec: reqSpec, user: user })
                 .then(function(resp) {
                     logHelper.logMessage(logger, 'consignmentdetail', 'Successfully registered user', resp.body);
@@ -163,6 +301,75 @@ function consignmentdetail(params) {
     });
 }
 
+function fetchConsignmentlist(params) {
+    console.log(params, 'data in params for query method')
+    return new Promise(function(resolve, reject) {
+
+        try {
+            logHelper.logEntryAndInput(logger, 'fetch consignment details', params);
+
+            if (!validate.isValidJson(params)) {
+                logHelper.logError(logger, 'fetch consignment details', 'Invalid params');
+                return reject({
+                    statusCode: constants.INVALID_INPUT,
+                    body: 'Could not fetch consignment details. Invalid params'
+                })
+            }
+
+
+
+            var user = params.user;
+            if (!validate.isValidString(user)) {
+                logHelper.logError(logger, 'fetch users details of user', 'Invalid user');
+                return reject({
+                    statusCode: constants.INVALID_INPUT,
+                    body: 'Could not fetch consignment details. Invalid user'
+                })
+            }
+
+
+            var getconsignment = params.getconsignment;
+            if (!validate.isValidString(getconsignment)) {
+                logHelper.logError(logger, 'fetch consignment details of user', 'Invalid consignment');
+                return reject({
+                    statusCode: constants.INVALID_INPUT,
+                    body: 'Could not fetch consignment details. Invalid consignment'
+                })
+            }
+            var reqSpec = getRequestSpec({
+                functionName: 'readuser',
+                args: [getconsignment]
+            });
+            recursiveQuery({
+                    requestSpec: reqSpec,
+                    user: user
+                })
+                .then(function(resp) {
+                    logHelper.logMessage(logger, 'fetched consignment details', 'Successfully fetched users details', resp.body);
+                    return resolve({
+                        statusCode: constants.SUCCESS,
+                        body: resp.body
+                    });
+                })
+                .catch(function(err) {
+                    logHelper.logError(logger, 'getconsignment', 'Could not fetch consignment details', err);
+                    return reject({
+                        statusCode: constants.INTERNAL_SERVER_ERROR,
+                        body: 'Could not fetch consignment details'
+                    });
+
+                });
+
+        } catch (err) {
+            logHelper.logError(logger, 'fetchconsignmentlist', 'Could not fetch property ad ', err);
+            return reject({
+                statusCode: constants.INTERNAL_SERVER_ERROR,
+                body: 'Could not fetch consignment details'
+            });
+        }
+    });
+}
+
 function read(params) {
     console.log(params, 'data in params for query method')
     return new Promise(function(resolve, reject) {
@@ -174,8 +381,6 @@ function read(params) {
                 logHelper.logError(logger, 'fetch key value details', 'Invalid params');
                 return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not fetch campaign details. Invalid params' })
             }
-
-
 
             var user = params.user;
             if (!validate.isValidString(user)) {
@@ -643,6 +848,9 @@ module.exports = {
     read: read,
     UserRegisteration: UserRegisteration,
     fetchpolicy: fetchpolicy,
+    fetchPolicylist: fetchPolicylist,
+    fetchUserlist: fetchUserlist,
+    fetchConsignmentlist: fetchConsignmentlist,
     consignmentdetail: consignmentdetail,
     recursiveRegister: recursiveRegister,
     recursiveLogin: recursiveLogin,

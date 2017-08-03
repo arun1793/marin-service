@@ -5,6 +5,9 @@
 const register = require('./functions/register');
 const fetchpolicy = require('./functions/fetchpolicy');
 const consignment = require('./functions/consignment');
+const fetchPolicylist = require('./functions/fetchpolicylist');
+const fetchUserlist = require('./functions/getuser');
+const fetchConsignmentlist = require('./functions/getconsignment');
 const mysql = require('mysql');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
@@ -41,7 +44,7 @@ var transporter = nodemailer.createTransport("SMTP", {
 module.exports = router => {
 
     //registerUser- routes user input to function register.
-    router.post('/registerUser', (req, res) => {
+    router.post('/user/registerUser', (req, res) => {
         var objBD = BD();
         objBD.connect();
         const id = Math.floor(Math.random() * (100000 - 1)) + 1;
@@ -63,7 +66,6 @@ module.exports = router => {
             !email.trim() || !usertype.trim() || !password.trim()) {
             //the if statement checks if any of the above paramenters are null or not..if is then it sends an error report.
             res.status(400).json({ message: 'Invalid Request !' });
-
         }
         var user = {
             fname: fname,
@@ -101,9 +103,9 @@ module.exports = router => {
                     var mailOptions = {
                         transport: transporter,
                         from: '"Dhananjay"<dhananjay.patil@rapidqube.com>',
-                        to: emailtosend, //req.body.to, 
+                        to: emailtosend,
                         subject: 'Please confirm your Email account',
-                        text: req.body.text,
+                        text: "Below link will expire in 15 minutes",
                         html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
                     };
                     transporter.sendMail(mailOptions, (error, info) => {
@@ -127,8 +129,35 @@ module.exports = router => {
         });
     });
 
+    // getuser - query method fetches details stored in ledger. 
+    router.get('/user/getuser', (req, res) => {
+
+        if (1 == 1) {
+            fetchUserlist.fetch_userlist({
+                    "user": "dhananjay.p",
+                    "getusers": "getusers"
+                })
+                .then(function(result) {
+                    res.json({
+                        message: "user detail fetched",
+                        userList: result.usersdata
+
+                    });
+
+                })
+                .catch(err => res.status(err.status).json({
+                    message: err.message
+                }));
+        } else {
+
+            res.status(401).json({
+                message: 'cant fetch data !'
+            });
+        }
+    });
+
     //verify-validates user emailid
-    router.get('/verify', cors(), (req, res, next) => {
+    router.get('/user/verify', cors(), (req, res, next) => {
         var querymail = req.query.mail;
         console.log("URL: " + querymail);
         var objBD = BD();
@@ -161,7 +190,7 @@ module.exports = router => {
     });
 
     //phoneverification- validates phone number
-    router.post('/phoneverification', cors(), (req, res) => {
+    router.post('/user/phoneverification', cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
 
@@ -199,7 +228,7 @@ module.exports = router => {
     });
 
     //userLogin- on user input this service gets invoked
-    router.post("/userLogin", cors(), (req, res) => {
+    router.post('/user/userLogin', cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
         console.log(req.body);
@@ -246,7 +275,7 @@ module.exports = router => {
     });
 
     //fetchPolicyQuotes- routes user input to function fetchpolicy
-    router.post('/fetchPolicyQuotes', (req, res) => {
+    router.post('/user/fetchPolicyQuotes', (req, res) => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
@@ -331,7 +360,6 @@ module.exports = router => {
                             "premiumAmount": "5,000",
                             "sumInsured": "2,25,000",
                             "premiumPayment": "55k"
-
                         },
                         {
                             "policyName": "ICICI Lombard",
@@ -356,7 +384,8 @@ module.exports = router => {
                             "premiumAmount": "3,000",
                             "sumInsured": "1,50,000",
                             "premiumPayment": "60k"
-                        }, {
+                        },
+                        {
                             "policyName": "Maersk",
                             "Roadways": "False",
                             "Shipping": "True",
@@ -365,8 +394,8 @@ module.exports = router => {
                             "premiumAmount": "5,000",
                             "sumInsured": "2,25,000",
                             "premiumPayment": "55k"
-
-                        }, {
+                        },
+                        {
                             "policyName": "Doodle",
                             "Roadways": "True",
                             "Shipping": "False",
@@ -375,7 +404,8 @@ module.exports = router => {
                             "premiumAmount": "5,000",
                             "sumInsured": "7,25,000",
                             "premiumPayment": "15k"
-                        }, {
+                        },
+                        {
                             "policyName": "MineDart",
                             "Roadways": "True",
                             "Shipping": "True",
@@ -384,7 +414,6 @@ module.exports = router => {
                             "premiumAmount": "5,000",
                             "sumInsured": "1,25,000",
                             "premiumPayment": "20k"
-
                         },
                         {
                             "policyName": "Marine Insurance",
@@ -404,7 +433,6 @@ module.exports = router => {
                             "premiumAmount": "3,000",
                             "sumInsured": "1,25,000",
                             "premiumPayment": "20k"
-
                         }
                     ]
 
@@ -418,7 +446,8 @@ module.exports = router => {
                             "premiumAmount": "1,000",
                             "sumInsured": "50,000",
                             "premiumPayment": "6k"
-                        }, {
+                        },
+                        {
                             "policyName": "wizCraft",
                             "Roadways": "False",
                             "Shipping": "False",
@@ -427,8 +456,8 @@ module.exports = router => {
                             "premiumAmount": "5,000",
                             "sumInsured": "1,25,000",
                             "premiumPayment": "20k"
-
-                        }, {
+                        },
+                        {
                             "policyName": "DreamWork",
                             "Roadways": "False",
                             "Shipping": "True",
@@ -437,7 +466,8 @@ module.exports = router => {
                             "premiumAmount": "5,000",
                             "sumInsured": "7,25,000",
                             "premiumPayment": "15k"
-                        }, {
+                        },
+                        {
                             "policyName": "Emirates",
                             "Roadways": "True",
                             "Shipping": "True",
@@ -446,7 +476,6 @@ module.exports = router => {
                             "premiumAmount": "5,000",
                             "sumInsured": "1,25,000",
                             "premiumPayment": "20k"
-
                         },
                         {
                             "policyName": "Marine Insurance",
@@ -457,7 +486,8 @@ module.exports = router => {
                             "premiumAmount": "1,000",
                             "sumInsured": "50,000",
                             "premiumPayment": "12k"
-                        }, {
+                        },
+                        {
                             "policyName": "Blue Dart",
                             "Roadways": "False",
                             "Shipping": "True",
@@ -466,93 +496,125 @@ module.exports = router => {
                             "premiumAmount": "3,000",
                             "sumInsured": "1,25,000",
                             "premiumPayment": "20k"
-
                         }
                     ]
 
                 } else if (policyType == "fobPolicy") {
 
                     policyList = [{
-                        "policyName": "ICICI Lombard",
-                        "Roadways": "False",
-                        "Shipping": "False",
-                        "Railway": "True",
-                        "Airways": "True",
-                        "premiumAmount": "1,000",
-                        "sumInsured": "50,000",
-                        "premiumPayment": "6k"
-                    }, {
-                        "policyName": "Oriental",
-                        "Roadways": "True",
-                        "Shipping": "True",
-                        "Railway": "False",
-                        "Airways": "False",
-                        "premiumAmount": "5,000",
-                        "sumInsured": "1,25,000",
-                        "premiumPayment": "20k"
+                            "policyName": "ICICI Lombard",
+                            "Roadways": "False",
+                            "Shipping": "False",
+                            "Railway": "True",
+                            "Airways": "True",
+                            "premiumAmount": "1,000",
+                            "sumInsured": "50,000",
+                            "premiumPayment": "6k"
+                        },
+                        {
+                            "policyName": "Oriental",
+                            "Roadways": "True",
+                            "Shipping": "True",
+                            "Railway": "False",
+                            "Airways": "False",
+                            "premiumAmount": "5,000",
+                            "sumInsured": "1,25,000",
+                            "premiumPayment": "20k"
+                        },
+                        {
+                            "policyName": "DHFL",
+                            "Roadways": "False",
+                            "Shipping": "True",
+                            "Railway": "False",
+                            "Airways": "True",
+                            "premiumAmount": "5,000",
+                            "sumInsured": "7,25,000",
+                            "premiumPayment": "15k"
+                        },
+                        {
+                            "policyName": "Harwlett Packards",
+                            "Roadways": "True",
+                            "Shipping": "False",
+                            "Railway": "True",
+                            "Airways": "False",
+                            "premiumAmount": "5,000",
+                            "sumInsured": "1,25,000",
+                            "premiumPayment": "20k"
 
-                    }, {
-                        "policyName": "DHFL",
-                        "Roadways": "False",
-                        "Shipping": "True",
-                        "Railway": "False",
-                        "Airways": "True",
-                        "premiumAmount": "5,000",
-                        "sumInsured": "7,25,000",
-                        "premiumPayment": "15k"
-                    }, {
-                        "policyName": "Harwlett Packards",
-                        "Roadways": "True",
-                        "Shipping": "False",
-                        "Railway": "True",
-                        "Airways": "False",
-                        "premiumAmount": "5,000",
-                        "sumInsured": "1,25,000",
-                        "premiumPayment": "20k"
-
-                    }, {
-                        "policyName": "Maersk",
-                        "Roadways": "True",
-                        "Shipping": "False",
-                        "Railway": "True",
-                        "Airways": "False",
-                        "premiumAmount": "5,000",
-                        "sumInsured": "2,25,000",
-                        "premiumPayment": "55k"
-
-                    }, {
-                        "policyName": "Doodle",
-                        "Roadways": "True",
-                        "Shipping": "True",
-                        "Railway": "False",
-                        "Airways": "False",
-                        "premiumAmount": "5,000",
-                        "sumInsured": "7,25,000",
-                        "premiumPayment": "15k"
-                    }]
+                        },
+                        {
+                            "policyName": "Maersk",
+                            "Roadways": "True",
+                            "Shipping": "False",
+                            "Railway": "True",
+                            "Airways": "False",
+                            "premiumAmount": "5,000",
+                            "sumInsured": "2,25,000",
+                            "premiumPayment": "55k"
+                        },
+                        {
+                            "policyName": "Doodle",
+                            "Roadways": "True",
+                            "Shipping": "True",
+                            "Railway": "False",
+                            "Airways": "False",
+                            "premiumAmount": "5,000",
+                            "sumInsured": "7,25,000",
+                            "premiumPayment": "15k"
+                        }
+                    ]
 
                 }
 
                 fetchpolicy.fetchPolicyQuotes(id, consignmentWeight, consignmentValue, contractType, policyType)
-                    .then((result) => {
-                        res.status(200).json({ "policyList": policyList });
-                    })
-                    // return res.json({
-                    //     "policyList": policyList
-                    // })
+
+                .then((result) => {
+                    res.status(200).json({ "policyList": policyList });
+                })
+            });
+        }
+    });
+
+    //policylist- query fetches user input given by user for fetching policy.
+    router.get('/user/policyList', (req, res) => {
+
+        if (1 == 1) {
+            fetchPolicylist.fetch_Policy_list({
+                    "user": "dhananjay.p",
+                    "get": "get"
+                })
+                .then(function(result) {
+                    res.json({
+                        message: "policy detail fetched",
+                        policyList: result
+
+                    });
+                    //res.json(result)
+                })
+                .catch(err => res.status(err.status).json({
+                    message: err.message
+                }));
+        } else {
+
+            res.status(401).json({
+                message: 'cant fetch data !'
             });
         }
     });
 
     //Consignment-routes user input to function consignment
-    router.post('/consignmentDetail', cors(), (req, res) => {
+    router.post('/user/consignmentDetail', cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
         const uid = Math.floor(Math.random() * (100000 - 1)) + 1;
         const id = uid.toString();
-        const policyType = req.body.policyType;
-        console.log(policyType);
+        const policyName = req.body.policyName;
+        console.log("policyName:" + policyName);
+        const premiumAmount = req.body.premiumAmount;
+        console.log("premiumamount:" + premiumAmount);
+        const sumInsured = req.body.sumInsured;
+        console.log("suminsured:" + sumInsured);
         const consignmentType = req.body.consignmentType;
         console.log("consignmenttype:" + consignmentType);
         const packingMode = req.body.packingMode;
@@ -561,16 +623,14 @@ module.exports = router => {
         console.log("consignmentWeight" + consignmentWeight);
         const consignmentValue = req.body.consignmentValue;
         console.log("consignmentvalue" + consignmentValue);
+        const policyType = req.body.policyType;
+        console.log(policyType);
         const contractType = req.body.contractType;
         console.log("contractType" + contractType);
-        const policyName = req.body.policyName;
-        console.log("policyName:" + policyName);
-        const premiumAmount = req.body.premiumAmount;
-        console.log("premiumamount:" + premiumAmount);
-        const sumInsured = req.body.sumInsured;
-        console.log("suminsured:" + sumInsured);
+        const transportMode = req.body.transportMode;
+        console.log("transportmode:" + transportMode);
 
-        if (!policyType || !consignmentType || !packingMode || !consignmentWeight || !consignmentValue || !contractType || !policyName || !premiumAmount || !sumInsured || !policyType.trim() || !consignmentType.trim() || !packingMode.trim() || !consignmentWeight.trim() || !consignmentValue.trim() || !contractType.trim() || !policyName.trim() || !premiumAmount.trim() || !sumInsured.trim()) {
+        if (!policyName || !premiumAmount || !sumInsured || !consignmentType || !packingMode || !consignmentWeight || !consignmentValue || !policyType || !contractType || !transportMode || !policyType.trim() || !consignmentType.trim() || !packingMode.trim() || !consignmentWeight.trim() || !consignmentValue.trim() || !contractType.trim() || !policyName.trim() || !premiumAmount.trim() || !sumInsured.trim() || !transportMode.trim()) {
 
             res.status(400).json({ message: 'Invalid Request !' });
 
@@ -580,38 +640,62 @@ module.exports = router => {
 
                 var udetail = {
                     uid: id[0].uid,
-                    policyType: policyType,
+                    policyName: policyName,
+                    premiumAmount: premiumAmount,
+                    sumInsured: sumInsured,
                     consignmentType: consignmentType,
                     packingMode: packingMode,
                     consignmentWeight: consignmentWeight,
                     consignmentValue: consignmentValue,
+                    policyType: policyType,
                     contractType: contractType,
-                    policyName: policyName,
-                    premiumAmount: premiumAmount,
-                    sumInsured: sumInsured
+                    transportMode: transportMode
                 };
+
                 objBD.query('INSERT INTO issuedpolicy SET ?', udetail, function(error) {});
 
                 objBD.query('DELETE from savepolicy where uid = ? ', id[0].uid, function(error) {});
 
 
-
-                consignment.consignmentDetail(id, policyType, consignmentType, packingMode, consignmentWeight, consignmentValue, contractType, policyName, premiumAmount, sumInsured)
+                consignment.consignmentDetail(id, policyName, premiumAmount, sumInsured, consignmentType, packingMode, consignmentWeight, consignmentValue, policyType, contractType, transportMode)
 
                 .then((result) => {
                         res.status(200).json({ "message": "true", "status": "success" });
                     })
-                    // res.send({
-                    //         "message": "true",
-                    //         "status": "success"
-                    //     })
                     // .catch(err => res.status(err.status).json({ message: err.message }));
             });
         }
     });
 
+    //getconsignment - query fetches consignment user input given for payment of consignment.
+    router.get('/user/getconsignment', (req, res) => {
+
+        if (1 == 1) {
+            fetchConsignmentlist.fetch_consignmentlist({
+                    "user": "dhananjay.p",
+                    "getusers": "getusers"
+                })
+                .then(function(result) {
+                    res.json({
+                        message: "user detail fetched",
+                        userList: result
+
+                    });
+
+                })
+                .catch(err => res.status(err.status).json({
+                    message: err.message
+                }));
+        } else {
+
+            res.status(401).json({
+                message: 'cant fetch data !'
+            });
+        }
+    });
+
     //issuedpolicy- fetches users issued policies 
-    router.get('/fetchissuedpolicy', cors(), (req, res) => {
+    router.get('/user/fetchissuedpolicy', cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
@@ -654,7 +738,7 @@ module.exports = router => {
     });
 
     //fetchsavepolicy- fetches saved policies for respective user on token
-    router.get("/fetchSavePolicy", function(req, res) {
+    router.get('/user/fetchSavePolicy', function(req, res) {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
@@ -669,8 +753,9 @@ module.exports = router => {
             });
         });
     });
+
     //userLogout- compares tokens taken from header with database data if it matches deletes token.
-    router.get("/userLogout", cors(), (req, res) => {
+    router.get('/user/userLogout', cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');

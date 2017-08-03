@@ -59,8 +59,9 @@ type Consignment struct{
 	PackingMode 	 	string 	`json:"packingmode"`
 	ConsignmentWeight 	int 	`json:"consignmentweight"`
     ConsignmentValue 	int 	`json:"consignmentvalue"`
-    PolicyType		string 	`json:"policytype"`
-    ContractType 		string 	`json:"contracttype"`        
+    PolicyType			string 	`json:"policytype"`
+	ContractType 		string 	`json:"contracttype"`
+	TransportMode       string 	`json:"transportmode"`
 }
 
 type AllConsignment struct{
@@ -393,7 +394,7 @@ func(t* SimpleChaincode) savePolicy(stub shim.ChaincodeStubInterface, args []str
 func(t* SimpleChaincode) consignmentDetail(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var err error
 			
-	if len(args) != 10 {
+	if len(args) != 11 {
         return nil, errors.New("Incorrect number of arguments. Expecting 10")
 	}
 	 //input sanitation
@@ -429,7 +430,9 @@ func(t* SimpleChaincode) consignmentDetail(stub shim.ChaincodeStubInterface, arg
 	if len(args[9]) <= 0{
 		return nil, errors.New("9th argument must be a non-empty string")
 	}
-
+	if len(args[10]) <= 0{
+		return nil, errors.New("9th argument must be a non-empty string")
+	}
 	consignment:=Consignment{}
 
 	consignment.Id, err = strconv.Atoi(args[0])
@@ -472,6 +475,9 @@ func(t* SimpleChaincode) consignmentDetail(stub shim.ChaincodeStubInterface, arg
 	consignment.ContractType=args[9]
 	fmt.Println("consignment", consignment)
 
+	consignment.TransportMode=args[10]
+	fmt.Println("consignment", consignment)
+	
     consignmentAsBytes, err := stub.GetState("getconsignment")
     if err != nil {
         return nil, errors.New("Failed to get consignment")

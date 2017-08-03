@@ -45,7 +45,7 @@ var mysql = require('mysql');
 module.exports = router;
 
 app.use(bodyParser.json());
-app.use(require('./controller'));
+// app.use(require('./controller'));
 app.use(cors());
 
 var cloudantKvStore;
