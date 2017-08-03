@@ -6,8 +6,8 @@ var getpolicy = "get";
 const bcSdk = require('../src/blockchain/blockchain_sdk');
 
 exports.fetch_Policy_list = (params) => {
-    return new Promise((resolve, reject) => {
-        bcSdk.fetchPolicylist({
+    return new Promise3((resolve, reject) => {
+        bcSdk.FetchPolicylist({
             user: user,
             getpolicy: getpolicy
         })
@@ -15,7 +15,8 @@ exports.fetch_Policy_list = (params) => {
         .then((policyArray) => {
             console.log("data in policyArray " + policyArray)
             return resolve({
-                status: 201,
+                "status": true,
+                "message": "fetched",
                 "policylist": policyArray
             })
         })
@@ -27,16 +28,16 @@ exports.fetch_Policy_list = (params) => {
             if (err.code == 11000) {
 
                 return reject({
-                    status: 409,
-                    message: 'cant fetch !'
+                    "status": false,
+                    "message": 'cant fetch !'
                 });
 
             } else {
                 console.log("error occurred" + err);
 
                 return reject({
-                    status: 500,
-                    message: 'Internal Server Error !'
+                    "status": false,
+                    "message": 'Internal Server Error !'
                 });
             }
         })

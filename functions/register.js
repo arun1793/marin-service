@@ -29,12 +29,12 @@ exports.registerUser = (uid, fname, lname, phone, email, usertype, password) =>
 
             if (err.code == 409) {
 
-                reject({ status: 409, message: 'User Already Registered !' });
+                reject({ "status": false, "message": 'User Already Registered !' });
 
             } else {
                 conslole.log("error occurred" + err);
 
-                reject({ status: 500, message: 'Internal Server Error !' });
+                reject({ "status": false, "message": 'Internal Server Error !' });
             }
         });
     });

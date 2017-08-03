@@ -59,10 +59,11 @@ function UserRegisteration(params) {
                     logHelper.logMessage(logger, 'UserRegisteration', 'Successfully registered user', resp.body);
                     return resolve({ statusCode: constants.SUCCESS, body: UserDetails });
                 })
-                .catch(function(err) {
-                    logHelper.logError(logger, 'UserRegisteration', 'Could not register user', err);
-                    return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not register user' });
-                });
+
+            .catch(function(err) {
+                logHelper.logError(logger, 'UserRegisteration', 'Could not register user', err);
+                return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not register user' });
+            });
 
         } catch (err) {
             logHelper.logError(logger, 'UserRegisteration', 'Could not register user application on blockchain ledger: ', err);
@@ -140,9 +141,9 @@ function fetchUserlist(params) {
     });
 }
 
-function fetchpolicy(params) {
+function FetchPolicy(params) {
 
-    console.log("calling SDK for policy");
+    console.log("calling SDK for fetchpolicy");
     return new Promise(function(resolve, reject) {
         var PolicyDetails;
         try {
@@ -156,14 +157,14 @@ function fetchpolicy(params) {
             var user = params.user;
             if (!validate.isValidString(user)) {
                 logHelper.logError(logger, 'fetchpolicy', 'Invalid user');
-                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not  fetchpolicy. Invalid user' })
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not fetchpolicy. Invalid user' })
             }
 
             PolicyDetails = params.PolicyDetails;
 
             if (!validate.isValidJson(PolicyDetails)) {
                 logHelper.logError(logger, 'fetchpolicy', 'Invalid UserDetails');
-                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not   fetchpolicy. Invalid json object' })
+                return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not fetchpolicy. Invalid json object' })
             }
             //here in function name we use the actual function name which is used for registeration i.e User_register
             //args: [UserDetails.name,UserDetails.email,UserDetails.phone,UserDetails.pan,UserDetails.aadhar,UserDetails.usertype,UserDetails.upi,UserDetails.passpin]})
@@ -173,11 +174,11 @@ function fetchpolicy(params) {
                     logHelper.logMessage(logger, 'fetchpolicy', 'Successfully fetchpolicy', resp.body);
                     return resolve({ statusCode: constants.SUCCESS, body: PolicyDetails });
                 })
-                .catch(function(err) {
-                    logHelper.logError(logger, 'fetchpolicy', 'Could not register user', err);
-                    return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not fetchpolicy' });
 
-                });
+            .catch(function(err) {
+                logHelper.logError(logger, 'fetchpolicy', 'Could notfetchpolicy', err);
+                return reject({ statusCode: constants.INTERNAL_SERVER_ERROR, body: 'Could not fetchpolicy' });
+            });
 
         } catch (err) {
             logHelper.logError(logger, 'UserRegisteration', 'Could not register user application on blockchain ledger: ', err);
@@ -186,7 +187,7 @@ function fetchpolicy(params) {
     });
 }
 
-function fetchPolicylist(params) {
+function FetchPolicylist(params) {
     console.log(params, 'data in params for query method')
     return new Promise(function(resolve, reject) {
 
@@ -847,8 +848,8 @@ function isUserEnrolled(params) {
 module.exports = {
     read: read,
     UserRegisteration: UserRegisteration,
-    fetchpolicy: fetchpolicy,
-    fetchPolicylist: fetchPolicylist,
+    FetchPolicy: FetchPolicy,
+    FetchPolicylist: FetchPolicylist,
     fetchUserlist: fetchUserlist,
     fetchConsignmentlist: fetchConsignmentlist,
     consignmentdetail: consignmentdetail,

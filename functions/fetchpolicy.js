@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var router = express.Router();
 var cors = require('cors');
@@ -7,18 +9,17 @@ var user = 'dhananjay.p';
 var affiliation = 'marine';
 
 
-exports.fetchPolicyQuotes = (id, consignmentWeight, consignmentValue, contractType, policyType) =>
+exports.fetchPolicyQuotes = (id, contractType, consignmentWeight, consignmentValue, policyType) =>
     new Promise((resolve, reject) => {
         const policy = ({
-
             id: id,
+            contractType: contractType,
             consignmentWeight: consignmentWeight,
             consignmentValue: consignmentValue,
-            contractType: contractType,
             policyType: policyType
-        })
+        });
 
-        bcSdk.fetchpolicy({ user: user, PolicyDetails: policy })
+        bcSdk.FetchPolicy({ user: user, PolicyDetails: policy })
 
         .then(() => resolve({ "status": true, "message": "policy fetched" }))
 
@@ -26,12 +27,12 @@ exports.fetchPolicyQuotes = (id, consignmentWeight, consignmentValue, contractTy
 
             if (err.code == 409) {
 
-                reject({ status: 409, message: 'already fetched' });
+                reject({ "status": false, "message": 'already fetched' });
 
             } else {
                 console.log("error occurred" + err);
 
-                reject({ status: 500, message: 'Internal Server Error !' });
+                reject({ "status": false, "message": 'Internal Server Error !' });
             }
         });
     });

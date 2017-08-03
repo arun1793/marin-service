@@ -15,7 +15,8 @@ exports.fetch_userlist = (params) => {
         .then((userArray) => {
             console.log("data in userArray " + userArray)
             return resolve({
-                status: 201,
+                "status": true,
+                "message": "fetched",
                 "usersdata": userArray.body
             })
         })
@@ -25,15 +26,15 @@ exports.fetch_userlist = (params) => {
             if (err.code == 11000) {
 
                 return reject({
-                    status: 409,
-                    message: 'cant fetch !'
+                    "status": false,
+                    "message": 'cant fetch !'
                 });
 
             } else {
                 console.log("error occurred" + err);
 
                 return reject({
-                    status: 500,
+                    "status": false,
                     message: 'Internal Server Error !'
                 });
             }

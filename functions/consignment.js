@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var router = express.Router();
 var cors = require('cors');
@@ -21,7 +23,7 @@ exports.consignmentDetail = (id, policyName, premiumAmount, sumInsured, consignm
             policyType: policyType,
             contractType: contractType,
             transportMode: transportMode
-        })
+        });
 
         bcSdk.consignmentdetail({ user: user, ConsignmentDetails: policy })
 
@@ -31,12 +33,12 @@ exports.consignmentDetail = (id, policyName, premiumAmount, sumInsured, consignm
 
             if (err.code == 409) {
 
-                reject({ status: 409, message: 'already fetched' });
+                reject({ "status": false, message: 'already fetched' });
 
             } else {
                 conslole.log("error occurred" + err);
 
-                reject({ status: 500, message: 'Internal Server Error !' });
+                reject({ "status": false, message: 'Internal Server Error !' });
             }
         });
     });

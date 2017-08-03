@@ -36,7 +36,7 @@ var transporter = nodemailer.createTransport("SMTP", {
     port: 587,
     secure: true,
     auth: {
-        user: "dhananjay.patil@rapidqube.com",
+        user: "vikram.viswanathan@rapidqube.com",
         pass: "Rpqb@12345"
     }
 });
@@ -44,7 +44,7 @@ var transporter = nodemailer.createTransport("SMTP", {
 module.exports = router => {
 
     //registerUser- routes user input to function register.
-    router.post('/user/registerUser', (req, res) => {
+    router.post("/user/registerUser", (req, res) => {
         var objBD = BD();
         objBD.connect();
         const id = Math.floor(Math.random() * (100000 - 1)) + 1;
@@ -84,12 +84,14 @@ module.exports = router => {
                 var possible = "0123456789";
                 for (var i = 0; i < 4; i++)
                     otp += possible.charAt(Math.floor(Math.random() * possible.length));
-                var remoteHost = "192.168.0.16:3000";
+                var remoteHost = "192.168.0.29:3000";
                 console.log(remoteHost);
+
                 var encodedMail = new Buffer(req.body.email).toString('base64');
                 var link = "http://" + remoteHost + "/marine/user/verify?mail=" + encodedMail;
                 var userResults, emailtosend, phonetosend, otptosend;
                 console.log(userResults);
+
                 objBD.query('select * from user_detail WHERE email = ?', [req.body.email], function(error, results, fields) {
                     console.log(userResults)
                     userResults = JSON.parse(JSON.stringify(results));
@@ -102,10 +104,10 @@ module.exports = router => {
                     //after generating otp mail will be sent to regsitered user.
                     var mailOptions = {
                         transport: transporter,
-                        from: '"Dhananjay"<dhananjay.patil@rapidqube.com>',
+                        from: '"vikram"<vikram.viswanathan@rapidqube.com>',
                         to: emailtosend,
                         subject: 'Please confirm your Email account',
-                        text: "Below link will expire in 15 minutes",
+                        text: req.body.text,
                         html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
                     };
                     transporter.sendMail(mailOptions, (error, info) => {
@@ -118,19 +120,21 @@ module.exports = router => {
                         '919768135452', phonetosend, otptosend, { type: 'unicode' },
                         (err, responseData) => { if (responseData) { console.log(responseData) } }
                     );
-                });
+                })
                 register.registerUser(uid, fname, lname, phone, email, usertype, password)
 
                 .then((result) => {
-                        res.status(200).json({ "message": "true", "status": "Registration successful" });
-                    })
-                    .catch(err => res.status(err.status).json({ message: err.message }));
+                    res.status(200).json({ "message": "true", "status": "Registration successful" });
+                })
+
+
+                .catch(err => res.status(err.status).json({ message: err.message }));
             }
         });
     });
 
     // getuser - query method fetches details stored in ledger. 
-    router.get('/user/getuser', (req, res) => {
+    router.get("/user/getuser", (req, res) => {
 
         if (1 == 1) {
             fetchUserlist.fetch_userlist({
@@ -157,7 +161,7 @@ module.exports = router => {
     });
 
     //verify-validates user emailid
-    router.get('/user/verify', cors(), (req, res, next) => {
+    router.get("/user/verify", cors(), (req, res, next) => {
         var querymail = req.query.mail;
         console.log("URL: " + querymail);
         var objBD = BD();
@@ -166,8 +170,8 @@ module.exports = router => {
         objBD.query('SELECT * FROM verification WHERE encodedMail = ?', [querymail], function(error, results, fields) {
             if (error) {
                 res.send({
-                    "code": 400,
-                    "failed": "error ocurred"
+                    "status": false,
+                    "message": "error ocurred"
                 })
             } else {
                 var resultLength = JSON.parse(JSON.stringify(results));
@@ -190,7 +194,7 @@ module.exports = router => {
     });
 
     //phoneverification- validates phone number
-    router.post('/user/phoneverification', cors(), (req, res) => {
+    router.post("/user/phoneverification", cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
 
@@ -228,17 +232,18 @@ module.exports = router => {
     });
 
     //userLogin- on user input this service gets invoked
-    router.post('/user/userLogin', cors(), (req, res) => {
+    router.post("/user/userLogin", cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
         console.log(req.body);
         var email = req.body.email;
         var password = req.body.password;
-        objBD.query('SELECT * FROM user_detail WHERE email = ?', [email], function(error, results, fields) {
+        objBD.query('SELECT * FROM user_detail WHERE email = ?', email, function(error, results, fields) {
             if (error) {
                 res.send({
-                    "code": 400,
-                    "failed": "error ocurred"
+                    "status": false,
+                    "token": "null",
+                    "message": "error ocurred"
                 })
             } else {
                 var resultLength = JSON.parse(JSON.stringify(results));
@@ -275,7 +280,7 @@ module.exports = router => {
     });
 
     //fetchPolicyQuotes- routes user input to function fetchpolicy
-    router.post('/user/fetchPolicyQuotes', (req, res) => {
+    router.post("/user/fetchPolicyQuotes", (req, res) => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
@@ -566,17 +571,21 @@ module.exports = router => {
 
                 }
 
-                fetchpolicy.fetchPolicyQuotes(id, consignmentWeight, consignmentValue, contractType, policyType)
+                fetchpolicy.fetchPolicyQuotes(id, contractType, consignmentWeight, consignmentValue, policyType)
 
                 .then((result) => {
-                    res.status(200).json({ "policyList": policyList });
+                    res.status(200).json({
+                        "status": true,
+                        "message": "fetched",
+                        "policyList": policyList
+                    });
                 })
             });
         }
     });
 
     //policylist- query fetches user input given by user for fetching policy.
-    router.get('/user/policyList', (req, res) => {
+    router.get("/user/policyList", (req, res) => {
 
         if (1 == 1) {
             fetchPolicylist.fetch_Policy_list({
@@ -585,6 +594,7 @@ module.exports = router => {
                 })
                 .then(function(result) {
                     res.json({
+                        "status": true,
                         message: "policy detail fetched",
                         policyList: result
 
@@ -597,13 +607,15 @@ module.exports = router => {
         } else {
 
             res.status(401).json({
-                message: 'cant fetch data !'
+                "status": false,
+                "message": "cant fetch data"
+
             });
         }
     });
 
     //Consignment-routes user input to function consignment
-    router.post('/user/consignmentDetail', cors(), (req, res) => {
+    router.post("/user/consignmentDetail", cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
@@ -632,7 +644,7 @@ module.exports = router => {
 
         if (!policyName || !premiumAmount || !sumInsured || !consignmentType || !packingMode || !consignmentWeight || !consignmentValue || !policyType || !contractType || !transportMode || !policyType.trim() || !consignmentType.trim() || !packingMode.trim() || !consignmentWeight.trim() || !consignmentValue.trim() || !contractType.trim() || !policyName.trim() || !premiumAmount.trim() || !sumInsured.trim() || !transportMode.trim()) {
 
-            res.status(400).json({ message: 'Invalid Request !' });
+            res.status(400).json({ "status": false, "message": 'Invalid Request !' });
 
         } else {
             objBD.query('SELECT * FROM user_session WHERE token = ?', token, function(error, results, fields) {
@@ -668,7 +680,7 @@ module.exports = router => {
     });
 
     //getconsignment - query fetches consignment user input given for payment of consignment.
-    router.get('/user/getconsignment', (req, res) => {
+    router.get("/user/getconsignment", (req, res) => {
 
         if (1 == 1) {
             fetchConsignmentlist.fetch_consignmentlist({
@@ -677,7 +689,8 @@ module.exports = router => {
                 })
                 .then(function(result) {
                     res.json({
-                        message: "user detail fetched",
+                        "status": false,
+                        "message": "user detail fetched",
                         userList: result
 
                     });
@@ -689,13 +702,14 @@ module.exports = router => {
         } else {
 
             res.status(401).json({
+                "status": false,
                 message: 'cant fetch data !'
             });
         }
     });
 
     //issuedpolicy- fetches users issued policies 
-    router.get('/user/fetchissuedpolicy', cors(), (req, res) => {
+    router.get("/user/fetchissuedpolicy", cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
@@ -704,8 +718,8 @@ module.exports = router => {
         objBD.query('SELECT * FROM user_session WHERE token = ?', [token], function(error, results, fields) {
             if (error) {
                 res.send({
-                    "code": 400,
-                    "failed": "error ocurred"
+                    "status": false,
+                    "message": "error ocurred"
                 })
             } else {
                 var resultLength = JSON.parse(JSON.stringify(results));
@@ -738,7 +752,7 @@ module.exports = router => {
     });
 
     //fetchsavepolicy- fetches saved policies for respective user on token
-    router.get('/user/fetchSavePolicy', function(req, res) {
+    router.get("/user/fetchSavePolicy", function(req, res) {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
@@ -748,14 +762,14 @@ module.exports = router => {
             objBD.query('SELECT * FROM savepolicy WHERE uid = ?', [uid], function(error, results, fields) {
                 res.send({
                     "status": true,
-                    "results": results
+                    "message": results
                 })
             });
         });
     });
 
     //userLogout- compares tokens taken from header with database data if it matches deletes token.
-    router.get('/user/userLogout', cors(), (req, res) => {
+    router.get("/user/userLogout", cors(), (req, res) => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
@@ -764,8 +778,8 @@ module.exports = router => {
         objBD.query('SELECT * FROM user_session WHERE token = ?', [token], function(error, results, fields) {
             if (error) {
                 res.send({
-                    "code": 400,
-                    "failed": "error ocurred"
+                    "status": false,
+                    "message": "error ocurred"
                 })
             } else {
                 var resultLength = JSON.parse(JSON.stringify(results));
