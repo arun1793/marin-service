@@ -36,7 +36,7 @@ exports.consignmentDetail = (id, policyName, premiumAmount, sumInsured, consignm
                 reject({ "status": false, message: 'already fetched' });
 
             } else {
-                conslole.log("error occurred" + err);
+                console.log("error occurred" + err);
 
                 reject({ "status": false, message: 'Internal Server Error !' });
             }

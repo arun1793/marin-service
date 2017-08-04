@@ -284,8 +284,6 @@ module.exports = router => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
-        const uid = Math.floor(Math.random() * (100000 - 1)) + 1;
-        const id = uid.toString();
         const consignmentWeight = req.body.consignmentWeight;
         const consignmentValue = req.body.consignmentValue;
         const contractType = req.body.contractType;
@@ -298,14 +296,17 @@ module.exports = router => {
         } else {
             objBD.query('SELECT * FROM user_session WHERE token = ?', token, function(error, results, fields) {
 
-                var id = JSON.parse(JSON.stringify(results));
+                var sr_no = (results);
+                var id1 = results[0].ID;
+                const id = id1.toString();
+
 
                 var policy = {
                     consignmentWeight: consignmentWeight,
                     consignmentValue: consignmentValue,
                     contractType: contractType,
                     policyType: policyType,
-                    uid: id[0].uid
+                    uid: sr_no[0].uid
                 }
                 objBD.query('INSERT INTO savepolicy SET ? ', [policy], function(error) {});
 
@@ -574,12 +575,9 @@ module.exports = router => {
                 fetchpolicy.fetchPolicyQuotes(id, contractType, consignmentWeight, consignmentValue, policyType)
 
                 .then((result) => {
-                    res.status(200).json({
-                        "status": true,
-                        "message": "fetched",
-                        "policyList": policyList
-                    });
-                })
+                        res.status(200).json({ "status": true, "message": "fetched", "policyList": policyList });
+                    })
+                    .catch(err => res.status(err.status).json({ message: err.message }));
             });
         }
     });
@@ -593,12 +591,7 @@ module.exports = router => {
                     "get": "get"
                 })
                 .then(function(result) {
-                    res.json({
-                        "status": true,
-                        message: "policy detail fetched",
-                        policyList: result
-
-                    });
+                    res.json({ "status": true, message: "policy detail fetched", policyList: result });
                     //res.json(result)
                 })
                 .catch(err => res.status(err.status).json({
@@ -619,8 +612,6 @@ module.exports = router => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
-        const uid = Math.floor(Math.random() * (100000 - 1)) + 1;
-        const id = uid.toString();
         const policyName = req.body.policyName;
         console.log("policyName:" + policyName);
         const premiumAmount = req.body.premiumAmount;
@@ -648,10 +639,11 @@ module.exports = router => {
 
         } else {
             objBD.query('SELECT * FROM user_session WHERE token = ?', token, function(error, results, fields) {
-                var id = JSON.parse(JSON.stringify(results));
-
+                var sr_no = (results);
+                var id1 = results[0].ID;
+                const id = id1.toString();
                 var udetail = {
-                    uid: id[0].uid,
+                    uid: sr_no[0].uid,
                     policyName: policyName,
                     premiumAmount: premiumAmount,
                     sumInsured: sumInsured,
@@ -666,7 +658,7 @@ module.exports = router => {
 
                 objBD.query('INSERT INTO issuedpolicy SET ?', udetail, function(error) {});
 
-                objBD.query('DELETE from savepolicy where uid = ? ', id[0].uid, function(error) {});
+                objBD.query('DELETE from savepolicy where uid = ? ', sr_no[0].uid, function(error) {});
 
 
                 consignment.consignmentDetail(id, policyName, premiumAmount, sumInsured, consignmentType, packingMode, consignmentWeight, consignmentValue, policyType, contractType, transportMode)
@@ -674,7 +666,7 @@ module.exports = router => {
                 .then((result) => {
                         res.status(200).json({ "message": "true", "status": "success" });
                     })
-                    // .catch(err => res.status(err.status).json({ message: err.message }));
+                    .catch(err => res.status(err.status).json({ message: err.message }));
             });
         }
     });
@@ -689,7 +681,7 @@ module.exports = router => {
                 })
                 .then(function(result) {
                     res.json({
-                        "status": false,
+                        "status": true,
                         "message": "user detail fetched",
                         userList: result
 

@@ -32,7 +32,7 @@ exports.registerUser = (uid, fname, lname, phone, email, usertype, password) =>
                 reject({ "status": false, "message": 'User Already Registered !' });
 
             } else {
-                conslole.log("error occurred" + err);
+                console.log("error occurred" + err);
 
                 reject({ "status": false, "message": 'Internal Server Error !' });
             }

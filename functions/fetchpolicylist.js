@@ -6,7 +6,7 @@ var getpolicy = "get";
 const bcSdk = require('../src/blockchain/blockchain_sdk');
 
 exports.fetch_Policy_list = (params) => {
-    return new Promise3((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         bcSdk.FetchPolicylist({
             user: user,
             getpolicy: getpolicy
