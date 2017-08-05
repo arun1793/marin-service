@@ -612,6 +612,9 @@ module.exports = router => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
+        if (!token || !token.trim()) {
+            res.status(400).json({ "status": false, "message": 'token needed !' });
+        }
         const policyName = req.body.policyName;
         console.log("policyName:" + policyName);
         const premiumAmount = req.body.premiumAmount;

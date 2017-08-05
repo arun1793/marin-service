@@ -2277,3 +2277,325 @@
 [34m[2017-08-04 18:28:43.141] [TRACE] datastore.js - [39mgetDbInstance : entry 
 [34m[2017-08-04 18:28:43.141] [TRACE] datastore.js - [39mgetDbInstance : params - "devworks_app_master" 
 [31m[2017-08-04 18:29:03.194] [ERROR] datastore.js - [39mgetDbInstance : devworks_app_master does not exist. Creating... - {}
+[32m[2017-08-04 18:31:15.124] [INFO] BlockchainSampleClient - [39m
+[32m[2017-08-04 18:31:15.125] [INFO] BlockchainSampleClient - [39m-----------------------------------------------------------------------------
+[32m[2017-08-04 18:31:15.126] [INFO] BlockchainSampleClient - [39m>>> BlockchainSampleClient env local, started Fri Aug 04 2017 18:31:15 GMT+0530 (IST) <<<
+[32m[2017-08-04 18:31:15.126] [INFO] BlockchainSampleClient - [39m-----------------------------------------------------------------------------
+[32m[2017-08-04 18:31:15.126] [INFO] BlockchainSampleClient - [39mNode started via(process.argv): /usr/bin/nodejs,/home/dhananjayp/marin-service/app.js
+[32m[2017-08-04 18:31:15.126] [INFO] BlockchainSampleClient - [39mNode version: v6.11.1
+[32m[2017-08-04 18:31:15.127] [INFO] BlockchainSampleClient - [39mNode and its dependency versions: {"http_parser":"2.7.0","node":"6.11.1","v8":"5.1.281.103","uv":"1.11.0","zlib":"1.2.11","ares":"1.10.1-DEV","icu":"56.1","modules":"48","openssl":"1.0.2k"}
+[32m[2017-08-04 18:31:15.127] [INFO] BlockchainSampleClient - [39m
+[32m[2017-08-04 18:31:15.127] [INFO] loggingHelper - [39mCreated logger for blockchain_sample_client.js at level ALL
+[34m[2017-08-04 18:31:15.127] [TRACE] blockchain_sample_client.js - [39msetup : entry
+[34m[2017-08-04 18:31:15.128] [TRACE] datastore.js - [39minit : entry 
+[34m[2017-08-04 18:31:15.128] [TRACE] datastore.js - [39minit : params - {"name":"Cloudant NoSQL DB-vern","label":"cloudantNoSQLDB","plan":"Lite","credentials":{"username":"82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix","password":"a08027a3322ee8bde6fd011aa7f3a53f943f1f6861d6c03e41bdfc206f811def","host":"82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com","port":443,"url":"https://82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix:a08027a3322ee8bde6fd011aa7f3a53f943f1f6861d6c03e41bdfc206f811def@82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com"}} 
+[34m[2017-08-04 18:31:15.132] [TRACE] blockchain_sample_client.js - [39mgetCloudantKeyValStore : entry 
+[34m[2017-08-04 18:31:15.132] [TRACE] blockchain_sample_client.js - [39mgetCloudantKeyValStore : params - "devworks_app_master" 
+[34m[2017-08-04 18:31:15.132] [TRACE] datastore.js - [39mgetDbInstance : entry 
+[34m[2017-08-04 18:31:15.132] [TRACE] datastore.js - [39mgetDbInstance : params - "devworks_app_master" 
+[32m[2017-08-04 18:31:51.068] [INFO] BlockchainSampleClient - [39m
+[32m[2017-08-04 18:31:51.070] [INFO] BlockchainSampleClient - [39m-----------------------------------------------------------------------------
+[32m[2017-08-04 18:31:51.070] [INFO] BlockchainSampleClient - [39m>>> BlockchainSampleClient env local, started Fri Aug 04 2017 18:31:51 GMT+0530 (IST) <<<
+[32m[2017-08-04 18:31:51.070] [INFO] BlockchainSampleClient - [39m-----------------------------------------------------------------------------
+[32m[2017-08-04 18:31:51.071] [INFO] BlockchainSampleClient - [39mNode started via(process.argv): /usr/bin/nodejs,/home/dhananjayp/marin-service/app.js
+[32m[2017-08-04 18:31:51.071] [INFO] BlockchainSampleClient - [39mNode version: v6.11.1
+[32m[2017-08-04 18:31:51.071] [INFO] BlockchainSampleClient - [39mNode and its dependency versions: {"http_parser":"2.7.0","node":"6.11.1","v8":"5.1.281.103","uv":"1.11.0","zlib":"1.2.11","ares":"1.10.1-DEV","icu":"56.1","modules":"48","openssl":"1.0.2k"}
+[32m[2017-08-04 18:31:51.071] [INFO] BlockchainSampleClient - [39m
+[32m[2017-08-04 18:31:51.071] [INFO] loggingHelper - [39mCreated logger for blockchain_sample_client.js at level ALL
+[34m[2017-08-04 18:31:51.071] [TRACE] blockchain_sample_client.js - [39msetup : entry
+[34m[2017-08-04 18:31:51.072] [TRACE] datastore.js - [39minit : entry 
+[34m[2017-08-04 18:31:51.072] [TRACE] datastore.js - [39minit : params - {"name":"Cloudant NoSQL DB-vern","label":"cloudantNoSQLDB","plan":"Lite","credentials":{"username":"82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix","password":"a08027a3322ee8bde6fd011aa7f3a53f943f1f6861d6c03e41bdfc206f811def","host":"82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com","port":443,"url":"https://82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix:a08027a3322ee8bde6fd011aa7f3a53f943f1f6861d6c03e41bdfc206f811def@82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com"}} 
+[34m[2017-08-04 18:31:51.077] [TRACE] blockchain_sample_client.js - [39mgetCloudantKeyValStore : entry 
+[34m[2017-08-04 18:31:51.077] [TRACE] blockchain_sample_client.js - [39mgetCloudantKeyValStore : params - "devworks_app_master" 
+[34m[2017-08-04 18:31:51.077] [TRACE] datastore.js - [39mgetDbInstance : entry 
+[34m[2017-08-04 18:31:51.077] [TRACE] datastore.js - [39mgetDbInstance : params - "devworks_app_master" 
+[31m[2017-08-04 18:32:21.137] [ERROR] datastore.js - [39mgetDbInstance : devworks_app_master does not exist. Creating... - {}
+[32m[2017-08-04 18:32:38.095] [INFO] BlockchainSampleClient - [39m
+[32m[2017-08-04 18:32:38.097] [INFO] BlockchainSampleClient - [39m-----------------------------------------------------------------------------
+[32m[2017-08-04 18:32:38.097] [INFO] BlockchainSampleClient - [39m>>> BlockchainSampleClient env local, started Fri Aug 04 2017 18:32:38 GMT+0530 (IST) <<<
+[32m[2017-08-04 18:32:38.097] [INFO] BlockchainSampleClient - [39m-----------------------------------------------------------------------------
+[32m[2017-08-04 18:32:38.097] [INFO] BlockchainSampleClient - [39mNode started via(process.argv): /usr/bin/nodejs,/home/dhananjayp/marin-service/app.js
+[32m[2017-08-04 18:32:38.097] [INFO] BlockchainSampleClient - [39mNode version: v6.11.1
+[32m[2017-08-04 18:32:38.097] [INFO] BlockchainSampleClient - [39mNode and its dependency versions: {"http_parser":"2.7.0","node":"6.11.1","v8":"5.1.281.103","uv":"1.11.0","zlib":"1.2.11","ares":"1.10.1-DEV","icu":"56.1","modules":"48","openssl":"1.0.2k"}
+[32m[2017-08-04 18:32:38.097] [INFO] BlockchainSampleClient - [39m
+[32m[2017-08-04 18:32:38.098] [INFO] loggingHelper - [39mCreated logger for blockchain_sample_client.js at level ALL
+[34m[2017-08-04 18:32:38.098] [TRACE] blockchain_sample_client.js - [39msetup : entry
+[34m[2017-08-04 18:32:38.098] [TRACE] datastore.js - [39minit : entry 
+[34m[2017-08-04 18:32:38.099] [TRACE] datastore.js - [39minit : params - {"name":"Cloudant NoSQL DB-vern","label":"cloudantNoSQLDB","plan":"Lite","credentials":{"username":"82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix","password":"a08027a3322ee8bde6fd011aa7f3a53f943f1f6861d6c03e41bdfc206f811def","host":"82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com","port":443,"url":"https://82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix:a08027a3322ee8bde6fd011aa7f3a53f943f1f6861d6c03e41bdfc206f811def@82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com"}} 
+[34m[2017-08-04 18:32:38.104] [TRACE] blockchain_sample_client.js - [39mgetCloudantKeyValStore : entry 
+[34m[2017-08-04 18:32:38.104] [TRACE] blockchain_sample_client.js - [39mgetCloudantKeyValStore : params - "devworks_app_master" 
+[34m[2017-08-04 18:32:38.105] [TRACE] datastore.js - [39mgetDbInstance : entry 
+[34m[2017-08-04 18:32:38.105] [TRACE] datastore.js - [39mgetDbInstance : params - "devworks_app_master" 
+[31m[2017-08-04 18:32:58.148] [ERROR] datastore.js - [39mgetDbInstance : devworks_app_master does not exist. Creating... - {}
+[31m[2017-08-04 18:33:23.184] [ERROR] datastore.js - [39mgetDbInstance : could not fetch dbInstance for devworks_app_master - { Error: getaddrinfo EAI_AGAIN 82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com:443    at Object.exports._errnoException (util.js:1018:11)    at errnoException (dns.js:33:15)    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:76:26)  cause:    { Error: getaddrinfo EAI_AGAIN 82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com:443       at Object.exports._errnoException (util.js:1018:11)       at errnoException (dns.js:33:15)       at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:76:26)     name: 'Error',     scope: 'socket',     errid: 'request',     code: 'EAI_AGAIN',     errno: 'EAI_AGAIN',     syscall: 'getaddrinfo',     hostname: '82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com',     host: '82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com',     port: 443,     description: 'getaddrinfo EAI_AGAIN 82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com:443',     stacktrace: [Object] },  isOperational: true,  scope: 'socket',  errid: 'request',  code: 'EAI_AGAIN',  errno: 'EAI_AGAIN',  syscall: 'getaddrinfo',  hostname: '82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com',  host: '82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com',  port: 443,  description: 'getaddrinfo EAI_AGAIN 82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com:443',  stacktrace:    [ 'Error: getaddrinfo EAI_AGAIN 82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com:443',     '    at Object.exports._errnoException (util.js:1018:11)',     '    at errnoException (dns.js:33:15)',     '    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:76:26)' ] }
+[31m[2017-08-04 18:33:23.189] [ERROR] blockchain_sample_client.js - [39mgetCloudantKeyValStore : Could not initialize model for devworks_app_master - {"statusCode":500,"body":"could not fetch dbInstance for devworks_app_master"}
+[31m[2017-08-04 18:33:23.191] [ERROR] blockchain_sample_client.js - [39mCould not initialize CloudantKeyValueStore : [object Object] - {}
+[32m[2017-08-04 18:33:23.193] [INFO] console - [39mrunClient Error Occurred { statusCode: 500,
+  body: 'could not fetch dbInstance for devworks_app_master' }
+[32m[2017-08-04 18:33:23.197] [INFO] console - [39mexit called
+[32m[2017-08-04 18:33:58.536] [INFO] BlockchainSampleClient - [39m
+[32m[2017-08-04 18:33:58.538] [INFO] BlockchainSampleClient - [39m-----------------------------------------------------------------------------
+[32m[2017-08-04 18:33:58.538] [INFO] BlockchainSampleClient - [39m>>> BlockchainSampleClient env local, started Fri Aug 04 2017 18:33:58 GMT+0530 (IST) <<<
+[32m[2017-08-04 18:33:58.538] [INFO] BlockchainSampleClient - [39m-----------------------------------------------------------------------------
+[32m[2017-08-04 18:33:58.538] [INFO] BlockchainSampleClient - [39mNode started via(process.argv): /usr/bin/nodejs,/home/dhananjayp/marin-service/app.js
+[32m[2017-08-04 18:33:58.538] [INFO] BlockchainSampleClient - [39mNode version: v6.11.1
+[32m[2017-08-04 18:33:58.538] [INFO] BlockchainSampleClient - [39mNode and its dependency versions: {"http_parser":"2.7.0","node":"6.11.1","v8":"5.1.281.103","uv":"1.11.0","zlib":"1.2.11","ares":"1.10.1-DEV","icu":"56.1","modules":"48","openssl":"1.0.2k"}
+[32m[2017-08-04 18:33:58.539] [INFO] BlockchainSampleClient - [39m
+[32m[2017-08-04 18:33:58.539] [INFO] loggingHelper - [39mCreated logger for blockchain_sample_client.js at level ALL
+[34m[2017-08-04 18:33:58.539] [TRACE] blockchain_sample_client.js - [39msetup : entry
+[34m[2017-08-04 18:33:58.540] [TRACE] datastore.js - [39minit : entry 
+[34m[2017-08-04 18:33:58.540] [TRACE] datastore.js - [39minit : params - {"name":"Cloudant NoSQL DB-vern","label":"cloudantNoSQLDB","plan":"Lite","credentials":{"username":"82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix","password":"a08027a3322ee8bde6fd011aa7f3a53f943f1f6861d6c03e41bdfc206f811def","host":"82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com","port":443,"url":"https://82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix:a08027a3322ee8bde6fd011aa7f3a53f943f1f6861d6c03e41bdfc206f811def@82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com"}} 
+[34m[2017-08-04 18:33:58.544] [TRACE] blockchain_sample_client.js - [39mgetCloudantKeyValStore : entry 
+[34m[2017-08-04 18:33:58.544] [TRACE] blockchain_sample_client.js - [39mgetCloudantKeyValStore : params - "devworks_app_master" 
+[34m[2017-08-04 18:33:58.544] [TRACE] datastore.js - [39mgetDbInstance : entry 
+[34m[2017-08-04 18:33:58.544] [TRACE] datastore.js - [39mgetDbInstance : params - "devworks_app_master" 
+[32m[2017-08-04 18:34:14.276] [INFO] datastore.js - [39mgetDbInstance : devworks_app_master already exists. - undefined
+[34m[2017-08-04 18:34:14.287] [TRACE] blockchain_network - [39msetupBlockchain : entry 
+[34m[2017-08-04 18:34:14.288] [TRACE] blockchain_network - [39msetupBlockchain : params - [Circular] 
+[34m[2017-08-04 18:34:14.290] [TRACE] blockchain_network - [39mchainInit : entry 
+[34m[2017-08-04 18:34:14.291] [TRACE] blockchain_network - [39mchainInit : params - [Circular] 
+[32m[2017-08-04 18:34:14.295] [INFO] blockchain_network - [39mchainInit : Chain Initialized - Chain {  peers: [],  securityEnabled: true,  members: {},  tcertBatchSize: 200,  devMode: false,  preFetchMode: true,  deployWaitTime: 100,  invokeWaitTime: 5,  name: 'sc_cc',  eventHub:    EventHub {     txCallback: [Function],     chaincodeRegistrants: HashTable {},     blockRegistrants: Set {},     txRegistrants: HashTable {},     ep: null,     connected: false },  keyValStore: CloudantKeyValStore { dbName: 'devworks_app_master', dbInstance: [Object] } }
+[32m[2017-08-04 18:34:14.296] [INFO] blockchain_network - [39mloadNetworkConfiguration : Successfully loaded network configuration - undefined
+[34m[2017-08-04 18:34:14.363] [TRACE] blockchain_network - [39mdoLogin : entry
+[34m[2017-08-04 18:34:14.372] [TRACE] kv_store_model - [39mget : entry 
+[34m[2017-08-04 18:34:14.372] [TRACE] kv_store_model - [39mget : params - {"id":"member.WebAppAdmin"} 
+[32m[2017-08-04 18:34:14.550] [INFO] kv_store_model - [39mget : successfully fetched member file with id member.WebAppAdmin - undefined
+[32m[2017-08-04 18:34:14.575] [INFO] blockchain_network - [39mdoLogin : Successfully logged in user on blockchain: WebAppAdmin - undefined
+[32m[2017-08-04 18:34:14.576] [INFO] blockchain_network - [39mconfigureNetwork : Successfully enrolled registrar: WebAppAdmin - undefined
+[32m[2017-08-04 18:34:14.578] [INFO] blockchain_network - [39msetupBlockchain : blockchain setup complete - undefined
+[34m[2017-08-04 18:34:14.596] [TRACE] kv_store_model - [39mget : entry 
+[34m[2017-08-04 18:34:14.597] [TRACE] kv_store_model - [39mget : params - {"id":"member.dhananjay.p"} 
+[32m[2017-08-04 18:34:14.771] [INFO] kv_store_model - [39mget : successfully fetched member file with id member.dhananjay.p - undefined
+[32m[2017-08-04 18:34:14.790] [INFO] blockchain_sdk - [39mregisterUser : Successfully registered user on blockchain: dhananjay.p - undefined
+[34m[2017-08-04 18:34:14.791] [TRACE] blockchain_sdk - [39mdoLogin : entry
+[32m[2017-08-04 18:34:14.800] [INFO] blockchain_sdk - [39mdoLogin : Successfully logged in user on blockchain: dhananjay.p - undefined
+[32m[2017-08-04 18:34:14.800] [INFO] console - [39mserver is running on3000
+[32m[2017-08-04 18:35:09.865] [INFO] console - [39mpolicyName:policyName
+[32m[2017-08-04 18:35:09.866] [INFO] console - [39mpremiumamount:2212
+[32m[2017-08-04 18:35:09.866] [INFO] console - [39msuminsured:7474
+[32m[2017-08-04 18:35:09.866] [INFO] console - [39mconsignmenttype:consignmentType
+[32m[2017-08-04 18:35:09.866] [INFO] console - [39mpackingMode:packingMode
+[32m[2017-08-04 18:35:09.867] [INFO] console - [39mconsignmentWeight332
+[32m[2017-08-04 18:35:09.867] [INFO] console - [39mconsignmentvalue4634
+[32m[2017-08-04 18:35:09.867] [INFO] console - [39mpolicyType
+[32m[2017-08-04 18:35:09.867] [INFO] console - [39mcontractTypecontractType
+[32m[2017-08-04 18:35:09.867] [INFO] console - [39mtransportmode:transportMode
+[32m[2017-08-04 18:35:09.875] [INFO] console - [39mcalling SDK for policy
+[34m[2017-08-04 18:35:09.875] [TRACE] blockchain_sdk - [39mconsignmentdetail : entry 
+[34m[2017-08-04 18:35:09.875] [TRACE] blockchain_sdk - [39mconsignmentdetail : params - {"user":"dhananjay.p","ConsignmentDetails":{"id":"2","policyName":"policyName","premiumAmount":"2212","sumInsured":"7474","consignmentType":"consignmentType","packingMode":"packingMode","consignmentWeight":"332","consignmentValue":"4634","policyType":"policyType","contractType":"contractType","transportMode":"transportMode"}} 
+[34m[2017-08-04 18:35:09.876] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 18:35:09.878] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["2","policyName","2212","7474","consignmentType","packingMode","332","4634","policyType","contractType","transportMode"]},"user":"dhananjay.p","retryCounter":0} 
+[32m[2017-08-04 18:35:51.108] [INFO] BlockchainSampleClient - [39m
+[32m[2017-08-04 18:35:51.110] [INFO] BlockchainSampleClient - [39m-----------------------------------------------------------------------------
+[32m[2017-08-04 18:35:51.110] [INFO] BlockchainSampleClient - [39m>>> BlockchainSampleClient env local, started Fri Aug 04 2017 18:35:51 GMT+0530 (IST) <<<
+[32m[2017-08-04 18:35:51.110] [INFO] BlockchainSampleClient - [39m-----------------------------------------------------------------------------
+[32m[2017-08-04 18:35:51.111] [INFO] BlockchainSampleClient - [39mNode started via(process.argv): /usr/bin/nodejs,/home/dhananjayp/marin-service/app.js
+[32m[2017-08-04 18:35:51.111] [INFO] BlockchainSampleClient - [39mNode version: v6.11.1
+[32m[2017-08-04 18:35:51.111] [INFO] BlockchainSampleClient - [39mNode and its dependency versions: {"http_parser":"2.7.0","node":"6.11.1","v8":"5.1.281.103","uv":"1.11.0","zlib":"1.2.11","ares":"1.10.1-DEV","icu":"56.1","modules":"48","openssl":"1.0.2k"}
+[32m[2017-08-04 18:35:51.111] [INFO] BlockchainSampleClient - [39m
+[32m[2017-08-04 18:35:51.111] [INFO] loggingHelper - [39mCreated logger for blockchain_sample_client.js at level ALL
+[34m[2017-08-04 18:35:51.111] [TRACE] blockchain_sample_client.js - [39msetup : entry
+[34m[2017-08-04 18:35:51.112] [TRACE] datastore.js - [39minit : entry 
+[34m[2017-08-04 18:35:51.112] [TRACE] datastore.js - [39minit : params - {"name":"Cloudant NoSQL DB-vern","label":"cloudantNoSQLDB","plan":"Lite","credentials":{"username":"82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix","password":"a08027a3322ee8bde6fd011aa7f3a53f943f1f6861d6c03e41bdfc206f811def","host":"82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com","port":443,"url":"https://82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix:a08027a3322ee8bde6fd011aa7f3a53f943f1f6861d6c03e41bdfc206f811def@82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com"}} 
+[34m[2017-08-04 18:35:51.116] [TRACE] blockchain_sample_client.js - [39mgetCloudantKeyValStore : entry 
+[34m[2017-08-04 18:35:51.116] [TRACE] blockchain_sample_client.js - [39mgetCloudantKeyValStore : params - "devworks_app_master" 
+[34m[2017-08-04 18:35:51.116] [TRACE] datastore.js - [39mgetDbInstance : entry 
+[34m[2017-08-04 18:35:51.116] [TRACE] datastore.js - [39mgetDbInstance : params - "devworks_app_master" 
+[31m[2017-08-04 18:36:16.168] [ERROR] datastore.js - [39mgetDbInstance : devworks_app_master does not exist. Creating... - {}
+[31m[2017-08-04 18:36:41.198] [ERROR] datastore.js - [39mgetDbInstance : could not fetch dbInstance for devworks_app_master - { Error: getaddrinfo EAI_AGAIN 82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com:443    at Object.exports._errnoException (util.js:1018:11)    at errnoException (dns.js:33:15)    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:76:26)  cause:    { Error: getaddrinfo EAI_AGAIN 82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com:443       at Object.exports._errnoException (util.js:1018:11)       at errnoException (dns.js:33:15)       at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:76:26)     name: 'Error',     scope: 'socket',     errid: 'request',     code: 'EAI_AGAIN',     errno: 'EAI_AGAIN',     syscall: 'getaddrinfo',     hostname: '82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com',     host: '82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com',     port: 443,     description: 'getaddrinfo EAI_AGAIN 82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com:443',     stacktrace: [Object] },  isOperational: true,  scope: 'socket',  errid: 'request',  code: 'EAI_AGAIN',  errno: 'EAI_AGAIN',  syscall: 'getaddrinfo',  hostname: '82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com',  host: '82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com',  port: 443,  description: 'getaddrinfo EAI_AGAIN 82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com:443',  stacktrace:    [ 'Error: getaddrinfo EAI_AGAIN 82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com:443',     '    at Object.exports._errnoException (util.js:1018:11)',     '    at errnoException (dns.js:33:15)',     '    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:76:26)' ] }
+[31m[2017-08-04 18:36:41.199] [ERROR] blockchain_sample_client.js - [39mgetCloudantKeyValStore : Could not initialize model for devworks_app_master - {"statusCode":500,"body":"could not fetch dbInstance for devworks_app_master"}
+[31m[2017-08-04 18:36:41.200] [ERROR] blockchain_sample_client.js - [39mCould not initialize CloudantKeyValueStore : [object Object] - {}
+[32m[2017-08-04 18:36:41.200] [INFO] console - [39mrunClient Error Occurred { statusCode: 500,
+  body: 'could not fetch dbInstance for devworks_app_master' }
+[32m[2017-08-04 18:36:41.203] [INFO] console - [39mexit called
+[32m[2017-08-04 18:36:46.651] [INFO] BlockchainSampleClient - [39m
+[32m[2017-08-04 18:36:46.652] [INFO] BlockchainSampleClient - [39m-----------------------------------------------------------------------------
+[32m[2017-08-04 18:36:46.652] [INFO] BlockchainSampleClient - [39m>>> BlockchainSampleClient env local, started Fri Aug 04 2017 18:36:46 GMT+0530 (IST) <<<
+[32m[2017-08-04 18:36:46.653] [INFO] BlockchainSampleClient - [39m-----------------------------------------------------------------------------
+[32m[2017-08-04 18:36:46.653] [INFO] BlockchainSampleClient - [39mNode started via(process.argv): /usr/bin/nodejs,/home/dhananjayp/marin-service/app.js
+[32m[2017-08-04 18:36:46.653] [INFO] BlockchainSampleClient - [39mNode version: v6.11.1
+[32m[2017-08-04 18:36:46.653] [INFO] BlockchainSampleClient - [39mNode and its dependency versions: {"http_parser":"2.7.0","node":"6.11.1","v8":"5.1.281.103","uv":"1.11.0","zlib":"1.2.11","ares":"1.10.1-DEV","icu":"56.1","modules":"48","openssl":"1.0.2k"}
+[32m[2017-08-04 18:36:46.653] [INFO] BlockchainSampleClient - [39m
+[32m[2017-08-04 18:36:46.653] [INFO] loggingHelper - [39mCreated logger for blockchain_sample_client.js at level ALL
+[34m[2017-08-04 18:36:46.654] [TRACE] blockchain_sample_client.js - [39msetup : entry
+[34m[2017-08-04 18:36:46.655] [TRACE] datastore.js - [39minit : entry 
+[34m[2017-08-04 18:36:46.655] [TRACE] datastore.js - [39minit : params - {"name":"Cloudant NoSQL DB-vern","label":"cloudantNoSQLDB","plan":"Lite","credentials":{"username":"82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix","password":"a08027a3322ee8bde6fd011aa7f3a53f943f1f6861d6c03e41bdfc206f811def","host":"82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com","port":443,"url":"https://82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix:a08027a3322ee8bde6fd011aa7f3a53f943f1f6861d6c03e41bdfc206f811def@82e35471-ca30-4f2a-a19d-618068e02f5e-bluemix.cloudant.com"}} 
+[34m[2017-08-04 18:36:46.659] [TRACE] blockchain_sample_client.js - [39mgetCloudantKeyValStore : entry 
+[34m[2017-08-04 18:36:46.660] [TRACE] blockchain_sample_client.js - [39mgetCloudantKeyValStore : params - "devworks_app_master" 
+[34m[2017-08-04 18:36:46.660] [TRACE] datastore.js - [39mgetDbInstance : entry 
+[34m[2017-08-04 18:36:46.660] [TRACE] datastore.js - [39mgetDbInstance : params - "devworks_app_master" 
+[32m[2017-08-04 18:36:47.451] [INFO] datastore.js - [39mgetDbInstance : devworks_app_master already exists. - undefined
+[34m[2017-08-04 18:36:47.463] [TRACE] blockchain_network - [39msetupBlockchain : entry 
+[34m[2017-08-04 18:36:47.463] [TRACE] blockchain_network - [39msetupBlockchain : params - [Circular] 
+[34m[2017-08-04 18:36:47.464] [TRACE] blockchain_network - [39mchainInit : entry 
+[34m[2017-08-04 18:36:47.465] [TRACE] blockchain_network - [39mchainInit : params - [Circular] 
+[32m[2017-08-04 18:36:47.469] [INFO] blockchain_network - [39mchainInit : Chain Initialized - Chain {  peers: [],  securityEnabled: true,  members: {},  tcertBatchSize: 200,  devMode: false,  preFetchMode: true,  deployWaitTime: 100,  invokeWaitTime: 5,  name: 'sc_cc',  eventHub:    EventHub {     txCallback: [Function],     chaincodeRegistrants: HashTable {},     blockRegistrants: Set {},     txRegistrants: HashTable {},     ep: null,     connected: false },  keyValStore: CloudantKeyValStore { dbName: 'devworks_app_master', dbInstance: [Object] } }
+[32m[2017-08-04 18:36:47.471] [INFO] blockchain_network - [39mloadNetworkConfiguration : Successfully loaded network configuration - undefined
+[34m[2017-08-04 18:36:47.533] [TRACE] blockchain_network - [39mdoLogin : entry
+[34m[2017-08-04 18:36:47.541] [TRACE] kv_store_model - [39mget : entry 
+[34m[2017-08-04 18:36:47.541] [TRACE] kv_store_model - [39mget : params - {"id":"member.WebAppAdmin"} 
+[32m[2017-08-04 18:36:47.727] [INFO] kv_store_model - [39mget : successfully fetched member file with id member.WebAppAdmin - undefined
+[32m[2017-08-04 18:36:47.748] [INFO] blockchain_network - [39mdoLogin : Successfully logged in user on blockchain: WebAppAdmin - undefined
+[32m[2017-08-04 18:36:47.749] [INFO] blockchain_network - [39mconfigureNetwork : Successfully enrolled registrar: WebAppAdmin - undefined
+[32m[2017-08-04 18:36:47.749] [INFO] blockchain_network - [39msetupBlockchain : blockchain setup complete - undefined
+[34m[2017-08-04 18:36:47.762] [TRACE] kv_store_model - [39mget : entry 
+[34m[2017-08-04 18:36:47.763] [TRACE] kv_store_model - [39mget : params - {"id":"member.dhananjay.p"} 
+[32m[2017-08-04 18:36:47.940] [INFO] kv_store_model - [39mget : successfully fetched member file with id member.dhananjay.p - undefined
+[32m[2017-08-04 18:36:47.954] [INFO] blockchain_sdk - [39mregisterUser : Successfully registered user on blockchain: dhananjay.p - undefined
+[34m[2017-08-04 18:36:47.956] [TRACE] blockchain_sdk - [39mdoLogin : entry
+[32m[2017-08-04 18:36:47.963] [INFO] blockchain_sdk - [39mdoLogin : Successfully logged in user on blockchain: dhananjay.p - undefined
+[32m[2017-08-04 18:36:47.964] [INFO] console - [39mserver is running on3000
+[32m[2017-08-04 18:36:49.669] [INFO] console - [39mpolicyName:policyName
+[32m[2017-08-04 18:36:49.669] [INFO] console - [39mpremiumamount:2212
+[32m[2017-08-04 18:36:49.670] [INFO] console - [39msuminsured:7474
+[32m[2017-08-04 18:36:49.670] [INFO] console - [39mconsignmenttype:consignmentType
+[32m[2017-08-04 18:36:49.670] [INFO] console - [39mpackingMode:packingMode
+[32m[2017-08-04 18:36:49.670] [INFO] console - [39mconsignmentWeight332
+[32m[2017-08-04 18:36:49.670] [INFO] console - [39mconsignmentvalue4634
+[32m[2017-08-04 18:36:49.670] [INFO] console - [39mpolicyType
+[32m[2017-08-04 18:36:49.670] [INFO] console - [39mcontractTypecontractType
+[32m[2017-08-04 18:36:49.670] [INFO] console - [39mtransportmode:transportMode
+[32m[2017-08-04 18:36:49.682] [INFO] console - [39mcalling SDK for policy
+[34m[2017-08-04 18:36:49.683] [TRACE] blockchain_sdk - [39mconsignmentdetail : entry 
+[34m[2017-08-04 18:36:49.683] [TRACE] blockchain_sdk - [39mconsignmentdetail : params - {"user":"dhananjay.p","ConsignmentDetails":{"id":"2","policyName":"policyName","premiumAmount":"2212","sumInsured":"7474","consignmentType":"consignmentType","packingMode":"packingMode","consignmentWeight":"332","consignmentValue":"4634","policyType":"policyType","contractType":"contractType","transportMode":"transportMode"}} 
+[34m[2017-08-04 18:36:49.683] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 18:36:49.684] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["2","policyName","2212","7474","consignmentType","packingMode","332","4634","policyType","contractType","transportMode"]},"user":"dhananjay.p","retryCounter":0} 
+[31m[2017-08-04 18:36:55.003] [ERROR] blockchain_sdk - [39mdoInvoke : Could not perform invoke  - EventTransactionError {  error:    { Error       at /home/dhananjayp/marin-service/node_modules/grpc/src/node/src/client.js:417:17 code: 14, metadata: [Object] },  msg: 'Error' }
+[31m[2017-08-04 18:36:57.007] [ERROR] blockchain_sdk - [39mrecursiveInvoke : Invoke Retry 0 - {"statusCode":500,"body":"Could not perform invoke "}
+[34m[2017-08-04 18:36:57.008] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 18:36:57.009] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["2","policyName","2212","7474","consignmentType","packingMode","332","4634","policyType","contractType","transportMode"]},"user":"dhananjay.p","retryCounter":1} 
+[31m[2017-08-04 18:36:57.347] [ERROR] blockchain_sdk - [39mdoInvoke : Could not perform invoke  - EventTransactionError {  error:    { Error       at /home/dhananjayp/marin-service/node_modules/grpc/src/node/src/client.js:417:17 code: 14, metadata: [Object] },  msg: 'Error' }
+[32m[2017-08-04 18:36:58.437] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 34f95e08-45c8-4593-8540-b5a33b1ee74b complete' }
+[31m[2017-08-04 18:36:59.348] [ERROR] blockchain_sdk - [39mrecursiveInvoke : Invoke Retry 1 - {"statusCode":500,"body":"Could not perform invoke "}
+[34m[2017-08-04 18:36:59.348] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 18:36:59.348] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["2","policyName","2212","7474","consignmentType","packingMode","332","4634","policyType","contractType","transportMode"]},"user":"dhananjay.p","retryCounter":2} 
+[31m[2017-08-04 18:37:00.024] [ERROR] blockchain_sdk - [39mdoInvoke : Could not perform invoke  - EventTransactionError {  error:    { Error       at /home/dhananjayp/marin-service/node_modules/grpc/src/node/src/client.js:417:17 code: 14, metadata: [Object] },  msg: 'Error' }
+[31m[2017-08-04 18:37:02.026] [ERROR] blockchain_sdk - [39mrecursiveInvoke : Invoke Retry 2 - {"statusCode":500,"body":"Could not perform invoke "}
+[34m[2017-08-04 18:37:02.026] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 18:37:02.030] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["2","policyName","2212","7474","consignmentType","packingMode","332","4634","policyType","contractType","transportMode"]},"user":"dhananjay.p","retryCounter":3} 
+[32m[2017-08-04 18:37:02.049] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx f31db3b3-4d38-4c0d-8aae-41bf4f90013f complete' }
+[32m[2017-08-04 18:37:03.260] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke submitted  - {"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["2","policyName","2212","7474","consignmentType","packingMode","332","4634","policyType","contractType","transportMode"]}
+[32m[2017-08-04 18:37:03.261] [INFO] blockchain_sdk - [39mconsignmentdetail : Successfully registered user - EventInvokeSubmitted { uuid: 'ceed9f74-1590-43b5-9b78-d8f0c6323f71' }
+[32m[2017-08-04 18:37:04.353] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 0882258f-3b98-4073-8855-9a58a87828db complete' }
+[32m[2017-08-04 18:37:07.049] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx ceed9f74-1590-43b5-9b78-d8f0c6323f71 complete' }
+[32m[2017-08-04 19:10:10.313] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t12' }
+[32m[2017-08-04 19:10:10.316] [INFO] console - [39mtRtFTNrdNj
+[32m[2017-08-04 19:10:21.945] [INFO] console - [39mcalling SDK for fetchpolicy
+[34m[2017-08-04 19:10:21.946] [TRACE] blockchain_sdk - [39mfetchpolicy : entry 
+[34m[2017-08-04 19:10:21.946] [TRACE] blockchain_sdk - [39mfetchpolicy : params - {"user":"dhananjay.p","PolicyDetails":{"id":"41","contractType":"Multi-Transit Policy","consignmentWeight":200000,"consignmentValue":20,"policyType":"cipPolicy"}} 
+[34m[2017-08-04 19:10:21.947] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 19:10:21.947] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"fetchPolicyQuotes","args":["41","Multi-Transit Policy",200000,20,"cipPolicy"]},"user":"dhananjay.p","retryCounter":0} 
+[31m[2017-08-04 19:10:22.578] [ERROR] blockchain_sdk - [39mdoInvoke : Could not perform invoke  - EventTransactionError {  error:    { Error: {"created":"@1501854022.575683727","description":"Secure read failed","file":"../src/core/lib/security/transport/secure_endpoint.c","file_line":157,"grpc_status":14,"referenced_errors":[{"created":"@1501854022.575662133","description":"OS Error","errno":104,"file":"../src/core/lib/iomgr/tcp_posix.c","file_line":229,"os_error":"Connection reset by peer","syscall":"recvmsg"}]}       at /home/dhananjayp/marin-service/node_modules/grpc/src/node/src/client.js:417:17 code: 14, metadata: [Object] },  msg: 'Error: {"created":"@1501854022.575683727","description":"Secure read failed","file":"../src/core/lib/security/transport/secure_endpoint.c","file_line":157,"grpc_status":14,"referenced_errors":[{"created":"@1501854022.575662133","description":"OS Error","errno":104,"file":"../src/core/lib/iomgr/tcp_posix.c","file_line":229,"os_error":"Connection reset by peer","syscall":"recvmsg"}]}' }
+[31m[2017-08-04 19:10:24.578] [ERROR] blockchain_sdk - [39mrecursiveInvoke : Invoke Retry 0 - {"statusCode":500,"body":"Could not perform invoke "}
+[34m[2017-08-04 19:10:24.579] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 19:10:24.579] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"fetchPolicyQuotes","args":["41","Multi-Transit Policy",200000,20,"cipPolicy"]},"user":"dhananjay.p","retryCounter":1} 
+[32m[2017-08-04 19:10:26.973] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 9499920b-ed5e-4353-9c48-a5537dfdc753 complete' }
+[32m[2017-08-04 19:10:27.703] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke submitted  - {"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"fetchPolicyQuotes","args":["41","Multi-Transit Policy",200000,20,"cipPolicy"]}
+[32m[2017-08-04 19:10:27.704] [INFO] blockchain_sdk - [39mfetchpolicy : Successfully fetchpolicy - EventInvokeSubmitted { uuid: '38646039-e14e-4af9-8b3c-8fd1520697e4' }
+[32m[2017-08-04 19:10:29.593] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 38646039-e14e-4af9-8b3c-8fd1520697e4 complete' }
+[32m[2017-08-04 19:10:53.854] [INFO] console - [39mpolicyName:All India Insurance
+[32m[2017-08-04 19:10:53.855] [INFO] console - [39mpremiumamount:1,000
+[32m[2017-08-04 19:10:53.855] [INFO] console - [39msuminsured:50,000
+[32m[2017-08-04 19:10:53.856] [INFO] console - [39mconsignmenttype:others
+[32m[2017-08-04 19:10:53.858] [INFO] console - [39mpackingMode:cardboard
+[32m[2017-08-04 19:10:53.858] [INFO] console - [39mconsignmentWeight200000
+[32m[2017-08-04 19:10:53.858] [INFO] console - [39mconsignmentvalue20
+[32m[2017-08-04 19:10:53.858] [INFO] console - [39mcipPolicy
+[32m[2017-08-04 19:10:53.858] [INFO] console - [39mcontractTypeMulti-Transit Policy
+[32m[2017-08-04 19:10:53.858] [INFO] console - [39mtransportmode:Roadways,
+[32m[2017-08-04 19:10:53.860] [INFO] console - [39mcalling SDK for policy
+[34m[2017-08-04 19:10:53.860] [TRACE] blockchain_sdk - [39mconsignmentdetail : entry 
+[34m[2017-08-04 19:10:53.860] [TRACE] blockchain_sdk - [39mconsignmentdetail : params - {"user":"dhananjay.p","ConsignmentDetails":{"id":"41","policyName":"All India Insurance","premiumAmount":"1,000","sumInsured":"50,000","consignmentType":"others","packingMode":"cardboard","consignmentWeight":"200000","consignmentValue":"20","policyType":"cipPolicy","contractType":"Multi-Transit Policy","transportMode":"Roadways,"}} 
+[34m[2017-08-04 19:10:53.860] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 19:10:53.861] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["41","All India Insurance","1,000","50,000","others","cardboard","200000","20","cipPolicy","Multi-Transit Policy","Roadways,"]},"user":"dhananjay.p","retryCounter":0} 
+[32m[2017-08-04 19:10:54.474] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke submitted  - {"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["41","All India Insurance","1,000","50,000","others","cardboard","200000","20","cipPolicy","Multi-Transit Policy","Roadways,"]}
+[32m[2017-08-04 19:10:54.475] [INFO] blockchain_sdk - [39mconsignmentdetail : Successfully registered user - EventInvokeSubmitted { uuid: '078e4e83-6cbc-4085-862e-bca489572ba8' }
+[32m[2017-08-04 19:10:58.864] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 078e4e83-6cbc-4085-862e-bca489572ba8 complete' }
+[32m[2017-08-04 19:12:45.830] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t12' }
+[32m[2017-08-04 19:12:45.834] [INFO] console - [39m4xwthHLg39
+[32m[2017-08-04 19:13:00.358] [INFO] console - [39mcalling SDK for fetchpolicy
+[34m[2017-08-04 19:13:00.359] [TRACE] blockchain_sdk - [39mfetchpolicy : entry 
+[34m[2017-08-04 19:13:00.359] [TRACE] blockchain_sdk - [39mfetchpolicy : params - {"user":"dhananjay.p","PolicyDetails":{"id":"42","contractType":"Multi-Transit Policy","consignmentWeight":20000,"consignmentValue":20,"policyType":"cisPolicy"}} 
+[34m[2017-08-04 19:13:00.359] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 19:13:00.359] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"fetchPolicyQuotes","args":["42","Multi-Transit Policy",20000,20,"cisPolicy"]},"user":"dhananjay.p","retryCounter":0} 
+[32m[2017-08-04 19:13:01.242] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke submitted  - {"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"fetchPolicyQuotes","args":["42","Multi-Transit Policy",20000,20,"cisPolicy"]}
+[32m[2017-08-04 19:13:01.243] [INFO] blockchain_sdk - [39mfetchpolicy : Successfully fetchpolicy - EventInvokeSubmitted { uuid: '271bb055-396c-47da-8508-0bb6ca7aa7e6' }
+[32m[2017-08-04 19:13:05.364] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 271bb055-396c-47da-8508-0bb6ca7aa7e6 complete' }
+[32m[2017-08-04 19:13:26.350] [INFO] console - [39mpolicyName:ICICI Insurance
+[32m[2017-08-04 19:13:26.352] [INFO] console - [39mpremiumamount:3,000
+[32m[2017-08-04 19:13:26.352] [INFO] console - [39msuminsured:1,50,000
+[32m[2017-08-04 19:13:26.352] [INFO] console - [39mconsignmenttype:others
+[32m[2017-08-04 19:13:26.353] [INFO] console - [39mpackingMode:cardboard
+[32m[2017-08-04 19:13:26.353] [INFO] console - [39mconsignmentWeight20000
+[32m[2017-08-04 19:13:26.353] [INFO] console - [39mconsignmentvalue20
+[32m[2017-08-04 19:13:26.353] [INFO] console - [39mcisPolicy
+[32m[2017-08-04 19:13:26.353] [INFO] console - [39mcontractTypeMulti-Transit Policy
+[32m[2017-08-04 19:13:26.354] [INFO] console - [39mtransportmode:Roadways,
+[32m[2017-08-04 19:13:26.357] [INFO] console - [39mcalling SDK for policy
+[34m[2017-08-04 19:13:26.358] [TRACE] blockchain_sdk - [39mconsignmentdetail : entry 
+[34m[2017-08-04 19:13:26.358] [TRACE] blockchain_sdk - [39mconsignmentdetail : params - {"user":"dhananjay.p","ConsignmentDetails":{"id":"42","policyName":"ICICI Insurance","premiumAmount":"3,000","sumInsured":"1,50,000","consignmentType":"others","packingMode":"cardboard","consignmentWeight":"20000","consignmentValue":"20","policyType":"cisPolicy","contractType":"Multi-Transit Policy","transportMode":"Roadways,"}} 
+[34m[2017-08-04 19:13:26.358] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 19:13:26.359] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["42","ICICI Insurance","3,000","1,50,000","others","cardboard","20000","20","cisPolicy","Multi-Transit Policy","Roadways,"]},"user":"dhananjay.p","retryCounter":0} 
+[32m[2017-08-04 19:13:26.990] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke submitted  - {"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["42","ICICI Insurance","3,000","1,50,000","others","cardboard","20000","20","cisPolicy","Multi-Transit Policy","Roadways,"]}
+[32m[2017-08-04 19:13:26.991] [INFO] blockchain_sdk - [39mconsignmentdetail : Successfully registered user - EventInvokeSubmitted { uuid: '1b29a19d-0ed0-4352-b002-e3e5687e4ca0' }
+[32m[2017-08-04 19:13:31.377] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 1b29a19d-0ed0-4352-b002-e3e5687e4ca0 complete' }
+[32m[2017-08-04 19:14:53.253] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t.com' }
+[32m[2017-08-04 19:15:07.440] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t12' }
+[32m[2017-08-04 19:15:07.447] [INFO] console - [39mtuBV6QI2jl
+[32m[2017-08-04 19:15:18.802] [INFO] console - [39mcalling SDK for fetchpolicy
+[34m[2017-08-04 19:15:18.802] [TRACE] blockchain_sdk - [39mfetchpolicy : entry 
+[34m[2017-08-04 19:15:18.802] [TRACE] blockchain_sdk - [39mfetchpolicy : params - {"user":"dhananjay.p","PolicyDetails":{"id":"43","contractType":"Multi-Transit Policy","consignmentWeight":20000,"consignmentValue":200,"policyType":"cipPolicy"}} 
+[34m[2017-08-04 19:15:18.802] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 19:15:18.802] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"fetchPolicyQuotes","args":["43","Multi-Transit Policy",20000,200,"cipPolicy"]},"user":"dhananjay.p","retryCounter":0} 
+[32m[2017-08-04 19:15:19.646] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke submitted  - {"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"fetchPolicyQuotes","args":["43","Multi-Transit Policy",20000,200,"cipPolicy"]}
+[32m[2017-08-04 19:15:19.647] [INFO] blockchain_sdk - [39mfetchpolicy : Successfully fetchpolicy - EventInvokeSubmitted { uuid: '0ba888e5-8d7e-4c14-9118-84960fb360ef' }
+[32m[2017-08-04 19:15:23.810] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 0ba888e5-8d7e-4c14-9118-84960fb360ef complete' }
+[32m[2017-08-04 19:15:36.509] [INFO] console - [39mpolicyName:wizCraft
+[32m[2017-08-04 19:15:36.510] [INFO] console - [39mpremiumamount:5,000
+[32m[2017-08-04 19:15:36.510] [INFO] console - [39msuminsured:1,25,000
+[32m[2017-08-04 19:15:36.511] [INFO] console - [39mconsignmenttype:other
+[32m[2017-08-04 19:15:36.511] [INFO] console - [39mpackingMode:iiii
+[32m[2017-08-04 19:15:36.511] [INFO] console - [39mconsignmentWeight20000
+[32m[2017-08-04 19:15:36.512] [INFO] console - [39mconsignmentvalue200
+[32m[2017-08-04 19:15:36.513] [INFO] console - [39mcipPolicy
+[32m[2017-08-04 19:15:36.513] [INFO] console - [39mcontractTypeMulti-Transit Policy
+[32m[2017-08-04 19:15:36.513] [INFO] console - [39mtransportmode:Airways,
+[32m[2017-08-04 19:15:36.514] [INFO] console - [39mcalling SDK for policy
+[34m[2017-08-04 19:15:36.514] [TRACE] blockchain_sdk - [39mconsignmentdetail : entry 
+[34m[2017-08-04 19:15:36.514] [TRACE] blockchain_sdk - [39mconsignmentdetail : params - {"user":"dhananjay.p","ConsignmentDetails":{"id":"43","policyName":"wizCraft","premiumAmount":"5,000","sumInsured":"1,25,000","consignmentType":"other","packingMode":"iiii","consignmentWeight":"20000","consignmentValue":"200","policyType":"cipPolicy","contractType":"Multi-Transit Policy","transportMode":"Airways,"}} 
+[34m[2017-08-04 19:15:36.515] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 19:15:36.515] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["43","wizCraft","5,000","1,25,000","other","iiii","20000","200","cipPolicy","Multi-Transit Policy","Airways,"]},"user":"dhananjay.p","retryCounter":0} 
+[32m[2017-08-04 19:15:37.125] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke submitted  - {"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["43","wizCraft","5,000","1,25,000","other","iiii","20000","200","cipPolicy","Multi-Transit Policy","Airways,"]}
+[32m[2017-08-04 19:15:37.126] [INFO] blockchain_sdk - [39mconsignmentdetail : Successfully registered user - EventInvokeSubmitted { uuid: '2ff1caed-c60a-4b54-b16a-c066d8ba9302' }
+[32m[2017-08-04 19:15:41.521] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 2ff1caed-c60a-4b54-b16a-c066d8ba9302 complete' }
+[32m[2017-08-04 19:17:04.346] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'R@12' }
+[32m[2017-08-04 19:17:23.952] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'R@12' }
+[32m[2017-08-04 19:17:41.834] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'R@12' }
+[32m[2017-08-04 19:18:03.340] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t12' }
+[32m[2017-08-04 19:18:03.345] [INFO] console - [39mBdZpfJGpQ9
+[32m[2017-08-04 19:18:14.079] [INFO] console - [39mcalling SDK for fetchpolicy
+[34m[2017-08-04 19:18:14.081] [TRACE] blockchain_sdk - [39mfetchpolicy : entry 
+[34m[2017-08-04 19:18:14.081] [TRACE] blockchain_sdk - [39mfetchpolicy : params - {"user":"dhananjay.p","PolicyDetails":{"id":"44","contractType":"Multi-Transit Policy","consignmentWeight":200000,"consignmentValue":200,"policyType":"cifPolicy"}} 
+[34m[2017-08-04 19:18:14.081] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 19:18:14.081] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"fetchPolicyQuotes","args":["44","Multi-Transit Policy",200000,200,"cifPolicy"]},"user":"dhananjay.p","retryCounter":0} 
+[32m[2017-08-04 19:18:16.390] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke submitted  - {"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"fetchPolicyQuotes","args":["44","Multi-Transit Policy",200000,200,"cifPolicy"]}
+[32m[2017-08-04 19:18:16.391] [INFO] blockchain_sdk - [39mfetchpolicy : Successfully fetchpolicy - EventInvokeSubmitted { uuid: '3ba6e866-d032-46ce-bbfb-b548129f8663' }
+[32m[2017-08-04 19:18:19.090] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 3ba6e866-d032-46ce-bbfb-b548129f8663 complete' }
+[32m[2017-08-04 19:18:55.408] [INFO] console - [39mpolicyName:Marine Insurance
+[32m[2017-08-04 19:18:55.409] [INFO] console - [39mpremiumamount:3,500
+[32m[2017-08-04 19:18:55.409] [INFO] console - [39msuminsured:50,000
+[32m[2017-08-04 19:18:55.409] [INFO] console - [39mconsignmenttype:others
+[32m[2017-08-04 19:18:55.409] [INFO] console - [39mpackingMode:cardboard
+[32m[2017-08-04 19:18:55.409] [INFO] console - [39mconsignmentWeight200000
+[32m[2017-08-04 19:18:55.410] [INFO] console - [39mconsignmentvalue200
+[32m[2017-08-04 19:18:55.410] [INFO] console - [39mcifPolicy
+[32m[2017-08-04 19:18:55.411] [INFO] console - [39mcontractTypeMulti-Transit Policy
+[32m[2017-08-04 19:18:55.411] [INFO] console - [39mtransportmode:Roadways,
+[32m[2017-08-04 19:18:55.412] [INFO] console - [39mcalling SDK for policy
+[34m[2017-08-04 19:18:55.412] [TRACE] blockchain_sdk - [39mconsignmentdetail : entry 
+[34m[2017-08-04 19:18:55.412] [TRACE] blockchain_sdk - [39mconsignmentdetail : params - {"user":"dhananjay.p","ConsignmentDetails":{"id":"44","policyName":"Marine Insurance","premiumAmount":"3,500","sumInsured":"50,000","consignmentType":"others","packingMode":"cardboard","consignmentWeight":"200000","consignmentValue":"200","policyType":"cifPolicy","contractType":"Multi-Transit Policy","transportMode":"Roadways,"}} 
+[34m[2017-08-04 19:18:55.412] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-04 19:18:55.412] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["44","Marine Insurance","3,500","50,000","others","cardboard","200000","200","cifPolicy","Multi-Transit Policy","Roadways,"]},"user":"dhananjay.p","retryCounter":0} 
+[32m[2017-08-04 19:18:56.500] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke submitted  - {"chaincodeID":"e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196","fcn":"consignmentDetail","args":["44","Marine Insurance","3,500","50,000","others","cardboard","200000","200","cifPolicy","Multi-Transit Policy","Roadways,"]}
+[32m[2017-08-04 19:18:56.500] [INFO] blockchain_sdk - [39mconsignmentdetail : Successfully registered user - EventInvokeSubmitted { uuid: '825a1412-a388-4a60-842c-21d82832d7f3' }
+[32m[2017-08-04 19:19:00.415] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 825a1412-a388-4a60-842c-21d82832d7f3 complete' }
