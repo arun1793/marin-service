@@ -284,8 +284,11 @@ module.exports = router => {
         var objBD = BD();
         objBD.connect();
         var token = req.get('Authorization');
-        const consignmentWeight = req.body.consignmentWeight;
-        const consignmentValue = req.body.consignmentValue;
+        if (!token || !token.trim()) {
+            res.status(400).json({ "status": false, "message": 'token needed !' });
+        }
+        const consignmentWeight = (req.body.consignmentWeight).toString();
+        const consignmentValue = (req.body.consignmentValue).toString();
         const contractType = req.body.contractType;
         const policyType = req.body.policyType;
 
@@ -617,17 +620,17 @@ module.exports = router => {
         }
         const policyName = req.body.policyName;
         console.log("policyName:" + policyName);
-        const premiumAmount = req.body.premiumAmount;
+        const premiumAmount = (req.body.premiumAmount).toString();
         console.log("premiumamount:" + premiumAmount);
-        const sumInsured = req.body.sumInsured;
+        const sumInsured = (req.body.sumInsured).toString();
         console.log("suminsured:" + sumInsured);
         const consignmentType = req.body.consignmentType;
         console.log("consignmenttype:" + consignmentType);
         const packingMode = req.body.packingMode;
         console.log("packingMode:" + packingMode);
-        const consignmentWeight = req.body.consignmentWeight;
+        const consignmentWeight = (req.body.consignmentWeight).toString();
         console.log("consignmentWeight" + consignmentWeight);
-        const consignmentValue = req.body.consignmentValue;
+        const consignmentValue = (req.body.consignmentValue).toString();
         console.log("consignmentvalue" + consignmentValue);
         const policyType = req.body.policyType;
         console.log(policyType);
@@ -732,7 +735,8 @@ module.exports = router => {
                             }
                         ]
                         res.send({
-                            IssuedPolicy_Details
+                            "status": true,
+                            "message": IssuedPolicy_Details
                         });
                     } else {
                         res.send({
