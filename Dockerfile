@@ -8,6 +8,7 @@ RUN npm install
 RUN npm install date-and-time --save
 RUN npm install --save body-parser
 RUN npm install cors
+RUN npm install mysql
 CMD ["node", "app.js"]
 
 
