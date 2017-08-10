@@ -9,20 +9,24 @@ var user = 'dhananjay.p';
 var affiliation = 'marine';
 
 
-exports.consignmentDetail = (id, policyName, premiumAmount, sumInsured, consignmentType, packingMode, consignmentWeight, consignmentValue, policyType, contractType, transportMode) =>
+exports.consignmentDetail = (id, consignmentWeight, consignmentValue, policyName, sumInsured, premiumAmount, modeofTransport, packingMode, consignmentType, contractType, policyType, email, policyHolderName, userType) =>
     new Promise((resolve, reject) => {
         const policy = ({
+
             id: id,
-            policyName: policyName,
-            premiumAmount: premiumAmount,
-            sumInsured: sumInsured,
-            consignmentType: consignmentType,
-            packingMode: packingMode,
             consignmentWeight: consignmentWeight,
             consignmentValue: consignmentValue,
-            policyType: policyType,
+            policyName: policyName,
+            sumInsured: sumInsured,
+            premiumAmount: premiumAmount,
+            modeofTransport: modeofTransport,
+            packingMode: packingMode,
+            consignmentType: consignmentType,
             contractType: contractType,
-            transportMode: transportMode
+            policyType: policyType,
+            email: email,
+            policyHolderName: policyHolderName,
+            userType: userType
         });
 
         bcSdk.consignmentdetail({ user: user, ConsignmentDetails: policy })

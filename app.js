@@ -11,6 +11,7 @@
 
 const express = require('express');
 var nodemailer = require('nodemailer');
+var AWS = require('aws-sdk');
 const app = express();
 const bodyParser = require('body-parser');
 const loggerpac = require('morgan');

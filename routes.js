@@ -11,6 +11,7 @@ const fetchConsignmentlist = require('./functions/getconsignment');
 const mysql = require('mysql');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+var dateTime = require('node-datetime');
 
 // connection to database.
 function BD() {
@@ -147,7 +148,6 @@ module.exports = router => {
                         userList: result.usersdata
 
                     });
-
                 })
                 .catch(err => res.status(err.status).json({
                     message: err.message
@@ -243,6 +243,7 @@ module.exports = router => {
                 res.send({
                     "status": false,
                     "token": "null",
+                    "userType": "null",
                     "message": "error ocurred"
                 })
             } else {
@@ -259,12 +260,14 @@ module.exports = router => {
                         res.send({
                             "status": true,
                             "token": token,
+                            "userType": results[0].usertype,
                             "message": "Login Successfull"
                         });
                     } else {
                         res.send({
                             "status": false,
                             "token": "null",
+                            "userType": "null",
                             "message": "Email and password does not match"
                         });
                     }
@@ -272,6 +275,7 @@ module.exports = router => {
                     res.send({
                         "status": false,
                         "token": "null",
+                        "userType": "null",
                         "message": "Email does not exist"
                     });
                 }
@@ -289,8 +293,12 @@ module.exports = router => {
         }
         const consignmentWeight = (req.body.consignmentWeight).toString();
         const consignmentValue = (req.body.consignmentValue).toString();
+        const invoiceNo = (req.body.invoiceNo).toString();
+        const modeofTransport = (req.body.modeofTransport);
+        const packingMode = req.body.packingMode;
         const contractType = req.body.contractType;
         const policyType = req.body.policyType;
+        const consignmentType = req.body.consignmentType;
 
         if (!contractType || !contractType.trim()) {
 
@@ -303,12 +311,15 @@ module.exports = router => {
                 var id1 = results[0].ID;
                 const id = id1.toString();
 
-
                 var policy = {
                     consignmentWeight: consignmentWeight,
                     consignmentValue: consignmentValue,
+                    invoiceNo: invoiceNo,
+                    modeofTransport: modeofTransport,
+                    packingMode: packingMode,
                     contractType: contractType,
                     policyType: policyType,
+                    consignmentType: consignmentType,
                     uid: sr_no[0].uid
                 }
                 objBD.query('INSERT INTO savepolicy SET ? ', [policy], function(error) {});
@@ -327,8 +338,8 @@ module.exports = router => {
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
-                            "premiumAmount": "3,500",
-                            "sumInsured": "50,000",
+                            "premiumAmount": "3500",
+                            "sumInsured": "50000",
                             "premiumPayment": "12k"
                         }, {
                             "policyName": "Blue Dart",
@@ -336,8 +347,8 @@ module.exports = router => {
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "True",
-                            "premiumAmount": "4,000",
-                            "sumInsured": "1,25,000",
+                            "premiumAmount": "4000",
+                            "sumInsured": "125000",
                             "premiumPayment": "20k"
 
                         }, {
@@ -346,8 +357,8 @@ module.exports = router => {
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "True",
-                            "premiumAmount": "3,000",
-                            "sumInsured": "1,00,000",
+                            "premiumAmount": "3000",
+                            "sumInsured": "100000",
                             "premiumPayment": "15k"
                         }, {
                             "policyName": "Blue Dart",
@@ -355,8 +366,8 @@ module.exports = router => {
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "False",
-                            "premiumAmount": "3,750",
-                            "sumInsured": "1,25,000",
+                            "premiumAmount": "3750",
+                            "sumInsured": "125000",
                             "premiumPayment": "20k"
 
                         },
@@ -366,8 +377,8 @@ module.exports = router => {
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
-                            "premiumAmount": "5,000",
-                            "sumInsured": "2,25,000",
+                            "premiumAmount": "5000",
+                            "sumInsured": "225000",
                             "premiumPayment": "55k"
                         },
                         {
@@ -376,8 +387,8 @@ module.exports = router => {
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "True",
-                            "premiumAmount": "1,500",
-                            "sumInsured": "50,000",
+                            "premiumAmount": "1500",
+                            "sumInsured": "50000",
                             "premiumPayment": "6k"
                         }
                     ]
@@ -390,8 +401,8 @@ module.exports = router => {
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
-                            "premiumAmount": "3,000",
-                            "sumInsured": "1,50,000",
+                            "premiumAmount": "3000",
+                            "sumInsured": "150000",
                             "premiumPayment": "60k"
                         },
                         {
@@ -400,8 +411,8 @@ module.exports = router => {
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "True",
-                            "premiumAmount": "5,000",
-                            "sumInsured": "2,25,000",
+                            "premiumAmount": "5000",
+                            "sumInsured": "225000",
                             "premiumPayment": "55k"
                         },
                         {
@@ -410,8 +421,8 @@ module.exports = router => {
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "True",
-                            "premiumAmount": "5,000",
-                            "sumInsured": "7,25,000",
+                            "premiumAmount": "5000",
+                            "sumInsured": "725000",
                             "premiumPayment": "15k"
                         },
                         {
@@ -420,8 +431,8 @@ module.exports = router => {
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "False",
-                            "premiumAmount": "5,000",
-                            "sumInsured": "1,25,000",
+                            "premiumAmount": "5000",
+                            "sumInsured": "125000",
                             "premiumPayment": "20k"
                         },
                         {
@@ -430,8 +441,8 @@ module.exports = router => {
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
-                            "premiumAmount": "1,000",
-                            "sumInsured": "50,000",
+                            "premiumAmount": "1000",
+                            "sumInsured": "50000",
                             "premiumPayment": "12k"
                         }, {
                             "policyName": "Blue Dart",
@@ -439,8 +450,8 @@ module.exports = router => {
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "True",
-                            "premiumAmount": "3,000",
-                            "sumInsured": "1,25,000",
+                            "premiumAmount": "3000",
+                            "sumInsured": "125000",
                             "premiumPayment": "20k"
                         }
                     ]
@@ -452,8 +463,8 @@ module.exports = router => {
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
-                            "premiumAmount": "1,000",
-                            "sumInsured": "50,000",
+                            "premiumAmount": "1000",
+                            "sumInsured": "50000",
                             "premiumPayment": "6k"
                         },
                         {
@@ -462,8 +473,8 @@ module.exports = router => {
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "True",
-                            "premiumAmount": "5,000",
-                            "sumInsured": "1,25,000",
+                            "premiumAmount": "5000",
+                            "sumInsured": "125000",
                             "premiumPayment": "20k"
                         },
                         {
@@ -472,8 +483,8 @@ module.exports = router => {
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "True",
-                            "premiumAmount": "5,000",
-                            "sumInsured": "7,25,000",
+                            "premiumAmount": "5000",
+                            "sumInsured": "725000",
                             "premiumPayment": "15k"
                         },
                         {
@@ -482,8 +493,8 @@ module.exports = router => {
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "False",
-                            "premiumAmount": "5,000",
-                            "sumInsured": "1,25,000",
+                            "premiumAmount": "5000",
+                            "sumInsured": "125000",
                             "premiumPayment": "20k"
                         },
                         {
@@ -492,8 +503,8 @@ module.exports = router => {
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
-                            "premiumAmount": "1,000",
-                            "sumInsured": "50,000",
+                            "premiumAmount": "1000",
+                            "sumInsured": "50000",
                             "premiumPayment": "12k"
                         },
                         {
@@ -502,8 +513,8 @@ module.exports = router => {
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "True",
-                            "premiumAmount": "3,000",
-                            "sumInsured": "1,25,000",
+                            "premiumAmount": "3000",
+                            "sumInsured": "125000",
                             "premiumPayment": "20k"
                         }
                     ]
@@ -516,8 +527,8 @@ module.exports = router => {
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "True",
-                            "premiumAmount": "1,000",
-                            "sumInsured": "50,000",
+                            "premiumAmount": "1000",
+                            "sumInsured": "50000",
                             "premiumPayment": "6k"
                         },
                         {
@@ -526,8 +537,8 @@ module.exports = router => {
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "False",
-                            "premiumAmount": "5,000",
-                            "sumInsured": "1,25,000",
+                            "premiumAmount": "5000",
+                            "sumInsured": "125000",
                             "premiumPayment": "20k"
                         },
                         {
@@ -536,8 +547,8 @@ module.exports = router => {
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "True",
-                            "premiumAmount": "5,000",
-                            "sumInsured": "7,25,000",
+                            "premiumAmount": "5000",
+                            "sumInsured": "725000",
                             "premiumPayment": "15k"
                         },
                         {
@@ -546,8 +557,8 @@ module.exports = router => {
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
-                            "premiumAmount": "5,000",
-                            "sumInsured": "1,25,000",
+                            "premiumAmount": "5000",
+                            "sumInsured": "125000",
                             "premiumPayment": "20k"
 
                         },
@@ -557,8 +568,8 @@ module.exports = router => {
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
-                            "premiumAmount": "5,000",
-                            "sumInsured": "2,25,000",
+                            "premiumAmount": "5000",
+                            "sumInsured": "225000",
                             "premiumPayment": "55k"
                         },
                         {
@@ -567,15 +578,15 @@ module.exports = router => {
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "False",
-                            "premiumAmount": "5,000",
-                            "sumInsured": "7,25,000",
+                            "premiumAmount": "5000",
+                            "sumInsured": "725000",
                             "premiumPayment": "15k"
                         }
                     ]
 
                 }
 
-                fetchpolicy.fetchPolicyQuotes(id, contractType, consignmentWeight, consignmentValue, policyType)
+                fetchpolicy.fetchPolicyQuotes(id, consignmentWeight, consignmentValue, invoiceNo, modeofTransport, packingMode, contractType, policyType, consignmentType)
 
                 .then((result) => {
                         res.status(200).json({ "status": true, "message": "fetched", "policyList": policyList });
@@ -618,26 +629,34 @@ module.exports = router => {
         if (!token || !token.trim()) {
             res.status(400).json({ "status": false, "message": 'token needed !' });
         }
+
+
+        const consignmentWeight = (req.body.consignmentWeight).toString();
+        console.log("consignmentWeight:" + consignmentWeight);
+        const consignmentValue = (req.body.consignmentValue).toString();
+        console.log("consignmentValue:" + consignmentValue);
         const policyName = req.body.policyName;
         console.log("policyName:" + policyName);
-        const premiumAmount = (req.body.premiumAmount).toString();
-        console.log("premiumamount:" + premiumAmount);
         const sumInsured = (req.body.sumInsured).toString();
-        console.log("suminsured:" + sumInsured);
+        console.log("sumInsured:" + sumInsured);
+        const premiumAmount = (req.body.premiumAmount).toString();
+        console.log("premiumAmount:" + premiumAmount);
+        const modeofTransport = req.body.modeofTransport;
+        console.log("modeofTransport" + modeofTransport);
+        const packingMode = req.body.packingMode
+        console.log("packingMode" + packingMode);
         const consignmentType = req.body.consignmentType;
-        console.log("consignmenttype:" + consignmentType);
-        const packingMode = req.body.packingMode;
-        console.log("packingMode:" + packingMode);
-        const consignmentWeight = (req.body.consignmentWeight).toString();
-        console.log("consignmentWeight" + consignmentWeight);
-        const consignmentValue = (req.body.consignmentValue).toString();
-        console.log("consignmentvalue" + consignmentValue);
-        const policyType = req.body.policyType;
-        console.log(policyType);
+        console.log("consignmentType" + consignmentType);
         const contractType = req.body.contractType;
         console.log("contractType" + contractType);
-        const transportMode = req.body.transportMode;
-        console.log("transportmode:" + transportMode);
+        const policyType = req.body.transportMode;
+        console.log("policyType:" + policyType);
+        const email = req.body.email;
+        console.log("email" + email);
+        const policyHolderName = req.body.policyHolderName;
+        console.log("policyHolderName" + policyHolderName);
+        const userType = req.body.userType;
+        console.log("userType" + userType);
 
         if (!policyName || !premiumAmount || !sumInsured || !consignmentType || !packingMode || !consignmentWeight || !consignmentValue || !policyType || !contractType || !transportMode || !policyType.trim() || !consignmentType.trim() || !packingMode.trim() || !consignmentWeight.trim() || !consignmentValue.trim() || !contractType.trim() || !policyName.trim() || !premiumAmount.trim() || !sumInsured.trim() || !transportMode.trim()) {
 
@@ -650,24 +669,26 @@ module.exports = router => {
                 const id = id1.toString();
                 var udetail = {
                     uid: sr_no[0].uid,
-                    policyName: policyName,
-                    premiumAmount: premiumAmount,
-                    sumInsured: sumInsured,
-                    consignmentType: consignmentType,
-                    packingMode: packingMode,
                     consignmentWeight: consignmentWeight,
                     consignmentValue: consignmentValue,
-                    policyType: policyType,
+                    policyName: policyName,
+                    sumInsured: sumInsured,
+                    premiumAmount: premiumAmount,
+                    modeofTransport: modeofTransport,
+                    packingMode: packingMode,
+                    consignmentType: consignmentType,
                     contractType: contractType,
-                    transportMode: transportMode
+                    policyType: policyType,
+                    email: email,
+                    policyHolderName: policyHolderName,
+                    userType: userType
                 };
 
                 objBD.query('INSERT INTO issuedpolicy SET ?', udetail, function(error) {});
 
                 objBD.query('DELETE from savepolicy where uid = ? ', sr_no[0].uid, function(error) {});
 
-
-                consignment.consignmentDetail(id, policyName, premiumAmount, sumInsured, consignmentType, packingMode, consignmentWeight, consignmentValue, policyType, contractType, transportMode)
+                consignment.consignmentDetail(id, consignmentWeight, consignmentValue, policyName, sumInsured, premiumAmount, modeofTransport, packingMode, consignmentType, contractType, policyType, email, policyHolderName, userType)
 
                 .then((result) => {
                         res.status(200).json({ "message": "true", "status": "success" });
@@ -714,29 +735,37 @@ module.exports = router => {
         console.log("Token: " + token);
         var IssuedPolicy_Details;
         objBD.query('SELECT * FROM user_session WHERE token = ?', [token], function(error, results, fields) {
+
             if (error) {
                 res.send({
                     "status": false,
                     "message": "error ocurred"
                 })
             } else {
-                var resultLength = JSON.parse(JSON.stringify(results));
-                if (resultLength.length > 0) {
-                    if (resultLength[0].token === token) {
-                        IssuedPolicy_Details = [{
-                                "policyName": "ICICI Lombard",
-                                "issuedDate": "21 may 2017",
-                                "issuedAmount": "12000-INR"
-                            },
-                            {
-                                "policyName": "New India Insurence",
-                                "issuedDate": "21 jan 2017",
-                                "issuedAmount": "25000-INR"
-                            }
-                        ]
-                        res.send({
-                            "status": true,
-                            "message": IssuedPolicy_Details
+                var sr_no = (results);
+                var id1 = results[0].uid;
+                const uid = id1.toString();
+                // var datetime = new Date();
+                var date = dateTime.create();
+                var formatted = date.format('Y-m-d');
+
+                if (uid > 0) {
+                    if (uid === uid) {
+                        objBD.query('SELECT * FROM issuedpolicy WHERE uid = ?', uid, function(error, results, fields) {
+                            var sr_no = (results);
+                            var sum = results[0].sumInsured;
+                            const suminsured = sum.toString();
+
+                            IssuedPolicy_Details = [{
+                                    "policyName": results[0].policyName,
+                                    "issuedDate": formatted,
+                                    "issuedAmount": suminsured
+                                }],
+                                res.send({
+                                    "status": true,
+                                    "message": IssuedPolicy_Details
+                                        // "approvalStatus": "inProcess"
+                                });
                         });
                     } else {
                         res.send({
@@ -746,7 +775,6 @@ module.exports = router => {
                     }
                 }
             }
-
         });
     });
 

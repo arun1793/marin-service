@@ -9,14 +9,18 @@ var user = 'dhananjay.p';
 var affiliation = 'marine';
 
 
-exports.fetchPolicyQuotes = (id, contractType, consignmentWeight, consignmentValue, policyType) =>
+exports.fetchPolicyQuotes = (id, consignmentWeight, consignmentValue, invoiceNo, modeofTransport, packingMode, contractType, policyType, consignmentType) =>
     new Promise((resolve, reject) => {
         const policy = ({
             id: id,
-            contractType: contractType,
             consignmentWeight: consignmentWeight,
             consignmentValue: consignmentValue,
-            policyType: policyType
+            invoiceNo: invoiceNo,
+            modeofTransport: modeofTransport,
+            packingMode: packingMode,
+            contractType: contractType,
+            policyType: policyType,
+            consignmentType: consignmentType
         });
 
         bcSdk.FetchPolicy({ user: user, PolicyDetails: policy })
