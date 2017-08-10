@@ -630,7 +630,6 @@ module.exports = router => {
             res.status(400).json({ "status": false, "message": 'token needed !' });
         }
 
-
         const consignmentWeight = (req.body.consignmentWeight).toString();
         console.log("consignmentWeight:" + consignmentWeight);
         const consignmentValue = (req.body.consignmentValue).toString();
@@ -658,7 +657,7 @@ module.exports = router => {
         const userType = req.body.userType;
         console.log("userType" + userType);
 
-        if (!policyName || !premiumAmount || !sumInsured || !consignmentType || !packingMode || !consignmentWeight || !consignmentValue || !policyType || !contractType || !transportMode || !policyType.trim() || !consignmentType.trim() || !packingMode.trim() || !consignmentWeight.trim() || !consignmentValue.trim() || !contractType.trim() || !policyName.trim() || !premiumAmount.trim() || !sumInsured.trim() || !transportMode.trim()) {
+        if (!consignmentWeight || !consignmentValue || !policyName || !sumInsured || !premiumAmount || !modeofTransport || !packingMode || !consignmentType || !contractType || !policyType || !email || !policyHolderName || !userType || !consignmentWeight.trim() || !consignmentValue.trim() || !policyName.trim() || !sumInsured.trim() || !premiumAmount.trim() || !modeofTransport.trim() || !packingMode.trim() || !consignmentType.trim() || !contractType.trim() || !policyType.trim() || !email.trim() || !policyHolderName.trim() || !userType.trim()) {
 
             res.status(400).json({ "status": false, "message": 'Invalid Request !' });
 
