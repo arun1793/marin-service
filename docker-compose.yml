@@ -4,5 +4,5 @@ services:
     image: rapidqube/marin-service
     container_name: marin-service
     ports:
-     - "8090:3001"
+     - "8090:3000"
     #command: marin-service start
