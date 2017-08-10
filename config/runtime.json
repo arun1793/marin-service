@@ -6,7 +6,7 @@
     },
 
     "chaincode": {
-        "id": "e50c7153cceca00ec1ead33a75d96765d9fcadf4176d64d28aeb32c0972bafd0b5d36e9cfbae18a6ab1ce6b817071dc8aafef3b3c3334a14575d6562ec99e196",
+        "id": "a369e1a44e66aa1d2b5e79e3a2e6ffe13044e8a5636d988c324f602df86c8f1ddc3a0c105ef81c7facd6a199d7407299d0524a89ec35bf8640f1c9b944a99ab6",
         "name": "cp_chaincode"
     },
 

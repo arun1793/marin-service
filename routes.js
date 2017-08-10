@@ -605,6 +605,8 @@ module.exports = router => {
                     "get": "get"
                 })
                 .then(function(result) {
+
+
                     res.json({ "status": true, message: "policy detail fetched", policyList: result });
                     //res.json(result)
                 })
@@ -643,19 +645,19 @@ module.exports = router => {
         const modeofTransport = req.body.modeofTransport;
         console.log("modeofTransport" + modeofTransport);
         const packingMode = req.body.packingMode
-        console.log("packingMode" + packingMode);
+        console.log("packingMode:" + packingMode);
         const consignmentType = req.body.consignmentType;
-        console.log("consignmentType" + consignmentType);
+        console.log("consignmentType:" + consignmentType);
         const contractType = req.body.contractType;
-        console.log("contractType" + contractType);
-        const policyType = req.body.transportMode;
+        console.log("contractType:" + contractType);
+        const policyType = req.body.policyType;
         console.log("policyType:" + policyType);
         const email = req.body.email;
-        console.log("email" + email);
+        console.log("email:" + email);
         const policyHolderName = req.body.policyHolderName;
-        console.log("policyHolderName" + policyHolderName);
+        console.log("policyHolderName:" + policyHolderName);
         const userType = req.body.userType;
-        console.log("userType" + userType);
+        console.log("userType:" + userType);
 
         if (!consignmentWeight || !consignmentValue || !policyName || !sumInsured || !premiumAmount || !modeofTransport || !packingMode || !consignmentType || !contractType || !policyType || !email || !policyHolderName || !userType || !consignmentWeight.trim() || !consignmentValue.trim() || !policyName.trim() || !sumInsured.trim() || !premiumAmount.trim() || !modeofTransport.trim() || !packingMode.trim() || !consignmentType.trim() || !contractType.trim() || !policyType.trim() || !email.trim() || !policyHolderName.trim() || !userType.trim()) {
 
@@ -710,9 +712,7 @@ module.exports = router => {
                         "status": true,
                         "message": "user detail fetched",
                         userList: result
-
                     });
-
                 })
                 .catch(err => res.status(err.status).json({
                     message: err.message
@@ -753,12 +753,24 @@ module.exports = router => {
                         objBD.query('SELECT * FROM issuedpolicy WHERE uid = ?', uid, function(error, results, fields) {
                             var sr_no = (results);
                             var sum = results[0].sumInsured;
+                            var name = results[0].policyHolderName;
+                            var uType = results[0].userType;
+                            var premium = results[0].premiumAmount;
+                            const pAmount = premium.toString();
                             const suminsured = sum.toString();
+                            var policyNumber = "";
+                            var possible = "01234567891011121314151617181920213031404151523548854547585474654987878";
+                            for (var i = 0; i < 10; i++)
+                                policyNumber += possible.charAt(Math.floor(Math.random() * possible.length));
 
                             IssuedPolicy_Details = [{
                                     "policyName": results[0].policyName,
                                     "issuedDate": formatted,
-                                    "issuedAmount": suminsured
+                                    "premiumAmount": pAmount,
+                                    "issuedAmount": suminsured,
+                                    "policyHolderName": name,
+                                    "policyNumber": policyNumber,
+                                    "agentName": uType
                                 }],
                                 res.send({
                                     "status": true,
