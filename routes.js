@@ -308,7 +308,7 @@ module.exports = router => {
             objBD.query('SELECT * FROM user_session WHERE token = ?', token, function(error, results, fields) {
 
                 var sr_no = (results);
-                var id1 = results[0].ID;
+                var id1 = results[0].uid;
                 const id = id1.toString();
 
                 var policy = {
@@ -333,53 +333,53 @@ module.exports = router => {
                 if (policyType == "cifPolicy") {
 
                     policyList = [{
-                            "policyName": "Marine Insurance",
+                            "policyName": "21st Century Insurance",
                             "Roadways": "True",
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
                             "premiumAmount": "3500",
                             "sumInsured": "50000",
-                            "premiumPayment": "12k"
+                            "premiumPayment": "12000"
                         }, {
-                            "policyName": "Blue Dart",
+                            "policyName": "Alfa Corporation",
                             "Roadways": "False",
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "True",
                             "premiumAmount": "4000",
                             "sumInsured": "125000",
-                            "premiumPayment": "20k"
+                            "premiumPayment": "20000"
 
                         }, {
-                            "policyName": "DHFL",
+                            "policyName": "Bajaj Allianz",
                             "Roadways": "True",
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "True",
                             "premiumAmount": "3000",
                             "sumInsured": "100000",
-                            "premiumPayment": "15k"
+                            "premiumPayment": "15000"
                         }, {
-                            "policyName": "Blue Dart",
+                            "policyName": "American International Group",
                             "Roadways": "True",
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "False",
                             "premiumAmount": "3750",
                             "sumInsured": "125000",
-                            "premiumPayment": "20k"
+                            "premiumPayment": "20000"
 
                         },
                         {
-                            "policyName": "Maersk",
+                            "policyName": "Cincinnati Financial",
                             "Roadways": "True",
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
                             "premiumAmount": "5000",
                             "sumInsured": "225000",
-                            "premiumPayment": "55k"
+                            "premiumPayment": "55000"
                         },
                         {
                             "policyName": "ICICI Lombard",
@@ -389,70 +389,70 @@ module.exports = router => {
                             "Airways": "True",
                             "premiumAmount": "1500",
                             "sumInsured": "50000",
-                            "premiumPayment": "6k"
+                            "premiumPayment": "6000"
                         }
                     ]
 
                 } else if (policyType == "cisPolicy") {
 
                     policyList = [{
-                            "policyName": "ICICI Insurance",
+                            "policyName": "Darwin Professional Underwriters, Inc.",
                             "Roadways": "True",
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
                             "premiumAmount": "3000",
                             "sumInsured": "150000",
-                            "premiumPayment": "60k"
+                            "premiumPayment": "60000"
                         },
                         {
-                            "policyName": "Maersk",
+                            "policyName": "Eastern Insurance Holdings, Inc.",
                             "Roadways": "False",
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "True",
                             "premiumAmount": "5000",
                             "sumInsured": "225000",
-                            "premiumPayment": "55k"
+                            "premiumPayment": "55000"
                         },
                         {
-                            "policyName": "Doodle",
+                            "policyName": "EMC Insurance Group, Inc.",
                             "Roadways": "True",
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "True",
                             "premiumAmount": "5000",
                             "sumInsured": "725000",
-                            "premiumPayment": "15k"
+                            "premiumPayment": "15000"
                         },
                         {
-                            "policyName": "MineDart",
+                            "policyName": "Everest Re Group, Ltd.",
                             "Roadways": "True",
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "False",
                             "premiumAmount": "5000",
                             "sumInsured": "125000",
-                            "premiumPayment": "20k"
+                            "premiumPayment": "20000"
                         },
                         {
-                            "policyName": "Marine Insurance",
+                            "policyName": "First Mercury Financial Corporation",
                             "Roadways": "True",
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
                             "premiumAmount": "1000",
                             "sumInsured": "50000",
-                            "premiumPayment": "12k"
+                            "premiumPayment": "12000"
                         }, {
-                            "policyName": "Blue Dart",
+                            "policyName": "Berkshire Hathaway",
                             "Roadways": "False",
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "True",
                             "premiumAmount": "3000",
                             "sumInsured": "125000",
-                            "premiumPayment": "20k"
+                            "premiumPayment": "20000"
                         }
                     ]
 
@@ -465,57 +465,57 @@ module.exports = router => {
                             "Airways": "False",
                             "premiumAmount": "1000",
                             "sumInsured": "50000",
-                            "premiumPayment": "6k"
+                            "premiumPayment": "6000"
                         },
                         {
-                            "policyName": "wizCraft",
+                            "policyName": "Oriental",
                             "Roadways": "False",
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "True",
                             "premiumAmount": "5000",
                             "sumInsured": "125000",
-                            "premiumPayment": "20k"
+                            "premiumPayment": "20000"
                         },
                         {
-                            "policyName": "DreamWork",
+                            "policyName": "Bristol West Holdings",
                             "Roadways": "False",
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "True",
                             "premiumAmount": "5000",
                             "sumInsured": "725000",
-                            "premiumPayment": "15k"
+                            "premiumPayment": "15000"
                         },
                         {
-                            "policyName": "Emirates",
+                            "policyName": "Federated National Holding Company",
                             "Roadways": "True",
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "False",
                             "premiumAmount": "5000",
                             "sumInsured": "125000",
-                            "premiumPayment": "20k"
+                            "premiumPayment": "20000"
                         },
                         {
-                            "policyName": "Marine Insurance",
+                            "policyName": "AmCOMP Incorporated",
                             "Roadways": "True",
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
                             "premiumAmount": "1000",
                             "sumInsured": "50000",
-                            "premiumPayment": "12k"
+                            "premiumPayment": "12000"
                         },
                         {
-                            "policyName": "Blue Dart",
+                            "policyName": "Carolina Group",
                             "Roadways": "False",
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "True",
                             "premiumAmount": "3000",
                             "sumInsured": "125000",
-                            "premiumPayment": "20k"
+                            "premiumPayment": "20000"
                         }
                     ]
 
@@ -529,7 +529,7 @@ module.exports = router => {
                             "Airways": "True",
                             "premiumAmount": "1000",
                             "sumInsured": "50000",
-                            "premiumPayment": "6k"
+                            "premiumPayment": "60000"
                         },
                         {
                             "policyName": "Oriental",
@@ -539,27 +539,27 @@ module.exports = router => {
                             "Airways": "False",
                             "premiumAmount": "5000",
                             "sumInsured": "125000",
-                            "premiumPayment": "20k"
+                            "premiumPayment": "20000"
                         },
                         {
-                            "policyName": "DHFL",
+                            "policyName": "Everest Re Group, Ltd.",
                             "Roadways": "False",
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "True",
                             "premiumAmount": "5000",
                             "sumInsured": "725000",
-                            "premiumPayment": "15k"
+                            "premiumPayment": "15000"
                         },
                         {
-                            "policyName": "Harwlett Packards",
+                            "policyName": "Eastern Insurance Holdings, Inc.",
                             "Roadways": "True",
                             "Shipping": "False",
                             "Railway": "True",
                             "Airways": "False",
                             "premiumAmount": "5000",
                             "sumInsured": "125000",
-                            "premiumPayment": "20k"
+                            "premiumPayment": "20000"
 
                         },
                         {
@@ -570,17 +570,17 @@ module.exports = router => {
                             "Airways": "False",
                             "premiumAmount": "5000",
                             "sumInsured": "225000",
-                            "premiumPayment": "55k"
+                            "premiumPayment": "55000"
                         },
                         {
-                            "policyName": "Doodle",
+                            "policyName": "21st Century Insurance",
                             "Roadways": "True",
                             "Shipping": "True",
                             "Railway": "False",
                             "Airways": "False",
                             "premiumAmount": "5000",
                             "sumInsured": "725000",
-                            "premiumPayment": "15k"
+                            "premiumPayment": "15000"
                         }
                     ]
 
@@ -666,7 +666,7 @@ module.exports = router => {
         } else {
             objBD.query('SELECT * FROM user_session WHERE token = ?', token, function(error, results, fields) {
                 var sr_no = (results);
-                var id1 = results[0].ID;
+                var id1 = results[0].uid;
                 const id = id1.toString();
                 var udetail = {
                     uid: sr_no[0].uid,
@@ -700,18 +700,70 @@ module.exports = router => {
     });
 
     //getconsignment - query fetches consignment user input given for payment of consignment.
-    router.get("/user/getconsignment", (req, res) => {
+    router.get("/fetchissuedpolicy", (req, res) => {
 
         if (1 == 1) {
+            var uid;
+            var objBD = BD();
+            objBD.connect();
+            var token = req.get('Authorization');
+            console.log("Token: " + token);
+
+            objBD.query('SELECT * FROM user_session WHERE token = ?', [token], function(error, results, fields) {
+
+                if (error) {
+                    res.send({
+                        "status": false,
+                        "message": "error ocurred"
+                    })
+                } else {
+                    var sr_no = (results);
+                    var id1 = results[0].uid;
+                    uid = id1;
+                }
+            })
             fetchConsignmentlist.fetch_consignmentlist({
                     "user": "dhananjay.p",
                     "getusers": "getusers"
                 })
                 .then(function(result) {
-                    res.json({
+                    var date = dateTime.create();
+                    var formatted = date.format('Y-m-d');
+                    var filteredPolicy = [];
+                    var policyName = [];
+                    var sumInsured = [];
+                    var premiumAmount = [];
+                    var policyHolderName = [];
+                    var userType = [];
+                    var IssuedPolicy_Details = [];
+                    var bodystr = result.consignmentlist.body;
+                    var bodyObj = JSON.parse(bodystr)
+                    console.log("length" + bodyObj.consignmentlist.length);
+                    for (let i = 0; i < bodyObj.consignmentlist.length; i++) {
+
+                        if (bodyObj.consignmentlist[i].id === uid) {
+                            filteredPolicy.push(bodyObj.consignmentlist[i]);
+
+                            IssuedPolicy_Details.push(bodyObj.consignmentlist[i].policyname);
+                            IssuedPolicy_Details.push(filteredPolicy[i].premiumamount);
+                            IssuedPolicy_Details.push(filteredPolicy[i].suminsured);
+                            IssuedPolicy_Details.push(filteredPolicy[i].policyholdername);
+                            IssuedPolicy_Details.push(filteredPolicy[i].usertype);
+                            console.log("filteredPolicy" + filteredPolicy)
+                            console.log(filteredPolicy.length)
+                        }
+
+                    }
+                    var policyNumber = "";
+                    var possible = "01234567891011121314151617181920213031404151523548854547585474654987878";
+                    for (var i = 0; i < 10; i++)
+                        policyNumber += possible.charAt(Math.floor(Math.random() * possible.length));
+
+                    return res.json({
                         "status": true,
-                        "message": "user detail fetched",
-                        userList: result
+                        "policyNumber": policyNumber,
+                        "message": filteredPolicy,
+                        "IssuedPolicy_Details": IssuedPolicy_Details
                     });
                 })
                 .catch(err => res.status(err.status).json({
@@ -764,24 +816,35 @@ module.exports = router => {
                                 policyNumber += possible.charAt(Math.floor(Math.random() * possible.length));
 
                             IssuedPolicy_Details = [{
-                                    "policyName": results[0].policyName,
-                                    "issuedDate": formatted,
-                                    "premiumAmount": pAmount,
-                                    "issuedAmount": suminsured,
-                                    "policyHolderName": name,
-                                    "policyNumber": policyNumber,
-                                    "agentName": uType
-                                }],
+                                "policyName": results[0].policyName,
+                                "issuedDate": formatted,
+                                "premiumAmount": pAmount,
+                                "issuedAmount": suminsured,
+                                "policyHolderName": name,
+                                "policyNumber": policyNumber,
+                                "agentName": uType
+                            }]
+                            if (uType == "Direct Client") {
                                 res.send({
                                     "status": true,
                                     "message": IssuedPolicy_Details
-                                        // "approvalStatus": "inProcess"
                                 });
+                            } else if (uType == "CNF agents") {
+                                res.send({
+                                    "status": true,
+                                    "message": IssuedPolicy_Details
+                                });
+                            } else {
+                                res.send({
+                                    "status": true,
+                                    "message": results
+                                });
+                            }
                         });
                     } else {
                         res.send({
                             "status": false,
-                            "message": "already ended session"
+                            "message": "Invalid User"
                         });
                     }
                 }
@@ -804,6 +867,7 @@ module.exports = router => {
                 })
             });
         });
+
     });
 
     //userLogout- compares tokens taken from header with database data if it matches deletes token.
