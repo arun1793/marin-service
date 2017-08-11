@@ -261,6 +261,8 @@ module.exports = router => {
                             "status": true,
                             "token": token,
                             "userType": results[0].usertype,
+                            "firstName": results[0].fname,
+                            "lastName": results[0].lname,
                             "message": "Login Successfull"
                         });
                     } else {
@@ -689,6 +691,26 @@ module.exports = router => {
 
                 objBD.query('DELETE from savepolicy where uid = ? ', sr_no[0].uid, function(error) {});
 
+                var userResults, emailtosend;
+
+                objBD.query('select * from issuedpolicy WHERE email = ?', [req.body.email], function(error, results, fields) {
+
+                    userResults = JSON.parse(JSON.stringify(results));
+                    console.log("results: " + userResults[0].email);
+                    emailtosend = userResults[0].email;
+
+                    var mailOptions = {
+                        transport: transporter,
+                        from: '"vikram"<vikram.viswanathan@rapidqube.com>',
+                        to: emailtosend,
+                        subject: 'Insurence Confirmed',
+                        text: req.body.text,
+                        html: "Thank you for choosing Marin to insure your consignment.Please wait for 4-5 working days to receive your copy of the Insurance Policy Document"
+                    };
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {}
+                    });
+                })
                 consignment.consignmentDetail(id, consignmentWeight, consignmentValue, policyName, sumInsured, premiumAmount, modeofTransport, packingMode, consignmentType, contractType, policyType, email, policyHolderName, userType)
 
                 .then((result) => {
