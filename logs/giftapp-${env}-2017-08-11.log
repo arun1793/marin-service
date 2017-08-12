@@ -8467,3 +8467,92 @@
 [32m[2017-08-11 19:07:19.457] [INFO] console - [39mserver is running on3000
 [32m[2017-08-11 19:07:35.956] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t12' }
 [32m[2017-08-11 19:07:35.965] [INFO] console - [39mHc3FoVHqTi
+[32m[2017-08-11 19:16:12.757] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t12' }
+[32m[2017-08-11 19:16:12.760] [INFO] console - [39mbOrrAeQwzg
+[32m[2017-08-11 19:36:13.384] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t12' }
+[32m[2017-08-11 19:36:13.386] [INFO] console - [39mkK0HGlicAV
+[32m[2017-08-11 19:36:26.292] [INFO] console - [39mToken: kK0HGlicAV
+[32m[2017-08-11 19:41:51.949] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t12' }
+[32m[2017-08-11 19:41:51.951] [INFO] console - [39mf3qBCRE0kd
+[32m[2017-08-11 19:41:59.525] [INFO] console - [39mToken: f3qBCRE0kd
+[32m[2017-08-11 19:44:00.125] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t12' }
+[32m[2017-08-11 19:44:00.130] [INFO] console - [39mwJXfJr56OO
+[32m[2017-08-11 19:44:55.817] [INFO] console - [39mcalling SDK for fetchpolicy
+[34m[2017-08-11 19:44:55.818] [TRACE] blockchain_sdk - [39mfetchpolicy : entry 
+[34m[2017-08-11 19:44:55.819] [TRACE] blockchain_sdk - [39mfetchpolicy : params - {"user":"dhananjay.p","PolicyDetails":{"id":"2","consignmentWeight":"200","consignmentValue":"20000","invoiceNo":"23223423","modeofTransport":"Roadway,Seaway,","packingMode":"Container","contractType":"Multi-Transit Policy","policyType":"cisPolicy","consignmentType":"Others"}} 
+[34m[2017-08-11 19:44:55.820] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-11 19:44:55.820] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"a369e1a44e66aa1d2b5e79e3a2e6ffe13044e8a5636d988c324f602df86c8f1ddc3a0c105ef81c7facd6a199d7407299d0524a89ec35bf8640f1c9b944a99ab6","fcn":"fetchPolicyQuotes","args":["2","200","20000","23223423","Roadway,Seaway,","Container","Multi-Transit Policy","cisPolicy","Others"]},"user":"dhananjay.p","retryCounter":0} 
+[32m[2017-08-11 19:45:00.741] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke submitted  - {"chaincodeID":"a369e1a44e66aa1d2b5e79e3a2e6ffe13044e8a5636d988c324f602df86c8f1ddc3a0c105ef81c7facd6a199d7407299d0524a89ec35bf8640f1c9b944a99ab6","fcn":"fetchPolicyQuotes","args":["2","200","20000","23223423","Roadway,Seaway,","Container","Multi-Transit Policy","cisPolicy","Others"]}
+[32m[2017-08-11 19:45:00.743] [INFO] blockchain_sdk - [39mfetchpolicy : Successfully fetchpolicy - EventInvokeSubmitted { uuid: '32419420-786a-4be1-b67f-21d5d83059a7' }
+[32m[2017-08-11 19:45:03.999] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 32419420-786a-4be1-b67f-21d5d83059a7 complete' }
+[32m[2017-08-11 19:46:57.224] [INFO] console - [39mconsignmentWeight:200
+[32m[2017-08-11 19:46:57.224] [INFO] console - [39mconsignmentValue:20000
+[32m[2017-08-11 19:46:57.225] [INFO] console - [39mpolicyName:Eastern Insurance Holdings, Inc.
+[32m[2017-08-11 19:46:57.225] [INFO] console - [39msumInsured:225000
+[32m[2017-08-11 19:46:57.225] [INFO] console - [39mpremiumAmount:5000
+[32m[2017-08-11 19:46:57.225] [INFO] console - [39mmodeofTransportRoadway,Seaway,
+[32m[2017-08-11 19:46:57.225] [INFO] console - [39mpackingMode:Container
+[32m[2017-08-11 19:46:57.225] [INFO] console - [39mconsignmentType:Others
+[32m[2017-08-11 19:46:57.225] [INFO] console - [39mcontractType:New Policy
+[32m[2017-08-11 19:46:57.226] [INFO] console - [39mpolicyType:cisPolicy
+[32m[2017-08-11 19:46:57.226] [INFO] console - [39memail:rahdesai7@gmail.com
+[32m[2017-08-11 19:46:57.227] [INFO] console - [39mpolicyHolderName:rd desai
+[32m[2017-08-11 19:46:57.227] [INFO] console - [39muserType:Direct Client
+[32m[2017-08-11 19:46:57.233] [INFO] console - [39mcalling SDK for policy
+[34m[2017-08-11 19:46:57.234] [TRACE] blockchain_sdk - [39mconsignmentdetail : entry 
+[34m[2017-08-11 19:46:57.234] [TRACE] blockchain_sdk - [39mconsignmentdetail : params - {"user":"dhananjay.p","ConsignmentDetails":{"id":"2","consignmentWeight":"200","consignmentValue":"20000","policyName":"Eastern Insurance Holdings, Inc.","sumInsured":"225000","premiumAmount":"5000","modeofTransport":"Roadway,Seaway,","packingMode":"Container","consignmentType":"Others","contractType":"New Policy","policyType":"cisPolicy","email":"rahdesai7@gmail.com","policyHolderName":"rd desai","userType":"Direct Client"}} 
+[34m[2017-08-11 19:46:57.234] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-11 19:46:57.236] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"a369e1a44e66aa1d2b5e79e3a2e6ffe13044e8a5636d988c324f602df86c8f1ddc3a0c105ef81c7facd6a199d7407299d0524a89ec35bf8640f1c9b944a99ab6","fcn":"consignmentDetail","args":["2","200","20000","Eastern Insurance Holdings, Inc.","225000","5000","Roadway,Seaway,","Container","Others","New Policy","cisPolicy","rahdesai7@gmail.com","rd desai","Direct Client"]},"user":"dhananjay.p","retryCounter":0} 
+[32m[2017-08-11 19:46:57.406] [INFO] console - [39mresults: rahdesai7@gmail.com
+[32m[2017-08-11 19:46:57.865] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke submitted  - {"chaincodeID":"a369e1a44e66aa1d2b5e79e3a2e6ffe13044e8a5636d988c324f602df86c8f1ddc3a0c105ef81c7facd6a199d7407299d0524a89ec35bf8640f1c9b944a99ab6","fcn":"consignmentDetail","args":["2","200","20000","Eastern Insurance Holdings, Inc.","225000","5000","Roadway,Seaway,","Container","Others","New Policy","cisPolicy","rahdesai7@gmail.com","rd desai","Direct Client"]}
+[32m[2017-08-11 19:46:57.866] [INFO] blockchain_sdk - [39mconsignmentdetail : Successfully registered user - EventInvokeSubmitted { uuid: '4f935c37-ba97-4048-bb5a-fe7f11853141' }
+[32m[2017-08-11 19:47:02.249] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 4f935c37-ba97-4048-bb5a-fe7f11853141 complete' }
+[32m[2017-08-11 19:47:31.309] [INFO] console - [39mToken: wJXfJr56OO
+[32m[2017-08-11 19:48:16.925] [INFO] console - [39m{ email: 'rahdesau7@gmail.com', password: 'T@t12' }
+[32m[2017-08-11 19:48:44.209] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t12' }
+[32m[2017-08-11 19:48:44.213] [INFO] console - [39m0evCI7rjdT
+[32m[2017-08-11 19:48:51.638] [INFO] console - [39mToken: 0evCI7rjdT
+[32m[2017-08-11 19:59:40.828] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t12' }
+[32m[2017-08-11 19:59:40.837] [INFO] console - [39mruhWlAuIPu
+[32m[2017-08-11 19:59:47.597] [INFO] console - [39mToken: ruhWlAuIPu
+[32m[2017-08-11 20:11:50.978] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t12' }
+[32m[2017-08-11 20:11:50.984] [INFO] console - [39mtb2KuhA4dn
+[32m[2017-08-11 20:12:42.141] [INFO] console - [39mcalling SDK for fetchpolicy
+[34m[2017-08-11 20:12:42.142] [TRACE] blockchain_sdk - [39mfetchpolicy : entry 
+[34m[2017-08-11 20:12:42.143] [TRACE] blockchain_sdk - [39mfetchpolicy : params - {"user":"dhananjay.p","PolicyDetails":{"id":"2","consignmentWeight":"2000","consignmentValue":"20000","invoiceNo":"21341234","modeofTransport":"Roadway,Airway,Seaway,","packingMode":"Container","contractType":"Multi-Transit Policy","policyType":"cipPolicy","consignmentType":"Others"}} 
+[34m[2017-08-11 20:12:42.144] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-11 20:12:42.144] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"a369e1a44e66aa1d2b5e79e3a2e6ffe13044e8a5636d988c324f602df86c8f1ddc3a0c105ef81c7facd6a199d7407299d0524a89ec35bf8640f1c9b944a99ab6","fcn":"fetchPolicyQuotes","args":["2","2000","20000","21341234","Roadway,Airway,Seaway,","Container","Multi-Transit Policy","cipPolicy","Others"]},"user":"dhananjay.p","retryCounter":0} 
+[31m[2017-08-11 20:12:42.712] [ERROR] blockchain_sdk - [39mdoInvoke : Could not perform invoke  - EventTransactionError {  error:    { Error: {"created":"@1502462562.709537556","description":"Secure read failed","file":"../src/core/lib/security/transport/secure_endpoint.c","file_line":157,"grpc_status":14,"referenced_errors":[{"created":"@1502462562.709515335","description":"OS Error","errno":104,"file":"../src/core/lib/iomgr/tcp_posix.c","file_line":229,"os_error":"Connection reset by peer","syscall":"recvmsg"}]}       at /home/dhananjayp/marin-service/node_modules/grpc/src/node/src/client.js:417:17 code: 14, metadata: [Object] },  msg: 'Error: {"created":"@1502462562.709537556","description":"Secure read failed","file":"../src/core/lib/security/transport/secure_endpoint.c","file_line":157,"grpc_status":14,"referenced_errors":[{"created":"@1502462562.709515335","description":"OS Error","errno":104,"file":"../src/core/lib/iomgr/tcp_posix.c","file_line":229,"os_error":"Connection reset by peer","syscall":"recvmsg"}]}' }
+[31m[2017-08-11 20:12:44.716] [ERROR] blockchain_sdk - [39mrecursiveInvoke : Invoke Retry 0 - {"statusCode":500,"body":"Could not perform invoke "}
+[34m[2017-08-11 20:12:44.717] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-11 20:12:44.717] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"a369e1a44e66aa1d2b5e79e3a2e6ffe13044e8a5636d988c324f602df86c8f1ddc3a0c105ef81c7facd6a199d7407299d0524a89ec35bf8640f1c9b944a99ab6","fcn":"fetchPolicyQuotes","args":["2","2000","20000","21341234","Roadway,Airway,Seaway,","Container","Multi-Transit Policy","cipPolicy","Others"]},"user":"dhananjay.p","retryCounter":1} 
+[32m[2017-08-11 20:12:46.080] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke submitted  - {"chaincodeID":"a369e1a44e66aa1d2b5e79e3a2e6ffe13044e8a5636d988c324f602df86c8f1ddc3a0c105ef81c7facd6a199d7407299d0524a89ec35bf8640f1c9b944a99ab6","fcn":"fetchPolicyQuotes","args":["2","2000","20000","21341234","Roadway,Airway,Seaway,","Container","Multi-Transit Policy","cipPolicy","Others"]}
+[32m[2017-08-11 20:12:46.081] [INFO] blockchain_sdk - [39mfetchpolicy : Successfully fetchpolicy - EventInvokeSubmitted { uuid: '434d27f6-3c63-4101-aa80-4ce26c688248' }
+[32m[2017-08-11 20:12:47.152] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx a22f9c75-0cd3-426c-8095-047d0eece084 complete' }
+[32m[2017-08-11 20:12:49.724] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 434d27f6-3c63-4101-aa80-4ce26c688248 complete' }
+[32m[2017-08-11 20:13:02.065] [INFO] console - [39m{ email: 'rahdesai7@gmail.com', password: 'T@t12' }
+[32m[2017-08-11 20:13:02.069] [INFO] console - [39mYBRpYKikWi
+[32m[2017-08-11 20:13:08.991] [INFO] console - [39mToken: YBRpYKikWi
+[32m[2017-08-11 20:13:24.587] [INFO] console - [39mconsignmentWeight:2000
+[32m[2017-08-11 20:13:24.588] [INFO] console - [39mconsignmentValue:20000
+[32m[2017-08-11 20:13:24.588] [INFO] console - [39mpolicyName:Bristol West Holdings
+[32m[2017-08-11 20:13:24.588] [INFO] console - [39msumInsured:725000
+[32m[2017-08-11 20:13:24.589] [INFO] console - [39mpremiumAmount:5000
+[32m[2017-08-11 20:13:24.589] [INFO] console - [39mmodeofTransportRoadway,Airway,Seaway,
+[32m[2017-08-11 20:13:24.590] [INFO] console - [39mpackingMode:Container
+[32m[2017-08-11 20:13:24.590] [INFO] console - [39mconsignmentType:Others
+[32m[2017-08-11 20:13:24.590] [INFO] console - [39mcontractType:New Policy
+[32m[2017-08-11 20:13:24.590] [INFO] console - [39mpolicyType:cipPolicy
+[32m[2017-08-11 20:13:24.590] [INFO] console - [39memail:rahdesai7@gmail.com
+[32m[2017-08-11 20:13:24.590] [INFO] console - [39mpolicyHolderName:rd desai
+[32m[2017-08-11 20:13:24.590] [INFO] console - [39muserType:Direct Client
+[32m[2017-08-11 20:13:24.592] [INFO] console - [39mcalling SDK for policy
+[34m[2017-08-11 20:13:24.592] [TRACE] blockchain_sdk - [39mconsignmentdetail : entry 
+[34m[2017-08-11 20:13:24.592] [TRACE] blockchain_sdk - [39mconsignmentdetail : params - {"user":"dhananjay.p","ConsignmentDetails":{"id":"2","consignmentWeight":"2000","consignmentValue":"20000","policyName":"Bristol West Holdings","sumInsured":"725000","premiumAmount":"5000","modeofTransport":"Roadway,Airway,Seaway,","packingMode":"Container","consignmentType":"Others","contractType":"New Policy","policyType":"cipPolicy","email":"rahdesai7@gmail.com","policyHolderName":"rd desai","userType":"Direct Client"}} 
+[34m[2017-08-11 20:13:24.592] [TRACE] blockchain_sdk - [39mdoInvoke : entry 
+[34m[2017-08-11 20:13:24.592] [TRACE] blockchain_sdk - [39mdoInvoke : params - {"requestSpec":{"chaincodeID":"a369e1a44e66aa1d2b5e79e3a2e6ffe13044e8a5636d988c324f602df86c8f1ddc3a0c105ef81c7facd6a199d7407299d0524a89ec35bf8640f1c9b944a99ab6","fcn":"consignmentDetail","args":["2","2000","20000","Bristol West Holdings","725000","5000","Roadway,Airway,Seaway,","Container","Others","New Policy","cipPolicy","rahdesai7@gmail.com","rd desai","Direct Client"]},"user":"dhananjay.p","retryCounter":0} 
+[32m[2017-08-11 20:13:24.749] [INFO] console - [39mresults: rahdesai7@gmail.com
+[32m[2017-08-11 20:13:25.187] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke submitted  - {"chaincodeID":"a369e1a44e66aa1d2b5e79e3a2e6ffe13044e8a5636d988c324f602df86c8f1ddc3a0c105ef81c7facd6a199d7407299d0524a89ec35bf8640f1c9b944a99ab6","fcn":"consignmentDetail","args":["2","2000","20000","Bristol West Holdings","725000","5000","Roadway,Airway,Seaway,","Container","Others","New Policy","cipPolicy","rahdesai7@gmail.com","rd desai","Direct Client"]}
+[32m[2017-08-11 20:13:25.188] [INFO] blockchain_sdk - [39mconsignmentdetail : Successfully registered user - EventInvokeSubmitted { uuid: '5ac1e781-a591-4191-964c-fa8745406e7d' }
+[32m[2017-08-11 20:13:27.371] [INFO] console - [39mToken: tb2KuhA4dn
+[32m[2017-08-11 20:13:29.598] [INFO] blockchain_sdk - [39mdoInvoke : Transaction for invoke complete  - EventInvokeComplete { result: 'Tx 5ac1e781-a591-4191-964c-fa8745406e7d complete' }

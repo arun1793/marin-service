@@ -70,6 +70,7 @@ type Consignment struct{
 	Email					string	`json:"email"`
 	PolicyHolderName		string	`json:"policyholdername"`
 	UserType				string	`json:"usertype"`
+	InvoiceNo				int 	`json:"invoiceno"`
 }
 
 type AllConsignment struct{
@@ -476,6 +477,9 @@ func(t* SimpleChaincode) consignmentDetail(stub shim.ChaincodeStubInterface, arg
 	if len(args[13]) <= 0{
 		return nil, errors.New("14th argument must be a non-empty string")
 	}
+	if len(args[14]) <= 0{
+		return nil, errors.New("15th argument must be a non-empty string")
+	}
 	
 	consignment:=Consignment{}
 
@@ -529,6 +533,11 @@ func(t* SimpleChaincode) consignmentDetail(stub shim.ChaincodeStubInterface, arg
 
 	consignment.UserType=args[13]
 	fmt.Println("consignment", consignment)
+
+	consignment.InvoiceNo, err = strconv.Atoi(args[14])
+	if err != nil {
+		return nil, errors.New("Failed to get InvoiceNo as cannot convert it to int")
+	}
 	
     consignmentAsBytes, err := stub.GetState("getconsignment")
     if err != nil {

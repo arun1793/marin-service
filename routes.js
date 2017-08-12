@@ -660,8 +660,11 @@ module.exports = router => {
         console.log("policyHolderName:" + policyHolderName);
         const userType = req.body.userType;
         console.log("userType:" + userType);
+        const invoiceNo = req.body.invoiceNo;
+        console.log("invoiceNo:" + invoiceNo);
 
-        if (!consignmentWeight || !consignmentValue || !policyName || !sumInsured || !premiumAmount || !modeofTransport || !packingMode || !consignmentType || !contractType || !policyType || !email || !policyHolderName || !userType || !consignmentWeight.trim() || !consignmentValue.trim() || !policyName.trim() || !sumInsured.trim() || !premiumAmount.trim() || !modeofTransport.trim() || !packingMode.trim() || !consignmentType.trim() || !contractType.trim() || !policyType.trim() || !email.trim() || !policyHolderName.trim() || !userType.trim()) {
+
+        if (!consignmentWeight || !consignmentValue || !policyName || !sumInsured || !premiumAmount || !modeofTransport || !packingMode || !consignmentType || !contractType || !policyType || !email || !policyHolderName || !userType || !invoiceNo || !consignmentWeight.trim() || !consignmentValue.trim() || !policyName.trim() || !sumInsured.trim() || !premiumAmount.trim() || !modeofTransport.trim() || !packingMode.trim() || !consignmentType.trim() || !contractType.trim() || !policyType.trim() || !email.trim() || !policyHolderName.trim() || !userType.trim() || !invoiceNo.trim()) {
 
             res.status(400).json({ "status": false, "message": 'Invalid Request !' });
 
@@ -684,7 +687,8 @@ module.exports = router => {
                     policyType: policyType,
                     email: email,
                     policyHolderName: policyHolderName,
-                    userType: userType
+                    userType: userType,
+                    invoiceNo: invoiceNo
                 };
 
                 objBD.query('INSERT INTO issuedpolicy SET ?', udetail, function(error) {});
@@ -711,7 +715,7 @@ module.exports = router => {
                         if (error) {}
                     });
                 })
-                consignment.consignmentDetail(id, consignmentWeight, consignmentValue, policyName, sumInsured, premiumAmount, modeofTransport, packingMode, consignmentType, contractType, policyType, email, policyHolderName, userType)
+                consignment.consignmentDetail(id, consignmentWeight, consignmentValue, policyName, sumInsured, premiumAmount, modeofTransport, packingMode, consignmentType, contractType, policyType, email, policyHolderName, userType, invoiceNo)
 
                 .then((result) => {
                         res.status(200).json({ "message": "true", "status": "success" });
