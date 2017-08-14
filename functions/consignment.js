@@ -27,7 +27,8 @@ exports.consignmentDetail = (id, consignmentWeight, consignmentValue, policyName
             email: email,
             policyHolderName: policyHolderName,
             userType: userType,
-            invoiceNo: invoiceNo
+            invoiceNo: invoiceNo,
+            policyNumber: policyNumber
         });
 
         bcSdk.consignmentdetail({ user: user, ConsignmentDetails: policy })

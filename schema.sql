@@ -57,6 +57,7 @@ email VARCHAR(100) NOT NULL,
 policyHolderName VARCHAR(100) NOT NULL,
 userType VARCHAR(100) NOT NULL,
 invoiceNo BIGINT(100) NOT NULL,
+policyNumber BIGINT(100) NOT NULL,
 PRIMARY KEY(ID),
 FOREIGN KEY (uid) REFERENCES user_detail(uid)
 );
