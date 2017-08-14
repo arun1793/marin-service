@@ -429,7 +429,7 @@ func(t* SimpleChaincode) savePolicy(stub shim.ChaincodeStubInterface, args []str
 func(t* SimpleChaincode) consignmentDetail(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var err error
 			
-	if len(args) != 14 {
+	if len(args) != 15 {
         return nil, errors.New("Incorrect number of arguments. Expecting 10")
 	}
 	 //input sanitation
