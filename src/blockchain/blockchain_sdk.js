@@ -281,8 +281,7 @@ function consignmentdetail(params) {
                 logHelper.logError(logger, 'consignmentdetail', 'Invalid ConsignmentDetails');
                 return reject({ statusCode: constants.INVALID_INPUT, body: 'Could not create  consignmentdetail. Invalid json object' })
             }
-            //here in function name we use the actual function name which is used for registeration i.e User_register
-            //args: [UserDetails.name,UserDetails.email,UserDetails.phone,UserDetails.pan,UserDetails.aadhar,UserDetails.usertype,UserDetails.upi,UserDetails.passpin]})
+
             var reqSpec = getRequestSpec({ functionName: 'consignmentDetail', args: [ConsignmentDetails.id, ConsignmentDetails.consignmentWeight, ConsignmentDetails.consignmentValue, ConsignmentDetails.policyName, ConsignmentDetails.sumInsured, ConsignmentDetails.premiumAmount, ConsignmentDetails.modeofTransport, ConsignmentDetails.packingMode, ConsignmentDetails.consignmentType, ConsignmentDetails.contractType, ConsignmentDetails.policyType, ConsignmentDetails.email, ConsignmentDetails.policyHolderName, ConsignmentDetails.userType, ConsignmentDetails.invoiceNo, ConsignmentDetails.policyNumber] });
             recursiveInvoke({ requestSpec: reqSpec, user: user })
                 .then(function(resp) {

@@ -633,10 +633,6 @@ module.exports = router => {
         if (!token || !token.trim()) {
             res.status(400).json({ "status": false, "message": 'token needed !' });
         }
-        var policyNumber = "";
-        var possible = "01234567891011121314151617181920213031404151523548854547585474654987878";
-        for (var i = 0; i < 10; i++)
-            policyNumber += possible.charAt(Math.floor(Math.random() * possible.length));
 
         const consignmentWeight = (req.body.consignmentWeight).toString();
         console.log("consignmentWeight:" + consignmentWeight);
@@ -666,7 +662,10 @@ module.exports = router => {
         console.log("userType:" + userType);
         const invoiceNo = req.body.invoiceNo;
         console.log("invoiceNo:" + invoiceNo);
-
+        const policyNumber = "";
+        const possible = "01234567891011121314151617181920213031404151523548854547585474654987878";
+        for (var i = 0; i < 10; i++)
+            policyNumber += possible.charAt(Math.floor(Math.random() * possible.length));
 
         if (!consignmentWeight || !consignmentValue || !policyName || !sumInsured || !premiumAmount || !modeofTransport || !packingMode || !consignmentType || !contractType || !policyType || !email || !policyHolderName || !userType || !invoiceNo || !consignmentWeight.trim() || !consignmentValue.trim() || !policyName.trim() || !sumInsured.trim() || !premiumAmount.trim() || !modeofTransport.trim() || !packingMode.trim() || !consignmentType.trim() || !contractType.trim() || !policyType.trim() || !email.trim() || !policyHolderName.trim() || !userType.trim() || !invoiceNo.trim()) {
 

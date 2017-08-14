@@ -9,7 +9,7 @@ var user = 'dhananjay.p';
 var affiliation = 'marine';
 
 
-exports.consignmentDetail = (id, consignmentWeight, consignmentValue, policyName, sumInsured, premiumAmount, modeofTransport, packingMode, consignmentType, contractType, policyType, email, policyHolderName, userType, invoiceNo) =>
+exports.consignmentDetail = (id, consignmentWeight, consignmentValue, policyName, sumInsured, premiumAmount, modeofTransport, packingMode, consignmentType, contractType, policyType, email, policyHolderName, userType, invoiceNo, policyNumber) =>
     new Promise((resolve, reject) => {
         const policy = ({
 

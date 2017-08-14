@@ -71,6 +71,7 @@ type Consignment struct{
 	PolicyHolderName		string	`json:"policyholdername"`
 	UserType				string	`json:"usertype"`
 	InvoiceNo				int 	`json:"invoiceno"`
+	PolicyNumber			int		`json:"policynumber"`
 }
 
 type AllConsignment struct{
@@ -541,7 +542,7 @@ func(t* SimpleChaincode) consignmentDetail(stub shim.ChaincodeStubInterface, arg
 	if err != nil {
 		return nil, errors.New("Failed to get InvoiceNo as cannot convert it to int")
 	}
-	consignment.policyNumber, err = strconv.Atoi(args[15])
+	consignment.PolicyNumber, err = strconv.Atoi(args[15])
 	if err != nil {
 		return nil, errors.New("Failed to get InvoiceNo as cannot convert it to int")
 	}
