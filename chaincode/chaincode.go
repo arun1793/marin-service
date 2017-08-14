@@ -429,7 +429,7 @@ func(t* SimpleChaincode) savePolicy(stub shim.ChaincodeStubInterface, args []str
 func(t* SimpleChaincode) consignmentDetail(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var err error
 			
-	if len(args) != 15 {
+	if len(args) != 16 {
         return nil, errors.New("Incorrect number of arguments. Expecting 10")
 	}
 	 //input sanitation
@@ -478,6 +478,9 @@ func(t* SimpleChaincode) consignmentDetail(stub shim.ChaincodeStubInterface, arg
 		return nil, errors.New("14th argument must be a non-empty string")
 	}
 	if len(args[14]) <= 0{
+		return nil, errors.New("15th argument must be a non-empty string")
+	}
+	if len(args[15]) <= 0{
 		return nil, errors.New("15th argument must be a non-empty string")
 	}
 	
@@ -535,6 +538,10 @@ func(t* SimpleChaincode) consignmentDetail(stub shim.ChaincodeStubInterface, arg
 	fmt.Println("consignment", consignment)
 
 	consignment.InvoiceNo, err = strconv.Atoi(args[14])
+	if err != nil {
+		return nil, errors.New("Failed to get InvoiceNo as cannot convert it to int")
+	}
+	consignment.policyNumber, err = strconv.Atoi(args[15])
 	if err != nil {
 		return nil, errors.New("Failed to get InvoiceNo as cannot convert it to int")
 	}
