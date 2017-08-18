@@ -105,7 +105,7 @@ module.exports = router => {
                     //after generating otp mail will be sent to regsitered user.
                     var mailOptions = {
                         transport: transporter,
-                        from: '"vikram"<vikram.viswanathan@rapidqube.com>',
+                        from: '"Marin Service"<vikram.viswanathan@rapidqube.com>',
                         to: emailtosend,
                         subject: 'Please confirm your Email account',
                         text: req.body.text,
@@ -662,8 +662,8 @@ module.exports = router => {
         console.log("userType:" + userType);
         const invoiceNo = req.body.invoiceNo;
         console.log("invoiceNo:" + invoiceNo);
-        const policyNumber = "";
-        const possible = "01234567891011121314151617181920213031404151523548854547585474654987878";
+        var policyNumber = "";
+        var possible = "01234567891011121314151617181920213031404151523548854547585474654987878";
         for (var i = 0; i < 10; i++)
             policyNumber += possible.charAt(Math.floor(Math.random() * possible.length));
 
@@ -710,11 +710,11 @@ module.exports = router => {
 
                     var mailOptions = {
                         transport: transporter,
-                        from: '"Vikram Viswanathan"<vikram.viswanathan@rapidqube.com>',
+                        from: '"Marin Service"<vikram.viswanathan@rapidqube.com>',
                         to: emailtosend,
-                        subject: 'Insurence Confirmed',
+                        subject: 'Insurance Confirmed',
                         text: req.body.text,
-                        html: "Thank you for choosing Marin to insure your consignment.Please wait for 4-5 working days to receive your copy of the Insurance Policy Document"
+                        html: "Thank you for choosing Marin to insure your consignment. Please wait for 4-5 working days to receive your copy of the Insurance Policy Document"
                     };
                     transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {}
@@ -730,9 +730,9 @@ module.exports = router => {
         }
     });
 
-    //getconsignment - query fetches consignment user input given for payment of consignment.
+    //fetchissuedpolicy - query fetches consignment user input given for payment of consignment.
     router.get("/user/fetchissuedpolicy", (req, res) => {
-
+        var issuedPolicies = [];
         if (1 == 1) {
             var uid;
             var objBD = BD();
@@ -763,58 +763,30 @@ module.exports = router => {
                     var filteredPolicy = [];
                     var filtereddata = [];
                     var IssuedPolicy_Details;
-                    // var policyName = [];
-                    // var sumInsured = [];
-                    // var premiumAmount = [];
-                    // var policyHolderName = [];
-                    // var userType = [];
-                    // var IssuedPolicy_Details = [];
                     var bodystr = result.consignmentlist.body;
                     var bodyObj = JSON.parse(bodystr)
                     console.log("length" + bodyObj.consignmentlist.length);
                     for (let i = 0; i < bodyObj.consignmentlist.length; i++) {
                         if (bodyObj.consignmentlist[i].id === uid) {
                             filteredPolicy.push(bodyObj.consignmentlist[i]);
-                            // policyName.push(bodyObj.consignmentlist[i].policyname);
-                            // premiumAmount.push(filteredPolicy[i].premiumamount);
-                            // sumInsured.push(filteredPolicy[i].suminsured);
-                            // policyHolderName.push(filteredPolicy[i].policyholdername);
-                            // userType.push(filteredPolicy[i].usertype);
-                            // console.log("filteredPolicy" + filteredPolicy)
                             console.log(filteredPolicy.length)
                         }
                     }
-
-
                     for (let i = 0; i < filteredPolicy.length; i++) {
-                        IssuedPolicy_Details = [{
-                                "policyName": filteredPolicy[i].policyName,
-                                "issuedDate": formatted,
-                                "premiumAmount": filteredPolicy[i].premiumamount,
-                                "issuedAmount": filteredPolicy[i].suminsured,
-                                "policyHolderName": filteredPolicy[i].policyholdername,
-                                "policyNumber": "",
-                                "agentName": filteredPolicy[i].usertype
-                            }]
-                            // var policyname = filteredPolicy[i].policyname;
-                            // filtereddata.push(policyname);
-                            // filtereddata.push(formatted);
-                            // var premiumamount = filteredPolicy[i].premiumamount;
-                            // filtereddata.push(premiumamount);
-                            // var suminsured = filteredPolicy[i].suminsured;
-                            // filtereddata.push(suminsured);
-                            // var policyholdername = filteredPolicy[i].policyholdername;
-                            // filtereddata.push(policyholdername);
-                            // var usertype = filteredPolicy[i].usertype;
-                            // filtereddata.push(usertype);
-                            // filtereddata.push(policyNumber);
+
+                        issuedPolicies.push({
+                            "policyName": filteredPolicy[i].policyname,
+                            "issuedDate": formatted,
+                            "premiumAmount": filteredPolicy[i].premiumamount.toString(),
+                            "issuedAmount": filteredPolicy[i].suminsured.toString(),
+                            "policyHolderName": filteredPolicy[i].policyholdername,
+                            "policyNumber": filteredPolicy[i].policynumber.toString(),
+                            "agentName": filteredPolicy[i].usertype
+                        });
                     }
-
-
                     return res.json({
                         "status": true,
-                        "message": IssuedPolicy_Details
-                            // "IssuedPolicy_Details": IssuedPolicy_Details
+                        "message": issuedPolicies
                     });
                 })
                 .catch(err => res.status(err.status).json({
@@ -827,80 +799,6 @@ module.exports = router => {
             });
         }
     });
-
-    //issuedpolicy- fetches users issued policies 
-    // router.get("/user/fetchissuedpolicy", cors(), (req, res) => {
-    //     var objBD = BD();
-    //     objBD.connect();
-    //     var token = req.get('Authorization');
-    //     console.log("Token: " + token);
-    //     var IssuedPolicy_Details;
-    //     objBD.query('SELECT * FROM user_session WHERE token = ?', [token], function(error, results, fields) {
-
-    //         if (error) {
-    //             res.send({
-    //                 "status": false,
-    //                 "message": "error ocurred"
-    //             })
-    //         } else {
-    //             var sr_no = (results);
-    //             var id1 = results[0].uid;
-    //             const uid = id1.toString();
-    //             // var datetime = new Date();
-    //             var date = dateTime.create();
-    //             var formatted = date.format('Y-m-d');
-
-    //             if (uid > 0) {
-    //                 if (uid === uid) {
-    //                     objBD.query('SELECT * FROM issuedpolicy WHERE uid = ?', uid, function(error, results, fields) {
-    //                         var sr_no = (results);
-    //                         var sum = results[0].sumInsured;
-    //                         var name = results[0].policyHolderName;
-    //                         var uType = results[0].userType;
-    //                         var premium = results[0].premiumAmount;
-    //                         const pAmount = premium.toString();
-    //                         const suminsured = sum.toString();
-    //                         var policyNumber = "";
-    //                         var possible = "01234567891011121314151617181920213031404151523548854547585474654987878";
-    //                         for (var i = 0; i < 10; i++)
-    //                             policyNumber += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    //                         IssuedPolicy_Details = [{
-    //                             "policyName": results[0].policyName,
-    //                             "issuedDate": formatted,
-    //                             "premiumAmount": pAmount,
-    //                             "issuedAmount": suminsured,
-    //                             "policyHolderName": name,
-    //                             "policyNumber": policyNumber,
-    //                             "agentName": uType
-    //                         }]
-    //                         if (uType == "Direct Client") {
-    //                             res.send({
-    //                                 "status": true,
-    //                                 "message": IssuedPolicy_Details
-    //                             });
-    //                         } else if (uType == "CNF agents") {
-    //                             res.send({
-    //                                 "status": true,
-    //                                 "message": IssuedPolicy_Details
-    //                             });
-    //                         } else {
-    //                             res.send({
-    //                                 "status": true,
-    //                                 "message": results
-    //                             });
-    //                         }
-    //                     });
-    //                 } else {
-    //                     res.send({
-    //                         "status": false,
-    //                         "message": "Invalid User"
-    //                     });
-    //                 }
-    //             }
-    //         }
-    //     });
-    // });
 
     //fetchsavepolicy- fetches saved policies for respective user on token
     router.get("/user/fetchSavePolicy", function(req, res) {
@@ -917,7 +815,6 @@ module.exports = router => {
                 })
             });
         });
-
     });
 
     //userLogout- compares tokens taken from header with database data if it matches deletes token.
